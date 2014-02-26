@@ -1,0 +1,306 @@
+<?php echo $this->doctype(); ?>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <?php echo $this->headTitle('ZF2 '. $this->translate('Skeleton Application'))->setSeparator(' - ')->setAutoEscape(false) ?>
+
+        <?php echo $this->headMeta()
+            ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+        ?>
+        <link href="/mac/style/bootstrap.css" rel="stylesheet">
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.min.js"></script>
+        <script src="http://cdn.bootcss.com/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+        <!-- Font awesome icon -->
+        <link rel="stylesheet" href="/mac/style/font-awesome.css">
+
+        <link rel="stylesheet" href="/mac/style/jquery-ui.css">
+        <!-- Calendar -->
+        <link rel="stylesheet" href="/mac/style/fullcalendar.css">
+        <!-- prettyPhoto -->
+        <link rel="stylesheet" href="/mac/style/prettyPhoto.css">
+        <!-- Star rating -->
+        <link rel="stylesheet" href="/mac/style/rateit.css">
+        <!-- Date picker -->
+        <link rel="stylesheet" href="/mac/style/bootstrap-datetimepicker.min.css">
+        <!-- CLEditor -->
+        <link rel="stylesheet" href="/mac/style/jquery.cleditor.css">
+        <!-- Uniform -->
+        <link rel="stylesheet" href="/mac/style/uniform.default.css">
+        <!-- Bootstrap toggle -->
+        <link rel="stylesheet" href="/mac/style/bootstrap-switch.css">
+        <!-- Main stylesheet -->
+        <link href="/mac/style/style.css" rel="stylesheet">
+        <!-- Widgets stylesheet -->
+        <link href="/mac/style/widgets.css" rel="stylesheet">
+
+        <link href="/default/style/css/default.css" rel="stylesheet">
+
+        <script data-main="/default/js/main" src="/default/js/require.js" ></script>
+
+        <link rel="shortcut icon" href="/mac/img/favicon/favicon.png">
+
+        <?php echo $this->headLink() ?>
+        <?php echo $this->headScript() ?>
+
+    </head>
+    <body>
+
+    <div class="navbar navbar-fixed-top bs-docs-nav" role="banner">
+
+        <div class="conjtainer">
+            <!-- Menu button for smallar screens -->
+            <div class="navbar-header">
+                <button class="navbar-toggle btn-navbar" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+                    <span>菜单</span>
+                </button>
+                <!-- Site name for smallar screens -->
+                <a href="index.html" class="navbar-brand hidden-lg">XSale</a>
+            </div>
+
+
+
+            <!-- Navigation starts -->
+            <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+
+                <ul class="nav navbar-nav">
+
+                    <!-- Upload to server link. Class "dropdown-big" creates big dropdown -->
+                    <!-- Sync to server link -->
+                    <li>
+                        <a href="<?php echo $this->url('home') ?>"  ><span class="label label-primary"><i class="icon-home"></i></span> 回到主页</a>
+                    </li>
+                    <li>
+                        <a href="/saleRecord/check-out"><span class="label label-success"><i class="icon-money"></i></span> 结账页</a>
+                    </li>
+
+                </ul>
+
+                <!-- Links -->
+                <ul class="nav navbar-nav pull-right">
+                    <li class="dropdown pull-right">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <i class="icon-user"></i> 管理员 <b class="caret"></b>
+                        </a>
+
+                        <!-- Dropdown menu -->
+                        <ul class="dropdown-menu">
+                            <li><a href="#"><i class="icon-user"></i> 资料</a></li>
+                            <li><a href="#"><i class="icon-cogs"></i> 设置</a></li>
+                            <li><a href="login.html"><i class="icon-off"></i> 退出</a></li>
+                        </ul>
+                    </li>
+
+                </ul>
+            </nav>
+
+        </div>
+    </div>
+
+
+    <!-- Header starts -->
+    <header>
+        <div class="container">
+            <div class="row">
+
+                <!-- Logo section -->
+                <div class="col-md-4">
+                    <!-- Logo. -->
+                    <div class="logo">
+                        <h1><a href="#">XSale<span class="bold"></span></a></h1>
+                        <p class="meta">后台管理系统</p>
+                    </div>
+                    <!-- Logo ends -->
+                </div>
+
+                <!-- Button section -->
+                <div class="col-md-4">
+
+                </div>
+
+                <!-- Data section -->
+
+                <div class="col-md-4">
+                    <div class="header-data">
+
+                        <!-- Traffic data -->
+                        <div class="hdata">
+                            <div class="mcol-left">
+                                <!-- Icon with red background -->
+                                <i class="icon-signal bred"></i>
+                            </div>
+                            <div class="mcol-right">
+                                <!-- Number of visitors -->
+                                <p><a href="#">7000</a> <em>访问</em></p>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+
+                        <!-- Members data -->
+                        <div class="hdata">
+                            <div class="mcol-left">
+                                <!-- Icon with blue background -->
+                                <i class="icon-user bblue"></i>
+                            </div>
+                            <div class="mcol-right">
+                                <!-- Number of visitors -->
+                                <p><a href="#">3000</a> <em>会员</em></p>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+
+                        <!-- revenue data -->
+                        <div class="hdata">
+                            <div class="mcol-left">
+                                <!-- Icon with green background -->
+                                <i class="icon-money bgreen"></i>
+                            </div>
+                            <div class="mcol-right">
+                                <!-- Number of visitors -->
+                                <p><a href="#">5000</a><em>销售量</em></p>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+    <!-- Header ends -->
+
+    <!-- Main content starts -->
+
+    <div class="content">
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-dropdown"><a href="#">导航</a></div>
+
+            <!--- Sidebar navigation -->
+            <!-- If the main navigation has sub navigation, then add the class "has_sub" to "li" of main navigation. -->
+            <ul id="nav">
+                <!-- Main menu with font awesome icon -->
+                <li><a href="/index/index" class="open"><i class="icon-home"></i> 首页</a>
+                    <!-- Sub menu markup
+                    <ul>
+                      <li><a href="#">Submenu #1</a></li>
+                      <li><a href="#">Submenu #2</a></li>
+                      <li><a href="#">Submenu #3</a></li>
+                    </ul>-->
+                </li>
+                <li class="has_sub"><a href="/StockRecord/index"><i class="icon-list-alt"></i> 进货 <span class="pull-right"><i class="icon-chevron-right"></i></span></a>
+                    <ul>
+                        <li><a href="/StockRecord/index">所有进货单</a></li>
+                        <li><a href="/StockRecord/create-record">添加进货单</a></li>
+                    </ul>
+                </li>
+                <li class="has_sub"><a href="/SaleRecord/index"><i class="icon-list-alt"></i> 出货 <span class="pull-right"><i class="icon-chevron-right"></i></span></a>
+                    <ul>
+                        <li><a href="/SaleRecord/index">所有销售记录</a></li>
+                        <li><a href="/SaleRecord/create-record">添加销售记录</a></li>
+                    </ul>
+                </li>
+                <li class="has_sub"><a href="/Product/index"><i class="icon-list-alt"></i> 产品 <span class="pull-right"><i class="icon-chevron-right"></i></span></a>
+                    <ul>
+                        <li><a href="/Product/index">所有产品</a></li>
+                    </ul>
+                </li>
+                <li class="has_sub"><a href="/customer/index"><i class="icon-list-alt"></i> 客户 <span class="pull-right"><i class="icon-chevron-right"></i></span></a>
+                    <ul>
+                        <li><a href="/customer/index">所有客户</a></li>
+                        <li><a href="/customer/create-customer">添加客户</a></li>
+                    </ul>
+                </li>
+                <li class="has_sub"><a href="/statistics/index"><i class="icon-list-alt"></i> 统计 <span class="pull-right"><i class="icon-chevron-right"></i></span></a>
+                    <ul>
+                        <li><a href="/statistics/profit">利润统计</a></li>
+                        <li><a href="/statistics/sold">销量统计</a></li>
+                        <li><a href="/statistics/hot-sell">热销产品</a></li>
+                    </ul>
+                </li>
+                <li class="has_sub"><a href="/account/index"><i class="icon-list-alt"></i> 账户 <span class="pull-right"><i class="icon-chevron-right"></i></span></a>
+                    <ul>
+                        <li><a href="/account/index">所有账户</a></li>
+                        <li><a href="/account/create-account">添加账户</a></li>
+                    </ul>
+                </li>
+                <li class="has_sub"><a href="/Setting/index"><i class="icon-list-alt"></i> 设置 <span class="pull-right"><i class="icon-chevron-right"></i></span></a>
+                    <ul>
+                        <li><a href="/Setting/system">系统设置</a></li>
+                        <li><a href="/Setting/others">其他设置</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Sidebar ends -->
+
+        <!-- Main bar -->
+        <div class="mainbar">
+
+            <!-- Page heading -->
+            <div class="page-head">
+                <h2 class="pull-left"><i class="icon-home"></i> 首页</h2>
+
+                <!-- Breadcrumb -->
+                <div class="bread-crumb pull-right">
+                    <a href="index.html"><i class="icon-home"></i> 首页</a>
+                    <!-- Divider -->
+                    <span class="divider">/</span>
+                    <a href="#" class="bread-current">控制台</a>
+                </div>
+
+                <div class="clearfix"></div>
+
+            </div>
+            <!-- Page heading ends -->
+
+
+
+            <!-- Matter -->
+
+            <div class="matter">
+                <div class="container">
+                    <?php echo $this->layout()->content; ?>
+                </div>
+            </div>
+
+            <!-- Matter ends -->
+
+        </div>
+
+        <!-- Mainbar ends -->
+        <div class="clearfix"></div>
+
+    </div>
+    <!-- Content ends -->
+
+    <!-- Footer starts -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Copyright info -->
+                    <p class="copy">Copyright &copy; 2012 | <a href="#">Your Site</a> </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Footer ends -->
+
+    <!-- Scroll to top -->
+    <span class="totop"><a href="#"><i class="icon-chevron-up"></i></a></span>
+
+    <?php echo $this->inlineScript();?>
+    <?php echo $this->Script;?>
+    </body>
+</html>

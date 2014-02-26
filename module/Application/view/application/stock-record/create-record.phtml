@@ -1,0 +1,137 @@
+<div class='row'>
+    <div class="col-md-12">
+        <div class="pull-right">
+            <button type="submit" class="btn btn-danger">保存进货单</button>
+            <button type="submit" class="btn btn-danger">保存并继续添加</button>
+            <button type="reset" class="btn btn-default">重置表单</button>
+        </div>
+    </div>
+</div>
+<div class="row">
+
+    <div class="col-md-6">
+        <div class="widget wgreen">
+
+            <div class="widget-head">
+                <div class="pull-left">添加进货单产品</div>
+                <div class="widget-icons pull-right">
+                    <a href="#" class="wminimize"><i class="icon-chevron-up"></i></a> 
+                    <a href="#" class="wclose"><i class="icon-remove"></i></a>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="widget-content">
+                <div class="padd">
+                    <!-- Form starts.  -->
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label  visible-lg">款号</label>
+                            <div class="col-lg-8">
+                                <input type="text" id="SKUInput" class="form-control" data-bind="value:stockProduct.sku " data-provide="typeahead" placeholder="输入产品的唯一编号">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label  visible-lg">图片</label>
+                            <div class="col-xs-3 col-lg-2">
+                                <button type="button" class="btn btn-default">添加图片</button>
+                            </div>
+                            <div class="col-xs-9 col-lg-6">
+                                <img data-bind="visible:stockProduct.picture,attr:{src:stockProduct.picture}" alt="" width="31px" height="31px">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label  visible-lg">名称</label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" data-bind="value:stockProduct.name" placeholder="输入产品名称">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label  visible-lg">进货价</label>
+                            <div class="col-lg-8">
+                               <input type="text" class="form-control" data-bind="value:stockProduct.cost" placeholder="输入产品进货价单价">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label  visible-lg">数量+</label>
+                            <div class="col-lg-8">
+                               <input type="text" class="form-control" data-bind="value:stockProduct.quantity" placeholder="输入进货数量">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label  visible-lg">零售价</label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" data-bind="value:stockProduct.price" placeholder="输入产品零售价(只作为参考价)">
+                            </div>
+                        </div>    
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label  visible-lg">描述</label>
+                            <div class="col-lg-8">
+                                <textarea class="form-control" rows="3" data-bind="value:stockProduct.description" placeholder="输入产品描述"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <!-- Buttons -->
+                            <div class="col-lg-offset-4 col-lg-12">
+                                <button type="submit" class="btn btn-success" data-bind="click:function(){stockProduct.submitTo(stockRecord);}">添加此产品到进货单</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="widget-foot">
+                <!-- Footer goes here -->
+            </div>
+        </div>  
+
+    </div>
+    <div class="col-md-6">
+        <div class="widget">
+
+            <div class="widget-head">
+                <div class="pull-left">此进货单包括产品:</div>
+                <div class="widget-icons pull-right">
+                    <a href="#" class="wminimize"><i class="icon-chevron-up"></i></a> 
+                    <a href="#" class="wclose"><i class="icon-remove"></i></a>
+                </div>  
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="widget-content">
+
+                <table class="table table-striped table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>款号</th>
+                            <th>进货价</th>
+                            <th>数量+</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody data-bind="foreach:stockRecord.stockProducts">
+                        <tr>
+                            <td data-bind="text:sku "></td>
+                            <td data-bind="text:cost "></td>
+                            <td data-bind="text:quantity"></td>
+                            <td>
+                                <button class="btn btn-xs btn-success"><i class="icon-ok"></i> </button>
+                                <button class="btn btn-xs btn-warning"><i class="icon-pencil"></i> </button>
+                                <button class="btn btn-xs btn-danger" data-bind="click:function(){stockRecord.stockProducts.remove(function(item) { return item.sku == sku })}"><i class="icon-remove"></i> </button>
+
+                            </td>
+                        </tr>                                                       
+                    </tbody>
+                    <tfoot>
+                            <tr>
+                                <td colspan="4"><div class="pull-right"><h3 data-bind="text:'总计:'+stockRecord.totalPrice()+'￥'"></h3></div></td>
+                            </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+        </div>
+
+
+    </div>
+</div>
+<?php $this->headScript()->appendScript("require(['main'],function(){require(['page/stock-record/create-record']);});");?>
+

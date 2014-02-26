@@ -1,0 +1,107 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-lg-3 pull-right">
+                <div class="input-group">
+                    <input type="text" class="form-control">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button" style="font-size: 14px !important;">搜索</button>
+                    </span>
+                </div><!-- /input-group -->
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="widget">
+            <div class="widget-head">
+                <div class="pull-left">产品列表</div>
+                <div class="widget-icons pull-right">
+                    <a href="#" class="wminimize"><i class="icon-chevron-up"></i></a> 
+                    <a href="#" class="wclose"><i class="icon-remove"></i></a>
+                </div>  
+                <div class="clearfix"></div>
+            </div>
+            <div class="widget-content medias">
+
+                <table id="product_list" class="table table-striped table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>
+                                <span class="uni">
+                                    <input type="checkbox" value="check1">
+                                </span>
+                            </th>
+                            <th>缩略图</th>
+                            <th>款号</th>
+                            <th>名称</th>
+                            <th>进货价</th>
+                            <th>零售价</th>
+                            <th>库存</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr data-href="/product/edit-product">
+                            <td>                            
+                                <span class="uni">
+                                    <input type="checkbox" value="check1">
+                                </span>
+                            </td>
+                            <td><img src="/mac/img/user.jpg" alt=""></td>
+                            <td>#86768</td>
+                            <td>欧尼娜 大码羽绒服女中长款加厚 欧洲站羽绒服女2013潮清仓</td>
+                            <td>202</td>
+                            <td>328</td>
+                            <td>45</td>
+                            <td>
+                                <button class="btn btn-xs btn-default"><i class="icon-pencil"></i> </button>
+                                <button class="btn btn-xs btn-danger"><i class="icon-remove"></i> </button>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+
+                <div class="widget-foot">
+
+                    <div class="uni pull-left">
+                        <select class="form-control">
+                            <option>操作</option>
+                            <option>编辑</option>
+                            <option>删除</option>
+                        </select>
+                    </div>
+
+
+                    <ul class="pagination pull-right">
+                        <li><a href="#">Prev</a></li>
+                        <li><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                        <li><a href="#">Next</a></li>
+                    </ul>
+
+                    <div class="clearfix"></div> 
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<?php
+$this->Script = <<<SCRIPT
+    <script type="text/javascript">
+        $('#product_list>tbody>tr').click(function(e){
+            location.href = $(this).attr('data-href');
+        });
+        $('#product_list>tbody>tr>td:has("button")').click(function(){
+            return false;
+        });
+    </script>    
+SCRIPT;
+?>
