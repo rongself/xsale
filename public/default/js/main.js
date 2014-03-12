@@ -6,7 +6,7 @@ require.config({
         bootstrap: '/mac/js/bootstrap',
         custom: '/mac/js/custom',
         validation:'lib/knockout.validation',
-        validationConfig:'lib/knockout.validation.config',
+        validationConfig:'module/knockout.validation.config',
         typeahead:'lib/typeahead.min',
         underscore:'lib/underscore.min'
     }

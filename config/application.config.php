@@ -2,9 +2,13 @@
 return array(
     // This should be an array of module namespaces used in the application.
     'modules' => array(
+        'ZendDeveloperTools',
+        'DoctrineModule',
+        'DoctrineORMModule',
+        'BjyProfiler',
         'Application',
     ),
-
+    //./vendor/doctrine/doctrine-module/bin/doctrine-module orm:convert-mapping --namespace="Application\\Entity\\" --force  --from-database annotation ./module/Application/src/
     // These are various options for the listeners attached to the ModuleManager
     'module_listener_options' => array(
         // This should be an array of paths in which modules reside.

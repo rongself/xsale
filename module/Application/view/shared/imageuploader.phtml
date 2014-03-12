@@ -1,0 +1,14 @@
+<span class="btn btn-default fileinput-button">
+    <i class="icon-plus"></i>
+    <span>添加图片</span>
+    <!-- The file input field used as target for the file upload widget -->
+    <!-- TODO 上传按钮点击范围-->
+    <input id="fileupload" type="file" name="files[]" multiple>
+</span>
+<img data-bind="visible:stockProduct.picture,attr:{src:stockProduct.picture}" alt="" width="31px" height="31px">
+<!-- The global progress bar -->
+<div id="progress" data-bind="visible:showProgress" class="progress">
+    <div class="progress-bar progress-bar-info"></div>
+</div>
+<!-- The container for the uploaded files -->
+<div id="files" class="files"></div>
