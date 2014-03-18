@@ -5,7 +5,10 @@
     <!-- TODO 上传按钮点击范围-->
     <input id="fileupload" type="file" name="files[]" multiple>
 </span>
-<img data-bind="visible:stockProduct.picture,attr:{src:stockProduct.picture}" alt="" width="31px" height="31px">
+<!-- ko foreach: stockProduct.pictures -->
+<img data-bind="attr:{src:$data}" alt="" width="31px" height="31px">
+<!-- /ko -->
+
 <!-- The global progress bar -->
 <div id="progress" data-bind="visible:showProgress" class="progress">
     <div class="progress-bar progress-bar-info"></div>

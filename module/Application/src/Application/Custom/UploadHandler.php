@@ -11,7 +11,7 @@ namespace Application\Custom;
  * http://www.opensource.org/licenses/MIT
  */
 use stdClass;
-
+/**@todo 上传完成后返回文件路径*/
 class UploadHandler
 {
 
@@ -46,8 +46,8 @@ class UploadHandler
         $this->options = array(
             'fileName'=>null,
             'script_url' => $this->get_full_url().'/',
-            'upload_dir' => './data/uploads/img/',
-            'upload_url' => './data/uploads/img/',
+            'upload_dir' => '/uploads/img/',
+            'upload_url' => '/uploads/img/',
             'user_dirs' => false,
             'mkdir_mode' => 0755,
             'param_name' => 'files',            // Set the following option to 'POST', if your server does not support
@@ -1088,10 +1088,14 @@ class UploadHandler
         return readfile($file_path);
     }
 
-    protected function body($str) {
-        echo $str;
+    protected function setBody($str) {
+        $this->body = $str;
     }
-    
+
+    public function getBody() {
+        return $this->body;
+    }
+
     protected function header($str) {
         header($str);
     }
@@ -1119,7 +1123,7 @@ class UploadHandler
                     ));
                 }
             }
-            $this->body($json);
+            $this->setBody($content);
         }
         return $content;
     }

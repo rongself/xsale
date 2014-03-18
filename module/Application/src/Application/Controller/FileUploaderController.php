@@ -3,6 +3,7 @@
 namespace Application\Controller;
 
 use Application\Custom\UploadHandler;
+use Zend\Config\Writer\Json;
 use Zend\Debug\Debug;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\JsonModel;
@@ -36,8 +37,7 @@ class FileUploaderController extends AbstractActionController
 //            $rtn['success'] = $upload->receive();
 //        }
         $uploader = new UploadHandler();
-
-        return new ViewModel();
+        return new JsonModel($uploader->getBody());
     }
 
 

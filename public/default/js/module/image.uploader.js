@@ -9,6 +9,7 @@ require(['knockout','lib/jquery.fileupload'],function(ko){
     }
     ko.applyBindings(uploadViewModel);
     var url ='/FileUploader/image-uploader';
+    var uploadPath = '/uploads/img/';
     $('#fileupload').fileupload({
         url: url,
         dataType: 'json',
@@ -16,6 +17,7 @@ require(['knockout','lib/jquery.fileupload'],function(ko){
             console.log(data);
             $.each(data.files, function (index, file) {
                 console.log(file);
+                stockProduct.pictures.push(uploadPath+file.name);
                 $('<p/>').text(file.name).appendTo('#files');
             });
         },

@@ -16,7 +16,7 @@ define(['knockout','validation','validationConfig'], function(ko) {
             required: { message: '数量不能为空' },
             number:{message:'数量必须位数字'}
         });
-        self.picture = ko.observable();
+        self.pictures = ko.observableArray();
         self.price = ko.observable().extend({
             number:{message:'零售价必须为数字'}
         });
