@@ -18,7 +18,9 @@ define(['knockout','viewmodel/stockProduct'], function(ko,stockProductViewModel)
             product.name(stockProductInstance.name());
             product.cost(stockProductInstance.cost());
             product.stock(stockProductInstance.stock());
-            product.picture(stockProductInstance.picture());
+            $(stockProductInstance.pictures()).each(function(){
+                product.pictures.push(this);
+            });
             product.price(stockProductInstance.price());
             product.description(stockProductInstance.description());
             var exists = ko.utils.arrayFirst(self.stockProducts(),function(item){

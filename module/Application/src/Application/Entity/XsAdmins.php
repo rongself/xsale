@@ -15,7 +15,7 @@ class XsAdmins extends \Application\Entity\AbstractEntity
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Column(type="integer", name="id")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -24,21 +24,21 @@ class XsAdmins extends \Application\Entity\AbstractEntity
     /**
      * @var string
      *
-     * @ORM\Column(name="username", type="string", length=32, nullable=false)
+     * @ORM\Column(type="string", length=32, nullable=false, name="username")
      */
     private $username;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="password", type="string", length=32, nullable=false)
+     * @ORM\Column(type="string", length=32, nullable=false, name="password")
      */
     private $password;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="create_time", type="datetime", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true, name="create_time")
      */
     private $createTime;
 

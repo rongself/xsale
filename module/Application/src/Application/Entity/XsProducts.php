@@ -3,6 +3,7 @@
 namespace Application\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * XsProducts
@@ -15,72 +16,81 @@ class XsProducts extends \Application\Entity\AbstractEntity
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Column(type="integer", name="id")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
+     * @ORM\OneToMany(targetEntity="Application\Entity\XsProductImages", mappedBy="productId")
+     **/
+    private $productImages;
+
+    public function __construct() {
+        $this->productImages = new ArrayCollection();
+    }
+
+    /**
      * @var string
      *
-     * @ORM\Column(name="sku", type="string", length=30, nullable=true)
+     * @ORM\Column(type="string", length=30, nullable=true, name="sku")
      */
     private $sku;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=30, nullable=true)
+     * @ORM\Column(type="string", length=30, nullable=true, name="name")
      */
     private $name;
 
     /**
      * @var float
      *
-     * @ORM\Column(name="cost", type="float", precision=10, scale=0, nullable=false)
+     * @ORM\Column(type="float", nullable=false, name="cost", precision=10, scale=0)
      */
     private $cost;
 
     /**
      * @var float
      *
-     * @ORM\Column(name="price", type="float", precision=10, scale=0, nullable=true)
+     * @ORM\Column(type="float", nullable=true, name="price", precision=10, scale=0)
      */
     private $price;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="text", nullable=true)
+     * @ORM\Column(type="text", nullable=true, name="description")
      */
     private $description;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="picture", type="text", nullable=true)
+     * @ORM\Column(type="text", nullable=true, name="picture")
      */
     private $picture;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="stock", type="integer", nullable=false)
+     * @ORM\Column(type="integer", nullable=false, name="stock")
      */
     private $stock;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="remark", type="text", nullable=true)
+     * @ORM\Column(type="text", nullable=true, name="remark")
      */
     private $remark;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="create_time", type="datetime", nullable=false)
+     * @ORM\Column(type="datetime", nullable=false, name="create_time")
      */
     private $createTime;
 
@@ -301,5 +311,38 @@ class XsProducts extends \Application\Entity\AbstractEntity
     public function getCreateTime()
     {
         return $this->createTime;
+    }
+
+    /**
+     * Add productImages
+     *
+     * @param \Application\Entity\XsProductImages $productImages
+     * @return XsProducts
+     */
+    public function addProductImage(\Application\Entity\XsProductImages $productImages)
+    {
+        $this->productImages[] = $productImages;
+
+        return $this;
+    }
+
+    /**
+     * Remove productImages
+     *
+     * @param \Application\Entity\XsProductImages $productImages
+     */
+    public function removeProductImage(\Application\Entity\XsProductImages $productImages)
+    {
+        $this->productImages->removeElement($productImages);
+    }
+
+    /**
+     * Get productImages
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getProductImages()
+    {
+        return $this->productImages;
     }
 }

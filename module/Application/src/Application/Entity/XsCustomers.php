@@ -15,7 +15,7 @@ class XsCustomers extends \Application\Entity\AbstractEntity
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Column(type="integer", name="id")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -24,42 +24,42 @@ class XsCustomers extends \Application\Entity\AbstractEntity
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=20, nullable=true)
+     * @ORM\Column(type="string", length=20, nullable=true, name="name")
      */
     private $name;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="phone_number", type="string", length=20, nullable=true)
+     * @ORM\Column(type="string", length=20, nullable=true, name="phone_number")
      */
     private $phoneNumber;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="wechat", type="string", length=32, nullable=true)
+     * @ORM\Column(type="string", length=32, nullable=true, name="wechat")
      */
     private $wechat;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="qq", type="string", length=32, nullable=true)
+     * @ORM\Column(type="string", length=32, nullable=true, name="qq")
      */
     private $qq;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="create_time", type="datetime", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true, name="create_time")
      */
     private $createTime;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="remark", type="text", nullable=true)
+     * @ORM\Column(type="text", nullable=true, name="remark")
      */
     private $remark;
 

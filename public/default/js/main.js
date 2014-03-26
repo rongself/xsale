@@ -8,12 +8,15 @@ require.config({
         validation:'lib/knockout.validation',
         validationConfig:'module/knockout.validation.config',
         typeahead:'lib/typeahead.min',
-        underscore:'lib/underscore.min'
+        underscore:'lib/underscore.min',
+        loadBar:'lib/jquery.loadingbar.min'
     }
 });
 require(["jquery"], function($) {
     require(['bootstrap'], function() {
+        PRODUCT_IMAGE_PATH = '/uploads/img/';
         /* Navigation */
+
         $(window).resize(function()
         {
             if ($(window).width() >= 765) {

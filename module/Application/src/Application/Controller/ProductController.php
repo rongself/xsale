@@ -30,7 +30,25 @@ class ProductController extends AbstractActionController
          */
         $objectManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
         $products = $objectManager->getRepository('\Application\Entity\XsProducts')->findAll();
-        return new jsonModel($products);
+        $returnData = array();
+        foreach ($products as $product) {
+            $row = array();
+            $row['id']   = $product->getId();
+            $row['name'] = $product->getName();
+            $row['sku']  = $product->getSku();
+            $row['cost'] = $product->getCost();
+            $row['price'] = $product->getPrice();
+            $row['description'] = $product->getDescription();
+            $row['stock'] = $product->getStock();
+            $row['picture'] = $product->getPicture();
+            $row['productImages'] = array();
+            foreach ($product->getProductImages() as $productImage) {
+                $row['productImages'][] = $productImage->getUrl();
+            }
+            $returnData[] = $row;
+        }
+
+        return new jsonModel($returnData);
     }
 
 

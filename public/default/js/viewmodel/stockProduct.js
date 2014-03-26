@@ -27,7 +27,7 @@ define(['knockout','validation','validationConfig'], function(ko) {
             self.name('');
             self.cost('');
             self.stock('');
-            self.picture('');
+            self.pictures.removeAll();
             self.price('');
             self.description('');
         }

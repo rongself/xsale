@@ -15,7 +15,7 @@ class XsOrders extends \Application\Entity\AbstractEntity
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Column(type="integer", name="id")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -24,14 +24,14 @@ class XsOrders extends \Application\Entity\AbstractEntity
     /**
      * @var float
      *
-     * @ORM\Column(name="total_price", type="float", precision=10, scale=0, nullable=true)
+     * @ORM\Column(type="float", nullable=true, name="total_price", precision=10, scale=0)
      */
     private $totalPrice;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="create_time", type="datetime", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true, name="create_time")
      */
     private $createTime;
 

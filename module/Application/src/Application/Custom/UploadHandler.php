@@ -46,8 +46,8 @@ class UploadHandler
         $this->options = array(
             'fileName'=>null,
             'script_url' => $this->get_full_url().'/',
-            'upload_dir' => '/uploads/img/',
-            'upload_url' => '/uploads/img/',
+            'upload_dir' => $_SERVER['DOCUMENT_ROOT'].'/uploads/img/',
+            'upload_url' => $this->get_full_url().'/public/uploads/img/',
             'user_dirs' => false,
             'mkdir_mode' => 0755,
             'param_name' => 'files',            // Set the following option to 'POST', if your server does not support

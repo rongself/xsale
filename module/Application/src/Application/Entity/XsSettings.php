@@ -15,7 +15,7 @@ class XsSettings extends \Application\Entity\AbstractEntity
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Column(type="integer", name="id")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -24,14 +24,14 @@ class XsSettings extends \Application\Entity\AbstractEntity
     /**
      * @var string
      *
-     * @ORM\Column(name="key", type="string", length=128, nullable=false)
+     * @ORM\Column(type="string", length=128, nullable=false, name="key")
      */
     private $key;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="value", type="string", length=128, nullable=true)
+     * @ORM\Column(type="string", length=128, nullable=true, name="value")
      */
     private $value;
 

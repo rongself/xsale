@@ -7,7 +7,10 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * XsOrderCart
  *
- * @ORM\Table(name="xs_order_cart", uniqueConstraints={@ORM\UniqueConstraint(name="orderanditem", columns={"order_id", "product_id"})})
+ * @ORM\Table(
+ *     name="xs_order_cart", 
+ *     uniqueConstraints={@ORM\UniqueConstraint(name="orderanditem", columns={"order_id","product_id"})}
+ * )
  * @ORM\Entity
  */
 class XsOrderCart extends \Application\Entity\AbstractEntity
@@ -15,7 +18,7 @@ class XsOrderCart extends \Application\Entity\AbstractEntity
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Column(type="integer", name="id")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -24,35 +27,35 @@ class XsOrderCart extends \Application\Entity\AbstractEntity
     /**
      * @var integer
      *
-     * @ORM\Column(name="order_id", type="integer", nullable=false)
+     * @ORM\Column(type="integer", nullable=false, name="order_id")
      */
     private $orderId;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="product_id", type="integer", nullable=false)
+     * @ORM\Column(type="integer", nullable=false, name="product_id")
      */
     private $productId;
 
     /**
      * @var float
      *
-     * @ORM\Column(name="price", type="float", precision=10, scale=0, nullable=false)
+     * @ORM\Column(type="float", nullable=false, name="price", precision=10, scale=0)
      */
     private $price;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="quantity", type="integer", nullable=false)
+     * @ORM\Column(type="integer", nullable=false, name="quantity")
      */
     private $quantity;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="create_time", type="datetime", nullable=false)
+     * @ORM\Column(type="datetime", nullable=false, name="create_time")
      */
     private $createTime;
 

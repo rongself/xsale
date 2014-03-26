@@ -15,7 +15,7 @@ class FileUploaderController extends AbstractActionController
     public function imageUploaderAction()
     {
 //        $upload = new \Zend\File\Transfer\Transfer();
-//        $upload->setDestination('./data/uploads/img/');
+//        $upload->setDestination('/uploads/img/');
 //
 //        $rtn = array('success' => null);
 //

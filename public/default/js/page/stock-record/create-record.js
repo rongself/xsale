@@ -13,7 +13,7 @@ require(['knockout',
 
         //set a validation need stockRecord instance
         stockProduct.sku.extend({
-            validation: { validator: uniqueInObservableArray, message: '该产品已存在于进货单中ll', params: stockRecord.stockProducts()}
+            validation: { validator: uniqueInObservableArray, message: '该产品已存在于进货单中', params: stockRecord.stockProducts()}
         });
         //for sku autocomplete
         var products = [];
@@ -38,7 +38,7 @@ require(['knockout',
                 var product = _.find(products, function (item) {
                     return item.sku == selectedSKU;
                 });
-                return '<img class="pull-left" style="margin-top: 4px;margin-right: 10px;" src="' + product.picture + '" alt="" width="40px" height="40px">' +
+                return '<img class="pull-left" style="margin-top: 4px;margin-right: 10px;" src="' + PRODUCT_IMAGE_PATH + 'thumbnail/'+product.picture + '" alt="" width="40px" height="40px">' +
                     '<div class="pull-left">' +
                         '<div>' + product.sku + '</div>' +
                         '<div style="color:#cccccc">' + product.name + '</div>' +
@@ -51,7 +51,9 @@ require(['knockout',
                 });
                 stockProduct.name(product.name);
                 stockProduct.cost(product.cost);
-                stockProduct.picture(product.picture);
+                $(product.productImages).each(function(){
+                    stockProduct.pictures.push(this);
+                });
                 stockProduct.price(product.price);
                 stockProduct.description(product.description);
                 $('#quantity').focus();
