@@ -31,6 +31,7 @@ class ProductController extends AbstractActionController
         $objectManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
         $products = $objectManager->getRepository('\Application\Entity\XsProducts')->findAll();
         $returnData = array();
+        //@todo All product return the same images
         foreach ($products as $product) {
             $row = array();
             $row['id']   = $product->getId();

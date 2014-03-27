@@ -1,7 +1,7 @@
 /**
  * Created by Ron on 14-2-27.
  */
-define(['knockout','viewmodel/stockProduct'], function(ko,stockProductViewModel) {
+define(['knockout','viewmodel/stockProduct','lib/json2','knockoutMapping'], function(ko,stockProductViewModel,JSON,koMapping) {
     return function() {
         var self = this;
         self.stockProducts = ko.observableArray(null);
@@ -13,16 +13,9 @@ define(['knockout','viewmodel/stockProduct'], function(ko,stockProductViewModel)
             return sum;
         });
         self.addItem = function(stockProductInstance) {
-            var product = new stockProductViewModel();
-            product.sku(stockProductInstance.sku());
-            product.name(stockProductInstance.name());
-            product.cost(stockProductInstance.cost());
-            product.stock(stockProductInstance.stock());
-            $(stockProductInstance.pictures()).each(function(){
-                product.pictures.push(this);
-            });
-            product.price(stockProductInstance.price());
-            product.description(stockProductInstance.description());
+            var json = ko.toJSON(stockProductInstance);
+            var product = koMapping.fromJSON(json);
+
             var exists = ko.utils.arrayFirst(self.stockProducts(),function(item){
                 return item.sku() === stockProductInstance.sku();
             })

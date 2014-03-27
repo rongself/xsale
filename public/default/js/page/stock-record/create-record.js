@@ -51,6 +51,7 @@ require(['knockout',
                 });
                 stockProduct.name(product.name);
                 stockProduct.cost(product.cost);
+                stockProduct.pictures.removeAll();
                 $(product.productImages).each(function(){
                     stockProduct.pictures.push(this);
                 });

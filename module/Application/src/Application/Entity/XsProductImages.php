@@ -21,7 +21,6 @@ class XsProductImages extends \Application\Entity\AbstractEntity
     private $id;
     /**
      * @var integer
-     * @ORM\Column(type="integer", name="product_id")
      * @ORM\ManyToOne(targetEntity="Application\Entity\XsProducts", inversedBy="productImages")
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
      */

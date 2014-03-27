@@ -23,13 +23,9 @@ class XsProducts extends \Application\Entity\AbstractEntity
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="Application\Entity\XsProductImages", mappedBy="productId")
+     * @ORM\OneToMany(targetEntity="Application\Entity\XsProductImages", mappedBy="productId",cascade={"persist"})
      **/
     private $productImages;
-
-    public function __construct() {
-        $this->productImages = new ArrayCollection();
-    }
 
     /**
      * @var string
@@ -94,7 +90,10 @@ class XsProducts extends \Application\Entity\AbstractEntity
      */
     private $createTime;
 
-
+    public function __construct($data = null) {
+        parent::__construct($data);
+        $this->productImages = new ArrayCollection();
+    }
 
     /**
      * Get id

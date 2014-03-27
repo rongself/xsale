@@ -42,6 +42,15 @@ class XsStockRecords extends \Application\Entity\AbstractEntity
      */
     private $createTime;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Application\Entity\XsProducts")
+     * @ORM\JoinTable(name="xs_stock_items",
+     *      joinColumns={@ORM\JoinColumn(name="stock_record_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id")}
+     *      )
+     */
+    private $stockProducts;
+
 
 
     /**
@@ -121,5 +130,45 @@ class XsStockRecords extends \Application\Entity\AbstractEntity
     public function getCreateTime()
     {
         return $this->createTime;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->stockProducts = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add stockProducts
+     *
+     * @param \Application\Entity\XsProducts $stockProducts
+     * @return XsStockRecords
+     */
+    public function addStockProduct(\Application\Entity\XsProducts $stockProducts)
+    {
+        $this->stockProducts[] = $stockProducts;
+
+        return $this;
+    }
+
+    /**
+     * Remove stockProducts
+     *
+     * @param \Application\Entity\XsProducts $stockProducts
+     */
+    public function removeStockProduct(\Application\Entity\XsProducts $stockProducts)
+    {
+        $this->stockProducts->removeElement($stockProducts);
+    }
+
+    /**
+     * Get stockProducts
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getStockProducts()
+    {
+        return $this->stockProducts;
     }
 }

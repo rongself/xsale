@@ -9,7 +9,8 @@ require.config({
         validationConfig:'module/knockout.validation.config',
         typeahead:'lib/typeahead.min',
         underscore:'lib/underscore.min',
-        loadBar:'lib/jquery.loadingbar.min'
+        loadBar:'lib/jquery.loadingbar.min',
+        knockoutMapping:'lib/knockout.mapping'
     }
 });
 require(["jquery"], function($) {

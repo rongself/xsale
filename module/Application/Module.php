@@ -42,7 +42,9 @@ class Module
     {
         return array(
             'factories' => array(
-
+                'Application\Service\StockRecordService' => function(ServiceManager $sm) {
+                        return new Application\Service\StockRecordService($sm);
+                },
             ),
         );
     }

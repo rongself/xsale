@@ -14,10 +14,27 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 
 abstract class AbstractEntity implements JsonSerializable {
 
+    public function __construct(array $data = null)
+    {
+        if($data!=null){
+            $ref = new \ReflectionClass($this);
+            $methods = $ref->getMethods();
+            foreach ($data as $key=>$value)
+            {
+                $methodsName = 'set'.ucfirst($key);
+                if($ref->hasMethod($methodsName))
+                {
+                    $this->$methodsName($value);
+                }
+            }
+        }
+    }
+
     public function jsonSerialize(){
 
         $array = array();
-        $methods =  get_class_methods(get_class($this));
+        $ref = new \ReflectionClass($this);
+        $methods = $ref->getMethods();
         foreach($methods as $methodsName){
             $prefix = substr($methodsName,0,3);
             if($prefix == 'get'){
@@ -28,6 +45,7 @@ abstract class AbstractEntity implements JsonSerializable {
         return $array;
 
     }
+
 
 
 } 
