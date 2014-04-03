@@ -1,52 +1,40 @@
 <?php
-
 namespace Application\Entity;
+use Doctrine\ORM\Mapping AS ORM;
 
-use Doctrine\ORM\Mapping as ORM;
-/**
- * XsProductImages
- *
- * @ORM\Table(name="xs_product_images")
+/** 
  * @ORM\Entity
+ * @ORM\Table(name="xs_product_images")
  */
-class XsProductImages extends \Application\Entity\AbstractEntity
+class ProductImage
 {
-    /**
-     * @var integer
-     *
-     * @ORM\Column(type="integer", name="id")
+    /** 
      * @ORM\Id
+     * @ORM\Column(type="integer", name="id")
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
-    /**
-     * @var integer
-     * @ORM\ManyToOne(targetEntity="Application\Entity\XsProducts", inversedBy="productImages")
-     * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
-     */
-    private $productId;
 
-    /**
-     * @var string
-     *
+    /** 
      * @ORM\Column(type="text", nullable=false, name="url")
      */
     private $url;
 
-    /**
-     * @var boolean
-     *
+    /** 
      * @ORM\Column(type="boolean", nullable=false, name="type")
      */
     private $type;
 
-    /**
-     * @var \DateTime
-     *
+    /** 
      * @ORM\Column(type="datetime", nullable=false, name="create_time")
      */
     private $createTime;
 
+    /** 
+     * @ORM\ManyToOne(targetEntity="Application\Entity\Product", inversedBy="productImages", cascade={"persist"})
+     * @ORM\JoinColumn(name="product_id", referencedColumnName="id", nullable=false)
+     */
+    private $product;
 
 
     /**
@@ -60,33 +48,10 @@ class XsProductImages extends \Application\Entity\AbstractEntity
     }
 
     /**
-     * Set productId
-     *
-     * @param integer $productId
-     * @return XsProductImages
-     */
-    public function setProductId($productId)
-    {
-        $this->productId = $productId;
-
-        return $this;
-    }
-
-    /**
-     * Get productId
-     *
-     * @return integer 
-     */
-    public function getProductId()
-    {
-        return $this->productId;
-    }
-
-    /**
      * Set url
      *
      * @param string $url
-     * @return XsProductImages
+     * @return ProductImage
      */
     public function setUrl($url)
     {
@@ -109,7 +74,7 @@ class XsProductImages extends \Application\Entity\AbstractEntity
      * Set type
      *
      * @param boolean $type
-     * @return XsProductImages
+     * @return ProductImage
      */
     public function setType($type)
     {
@@ -132,7 +97,7 @@ class XsProductImages extends \Application\Entity\AbstractEntity
      * Set createTime
      *
      * @param \DateTime $createTime
-     * @return XsProductImages
+     * @return ProductImage
      */
     public function setCreateTime($createTime)
     {
@@ -149,5 +114,28 @@ class XsProductImages extends \Application\Entity\AbstractEntity
     public function getCreateTime()
     {
         return $this->createTime;
+    }
+
+    /**
+     * Set product
+     *
+     * @param \Application\Entity\Product $product
+     * @return ProductImage
+     */
+    public function setProduct(\Application\Entity\Product $product)
+    {
+        $this->product = $product;
+
+        return $this;
+    }
+
+    /**
+     * Get product
+     *
+     * @return \Application\Entity\Product 
+     */
+    public function getProduct()
+    {
+        return $this->product;
     }
 }

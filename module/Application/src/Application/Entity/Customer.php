@@ -1,69 +1,54 @@
 <?php
-
 namespace Application\Entity;
+use Doctrine\ORM\Mapping AS ORM;
 
-use Doctrine\ORM\Mapping as ORM;
-
-/**
- * XsCustomers
- *
- * @ORM\Table(name="xs_customers")
+/** 
  * @ORM\Entity
+ * @ORM\Table(name="xs_customers")
  */
-class XsCustomers extends \Application\Entity\AbstractEntity
+class Customer
 {
-    /**
-     * @var integer
-     *
-     * @ORM\Column(type="integer", name="id")
+    /** 
      * @ORM\Id
+     * @ORM\Column(type="integer", name="id")
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
-    /**
-     * @var string
-     *
+    /** 
      * @ORM\Column(type="string", length=20, nullable=true, name="name")
      */
     private $name;
 
-    /**
-     * @var string
-     *
+    /** 
      * @ORM\Column(type="string", length=20, nullable=true, name="phone_number")
      */
     private $phoneNumber;
 
-    /**
-     * @var string
-     *
+    /** 
      * @ORM\Column(type="string", length=32, nullable=true, name="wechat")
      */
     private $wechat;
 
-    /**
-     * @var string
-     *
+    /** 
      * @ORM\Column(type="string", length=32, nullable=true, name="qq")
      */
     private $qq;
 
-    /**
-     * @var \DateTime
-     *
+    /** 
      * @ORM\Column(type="datetime", nullable=true, name="create_time")
      */
     private $createTime;
 
-    /**
-     * @var string
-     *
+    /** 
      * @ORM\Column(type="text", nullable=true, name="remark")
      */
     private $remark;
 
-
+    /** 
+     * @ORM\OneToOne(targetEntity="Application\Entity\Order", mappedBy="customer", cascade={"persist"})
+     */
+    private $order;
 
     /**
      * Get id
@@ -79,7 +64,7 @@ class XsCustomers extends \Application\Entity\AbstractEntity
      * Set name
      *
      * @param string $name
-     * @return XsCustomers
+     * @return Customer
      */
     public function setName($name)
     {
@@ -102,7 +87,7 @@ class XsCustomers extends \Application\Entity\AbstractEntity
      * Set phoneNumber
      *
      * @param string $phoneNumber
-     * @return XsCustomers
+     * @return Customer
      */
     public function setPhoneNumber($phoneNumber)
     {
@@ -125,7 +110,7 @@ class XsCustomers extends \Application\Entity\AbstractEntity
      * Set wechat
      *
      * @param string $wechat
-     * @return XsCustomers
+     * @return Customer
      */
     public function setWechat($wechat)
     {
@@ -148,7 +133,7 @@ class XsCustomers extends \Application\Entity\AbstractEntity
      * Set qq
      *
      * @param string $qq
-     * @return XsCustomers
+     * @return Customer
      */
     public function setQq($qq)
     {
@@ -171,7 +156,7 @@ class XsCustomers extends \Application\Entity\AbstractEntity
      * Set createTime
      *
      * @param \DateTime $createTime
-     * @return XsCustomers
+     * @return Customer
      */
     public function setCreateTime($createTime)
     {
@@ -194,7 +179,7 @@ class XsCustomers extends \Application\Entity\AbstractEntity
      * Set remark
      *
      * @param string $remark
-     * @return XsCustomers
+     * @return Customer
      */
     public function setRemark($remark)
     {
@@ -211,5 +196,28 @@ class XsCustomers extends \Application\Entity\AbstractEntity
     public function getRemark()
     {
         return $this->remark;
+    }
+
+    /**
+     * Set order
+     *
+     * @param \Application\Entity\Order $order
+     * @return Customer
+     */
+    public function setOrder(\Application\Entity\Order $order = null)
+    {
+        $this->order = $order;
+
+        return $this;
+    }
+
+    /**
+     * Get order
+     *
+     * @return \Application\Entity\Order 
+     */
+    public function getOrder()
+    {
+        return $this->order;
     }
 }

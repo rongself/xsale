@@ -13,7 +13,7 @@ define(['knockout','viewmodel/stockProduct','lib/json2','knockoutMapping'], func
             return sum;
         });
         self.addItem = function(stockProductInstance) {
-            var json = ko.toJSON(stockProductInstance);
+            var json = koMapping.toJSON(stockProductInstance);
             var product = koMapping.fromJSON(json);
 
             var exists = ko.utils.arrayFirst(self.stockProducts(),function(item){
@@ -34,6 +34,29 @@ define(['knockout','viewmodel/stockProduct','lib/json2','knockoutMapping'], func
             if(self.stockProducts().length>0){
                 self.stockProducts.removeAll();
             }
+        }
+        self.submit = function () {
+            if(self!=null&&typeof self.stockProducts() == 'object'&&self.stockProducts().length>0){
+                var data = koMapping.toJSON(self);
+                $.post('/stock-record/create-record',{stockRecord:data},function(result){
+                    if(result.success){
+                        self.clear();
+                        alert('进货单已成功提交');
+                    }
+                },'json');
+            }else{
+                alert('进货单中还未加入任何产品');
+                return false;
+            }
+            return true;
+        }
+        self.submitAndContinue = function () {
+            if(self.submit()){
+                location.href = '/StockRecord/index';
+            }
+        }
+        self.reset = function () {
+            self.clear();
         }
     }
 });

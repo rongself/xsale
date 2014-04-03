@@ -1,57 +1,39 @@
 <?php
-
 namespace Application\Entity;
+use Doctrine\ORM\Mapping AS ORM;
 
-use Doctrine\ORM\Mapping as ORM;
-
-/**
- * XsStockRecords
- *
- * @ORM\Table(name="xs_stock_records")
+/** 
  * @ORM\Entity
+ * @ORM\Table(name="xs_stock_records")
  */
-class XsStockRecords extends \Application\Entity\AbstractEntity
+class StockRecord
 {
-    /**
-     * @var integer
-     *
-     * @ORM\Column(type="integer", name="id")
+    /** 
      * @ORM\Id
+     * @ORM\Column(type="integer", name="id")
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
-    /**
-     * @var float
-     *
+    /** 
      * @ORM\Column(type="float", nullable=true, name="total_price", precision=10, scale=0)
      */
     private $totalPrice;
 
-    /**
-     * @var \DateTime
-     *
+    /** 
      * @ORM\Column(type="datetime", nullable=true, name="stock_date")
      */
     private $stockDate;
 
-    /**
-     * @var \DateTime
-     *
+    /** 
      * @ORM\Column(type="datetime", nullable=false, name="create_time")
      */
     private $createTime;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="Application\Entity\XsProducts")
-     * @ORM\JoinTable(name="xs_stock_items",
-     *      joinColumns={@ORM\JoinColumn(name="stock_record_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id")}
-     *      )
+    /** 
+     * @ORM\OneToMany(targetEntity="Application\Entity\StockItem", mappedBy="stockRecord", cascade={"persist"})
      */
-    private $stockProducts;
-
-
+    private $stockItems;
 
     /**
      * Get id
@@ -67,7 +49,7 @@ class XsStockRecords extends \Application\Entity\AbstractEntity
      * Set totalPrice
      *
      * @param float $totalPrice
-     * @return XsStockRecords
+     * @return StockRecord
      */
     public function setTotalPrice($totalPrice)
     {
@@ -90,7 +72,7 @@ class XsStockRecords extends \Application\Entity\AbstractEntity
      * Set stockDate
      *
      * @param \DateTime $stockDate
-     * @return XsStockRecords
+     * @return StockRecord
      */
     public function setStockDate($stockDate)
     {
@@ -113,7 +95,7 @@ class XsStockRecords extends \Application\Entity\AbstractEntity
      * Set createTime
      *
      * @param \DateTime $createTime
-     * @return XsStockRecords
+     * @return StockRecord
      */
     public function setCreateTime($createTime)
     {
@@ -136,39 +118,39 @@ class XsStockRecords extends \Application\Entity\AbstractEntity
      */
     public function __construct()
     {
-        $this->stockProducts = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->stockItems = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
-     * Add stockProducts
+     * Add stockItems
      *
-     * @param \Application\Entity\XsProducts $stockProducts
-     * @return XsStockRecords
+     * @param \Application\Entity\StockItem $stockItems
+     * @return StockRecord
      */
-    public function addStockProduct(\Application\Entity\XsProducts $stockProducts)
+    public function addStockItem(\Application\Entity\StockItem $stockItems)
     {
-        $this->stockProducts[] = $stockProducts;
+        $this->stockItems[] = $stockItems;
 
         return $this;
     }
 
     /**
-     * Remove stockProducts
+     * Remove stockItems
      *
-     * @param \Application\Entity\XsProducts $stockProducts
+     * @param \Application\Entity\StockItem $stockItems
      */
-    public function removeStockProduct(\Application\Entity\XsProducts $stockProducts)
+    public function removeStockItem(\Application\Entity\StockItem $stockItems)
     {
-        $this->stockProducts->removeElement($stockProducts);
+        $this->stockItems->removeElement($stockItems);
     }
 
     /**
-     * Get stockProducts
+     * Get stockItems
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getStockProducts()
+    public function getStockItems()
     {
-        return $this->stockProducts;
+        return $this->stockItems;
     }
 }

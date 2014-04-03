@@ -1,48 +1,34 @@
 <?php
-
 namespace Application\Entity;
+use Doctrine\ORM\Mapping AS ORM;
 
-use Doctrine\ORM\Mapping as ORM;
-
-/**
- * XsAdmins
- *
- * @ORM\Table(name="xs_admins")
+/** 
  * @ORM\Entity
+ * @ORM\Table(name="xs_admins")
  */
-class XsAdmins extends \Application\Entity\AbstractEntity
+class Admin
 {
-    /**
-     * @var integer
-     *
-     * @ORM\Column(type="integer", name="id")
+    /** 
      * @ORM\Id
+     * @ORM\Column(type="integer", name="id")
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
-    /**
-     * @var string
-     *
+    /** 
      * @ORM\Column(type="string", length=32, nullable=false, name="username")
      */
     private $username;
 
-    /**
-     * @var string
-     *
+    /** 
      * @ORM\Column(type="string", length=32, nullable=false, name="password")
      */
     private $password;
 
-    /**
-     * @var \DateTime
-     *
+    /** 
      * @ORM\Column(type="datetime", nullable=true, name="create_time")
      */
     private $createTime;
-
-
 
     /**
      * Get id
@@ -58,7 +44,7 @@ class XsAdmins extends \Application\Entity\AbstractEntity
      * Set username
      *
      * @param string $username
-     * @return XsAdmins
+     * @return Admin
      */
     public function setUsername($username)
     {
@@ -81,7 +67,7 @@ class XsAdmins extends \Application\Entity\AbstractEntity
      * Set password
      *
      * @param string $password
-     * @return XsAdmins
+     * @return Admin
      */
     public function setPassword($password)
     {
@@ -104,7 +90,7 @@ class XsAdmins extends \Application\Entity\AbstractEntity
      * Set createTime
      *
      * @param \DateTime $createTime
-     * @return XsAdmins
+     * @return Admin
      */
     public function setCreateTime($createTime)
     {

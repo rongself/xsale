@@ -1,41 +1,29 @@
 <?php
-
 namespace Application\Entity;
+use Doctrine\ORM\Mapping AS ORM;
 
-use Doctrine\ORM\Mapping as ORM;
-
-/**
- * XsSettings
- *
- * @ORM\Table(name="xs_settings")
+/** 
  * @ORM\Entity
+ * @ORM\Table(name="xs_settings")
  */
-class XsSettings extends \Application\Entity\AbstractEntity
+class Setting
 {
-    /**
-     * @var integer
-     *
-     * @ORM\Column(type="integer", name="id")
+    /** 
      * @ORM\Id
+     * @ORM\Column(type="integer", name="id")
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
-    /**
-     * @var string
-     *
+    /** 
      * @ORM\Column(type="string", length=128, nullable=false, name="key")
      */
     private $key;
 
-    /**
-     * @var string
-     *
+    /** 
      * @ORM\Column(type="string", length=128, nullable=true, name="value")
      */
     private $value;
-
-
 
     /**
      * Get id
@@ -51,7 +39,7 @@ class XsSettings extends \Application\Entity\AbstractEntity
      * Set key
      *
      * @param string $key
-     * @return XsSettings
+     * @return Setting
      */
     public function setKey($key)
     {
@@ -74,7 +62,7 @@ class XsSettings extends \Application\Entity\AbstractEntity
      * Set value
      *
      * @param string $value
-     * @return XsSettings
+     * @return Setting
      */
     public function setValue($value)
     {

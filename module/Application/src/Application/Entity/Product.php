@@ -1,98 +1,87 @@
 <?php
-
 namespace Application\Entity;
+use Doctrine\ORM\Mapping AS ORM;
 
-use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
-
-/**
- * XsProducts
- *
- * @ORM\Table(name="xs_products", uniqueConstraints={@ORM\UniqueConstraint(name="sku_unique", columns={"sku"})})
+/** 
  * @ORM\Entity
+ * @ORM\Table(name="xs_products", uniqueConstraints={@ORM\UniqueConstraint(name="sku_unique", columns={"sku"})})
  */
-class XsProducts extends \Application\Entity\AbstractEntity
+class Product
 {
-    /**
-     * @var integer
-     *
-     * @ORM\Column(type="integer", name="id")
+    /** 
      * @ORM\Id
+     * @ORM\Column(type="integer", name="id")
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Application\Entity\XsProductImages", mappedBy="productId",cascade={"persist"})
-     **/
-    private $productImages;
-
-    /**
-     * @var string
-     *
+    /** 
      * @ORM\Column(type="string", length=30, nullable=true, name="sku")
      */
     private $sku;
 
-    /**
-     * @var string
-     *
+    /** 
      * @ORM\Column(type="string", length=30, nullable=true, name="name")
      */
     private $name;
 
-    /**
-     * @var float
-     *
+    /** 
      * @ORM\Column(type="float", nullable=false, name="cost", precision=10, scale=0)
      */
     private $cost;
 
-    /**
-     * @var float
-     *
+    /** 
      * @ORM\Column(type="float", nullable=true, name="price", precision=10, scale=0)
      */
     private $price;
 
-    /**
-     * @var string
-     *
+    /** 
      * @ORM\Column(type="text", nullable=true, name="description")
      */
     private $description;
 
-    /**
-     * @var string
-     *
+    /** 
      * @ORM\Column(type="text", nullable=true, name="picture")
      */
     private $picture;
 
-    /**
-     * @var integer
-     *
+    /** 
      * @ORM\Column(type="integer", nullable=false, name="stock")
      */
     private $stock;
 
-    /**
-     * @var string
-     *
+    /** 
      * @ORM\Column(type="text", nullable=true, name="remark")
      */
     private $remark;
 
-    /**
-     * @var \DateTime
-     *
+    /** 
      * @ORM\Column(type="datetime", nullable=false, name="create_time")
      */
     private $createTime;
 
-    public function __construct($data = null) {
-        parent::__construct($data);
-        $this->productImages = new ArrayCollection();
+    /** 
+     * @ORM\OneToMany(targetEntity="Application\Entity\OrderCart", mappedBy="product", cascade={"persist"})
+     */
+    private $orderCart;
+
+    /** 
+     * @ORM\OneToMany(targetEntity="Application\Entity\ProductImage", mappedBy="product", cascade={"persist"})
+     */
+    private $productImages;
+
+    /** 
+     * @ORM\OneToMany(targetEntity="Application\Entity\StockItem", mappedBy="product", cascade={"persist"})
+     */
+    private $stockItems;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->productImages = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->stockItems = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -109,7 +98,7 @@ class XsProducts extends \Application\Entity\AbstractEntity
      * Set sku
      *
      * @param string $sku
-     * @return XsProducts
+     * @return Product
      */
     public function setSku($sku)
     {
@@ -132,7 +121,7 @@ class XsProducts extends \Application\Entity\AbstractEntity
      * Set name
      *
      * @param string $name
-     * @return XsProducts
+     * @return Product
      */
     public function setName($name)
     {
@@ -155,7 +144,7 @@ class XsProducts extends \Application\Entity\AbstractEntity
      * Set cost
      *
      * @param float $cost
-     * @return XsProducts
+     * @return Product
      */
     public function setCost($cost)
     {
@@ -178,7 +167,7 @@ class XsProducts extends \Application\Entity\AbstractEntity
      * Set price
      *
      * @param float $price
-     * @return XsProducts
+     * @return Product
      */
     public function setPrice($price)
     {
@@ -201,7 +190,7 @@ class XsProducts extends \Application\Entity\AbstractEntity
      * Set description
      *
      * @param string $description
-     * @return XsProducts
+     * @return Product
      */
     public function setDescription($description)
     {
@@ -224,7 +213,7 @@ class XsProducts extends \Application\Entity\AbstractEntity
      * Set picture
      *
      * @param string $picture
-     * @return XsProducts
+     * @return Product
      */
     public function setPicture($picture)
     {
@@ -247,7 +236,7 @@ class XsProducts extends \Application\Entity\AbstractEntity
      * Set stock
      *
      * @param integer $stock
-     * @return XsProducts
+     * @return Product
      */
     public function setStock($stock)
     {
@@ -270,7 +259,7 @@ class XsProducts extends \Application\Entity\AbstractEntity
      * Set remark
      *
      * @param string $remark
-     * @return XsProducts
+     * @return Product
      */
     public function setRemark($remark)
     {
@@ -293,7 +282,7 @@ class XsProducts extends \Application\Entity\AbstractEntity
      * Set createTime
      *
      * @param \DateTime $createTime
-     * @return XsProducts
+     * @return Product
      */
     public function setCreateTime($createTime)
     {
@@ -315,10 +304,10 @@ class XsProducts extends \Application\Entity\AbstractEntity
     /**
      * Add productImages
      *
-     * @param \Application\Entity\XsProductImages $productImages
-     * @return XsProducts
+     * @param \Application\Entity\ProductImage $productImages
+     * @return Product
      */
-    public function addProductImage(\Application\Entity\XsProductImages $productImages)
+    public function addProductImage(\Application\Entity\ProductImage $productImages)
     {
         $this->productImages[] = $productImages;
 
@@ -328,9 +317,9 @@ class XsProducts extends \Application\Entity\AbstractEntity
     /**
      * Remove productImages
      *
-     * @param \Application\Entity\XsProductImages $productImages
+     * @param \Application\Entity\ProductImage $productImages
      */
-    public function removeProductImage(\Application\Entity\XsProductImages $productImages)
+    public function removeProductImage(\Application\Entity\ProductImage $productImages)
     {
         $this->productImages->removeElement($productImages);
     }
@@ -343,5 +332,71 @@ class XsProducts extends \Application\Entity\AbstractEntity
     public function getProductImages()
     {
         return $this->productImages;
+    }
+
+    /**
+     * Add stockItems
+     *
+     * @param \Application\Entity\StockItem $stockItems
+     * @return Product
+     */
+    public function addStockItem(\Application\Entity\StockItem $stockItems)
+    {
+        $this->stockItems[] = $stockItems;
+
+        return $this;
+    }
+
+    /**
+     * Remove stockItems
+     *
+     * @param \Application\Entity\StockItem $stockItems
+     */
+    public function removeStockItem(\Application\Entity\StockItem $stockItems)
+    {
+        $this->stockItems->removeElement($stockItems);
+    }
+
+    /**
+     * Get stockItems
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getStockItems()
+    {
+        return $this->stockItems;
+    }
+
+    /**
+     * Add orderCart
+     *
+     * @param \Application\Entity\OrderCart $orderCart
+     * @return Product
+     */
+    public function addOrderCart(\Application\Entity\OrderCart $orderCart)
+    {
+        $this->orderCart[] = $orderCart;
+
+        return $this;
+    }
+
+    /**
+     * Remove orderCart
+     *
+     * @param \Application\Entity\OrderCart $orderCart
+     */
+    public function removeOrderCart(\Application\Entity\OrderCart $orderCart)
+    {
+        $this->orderCart->removeElement($orderCart);
+    }
+
+    /**
+     * Get orderCart
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getOrderCart()
+    {
+        return $this->orderCart;
     }
 }

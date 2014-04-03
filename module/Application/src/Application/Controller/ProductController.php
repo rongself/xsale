@@ -1,7 +1,7 @@
 <?php
 namespace Application\Controller;
 
-use Application\Entity\XsProducts;
+use Application\Entity\Product;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
@@ -29,7 +29,7 @@ class ProductController extends AbstractActionController
          * @var \Doctrine\ORM\EntityManager $objectManager
          */
         $objectManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
-        $products = $objectManager->getRepository('\Application\Entity\XsProducts')->findAll();
+        $products = $objectManager->getRepository('\Application\Entity\Product')->findAll();
         $returnData = array();
         //@todo All product return the same images
         foreach ($products as $product) {

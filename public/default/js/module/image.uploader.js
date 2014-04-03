@@ -5,7 +5,7 @@ require(['knockout','lib/jquery.fileupload'],function(ko){
     //for image upload
     // Change this to the location of your server-side upload handler:
     var uploadViewModel = {
-        showProgress :ko.observable(true)
+        showProgress :ko.observable(false)
     }
     ko.applyBindings(uploadViewModel);
     var url ='/FileUploader/image-uploader';

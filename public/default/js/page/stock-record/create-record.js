@@ -38,7 +38,7 @@ require(['knockout',
                 var product = _.find(products, function (item) {
                     return item.sku == selectedSKU;
                 });
-                return '<img class="pull-left" style="margin-top: 4px;margin-right: 10px;" src="' + PRODUCT_IMAGE_PATH + 'thumbnail/'+product.picture + '" alt="" width="40px" height="40px">' +
+                return '<img class="pull-left" style="margin-top: 4px;margin-right: 10px;" src="' + PRODUCT_IMAGE_PATH + 'thumbnail/'+(product.picture?product.picture:'default.jpg') + '" alt="" width="40px" height="40px">' +
                     '<div class="pull-left">' +
                         '<div>' + product.sku + '</div>' +
                         '<div style="color:#cccccc">' + product.name + '</div>' +
@@ -52,9 +52,9 @@ require(['knockout',
                 stockProduct.name(product.name);
                 stockProduct.cost(product.cost);
                 stockProduct.pictures.removeAll();
-                $(product.productImages).each(function(){
-                    stockProduct.pictures.push(this);
-                });
+//                $(product.productImages).each(function(){
+//                    stockProduct.pictures.push(this);
+//                });
                 stockProduct.price(product.price);
                 stockProduct.description(product.description);
                 $('#quantity').focus();
@@ -63,23 +63,4 @@ require(['knockout',
         });
 
         //form submit
-        recordSubmit = function () {
-            if(stockRecord!=null&&typeof stockRecord.stockProducts() == 'object'&&stockRecord.stockProducts().length>0){
-                var data = ko.toJSON(stockRecord);
-                $.post('/stock-record/create-record',{stockRecord:data},function(result){
-                    if(result.success){
-                        stockRecord.clear();
-                        alert('进货单已成功提交');
-                    }
-                },'json');
-            }else{
-                alert('进货单中还未加入任何产品');
-            }
-        }
-        recordSubmitAndContinue = function () {
-            alert();
-        }
-        recordReset = function () {
-            stockRecord.clear();
-        }
     });
