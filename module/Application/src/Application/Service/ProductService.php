@@ -9,15 +9,24 @@
 namespace Application\Service;
 
 
-class ProductService
+class ProductService extends  AbstractService
 {
-    public function __construct()
+    public function save($data)
     {
 
     }
 
-    public function save($data)
-    {
+    public function SearchProductsBySku($query){
+        $products = $this->objectManager->getRepository("\Application\Entity\Product")->createQueryBuilder('o')
+            ->where('o.sku LIKE :query')
+            ->setParameter('query', $query.'%')
+            ->setMaxResults(5)
+            ->getQuery()
+            ->getResult();
+        return $products;
+    }
 
+    public function getAllProducts(){
+        $products = $this->objectManager->getRepository("\Application\Entity\Product")->findAll();
     }
 } 

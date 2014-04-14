@@ -4,45 +4,24 @@
 require(['knockout',
       'viewmodel/saleRecord',
       'viewmodel/saleProduct',
+      'module/sku.autocomplete',
       'typeahead',
       'underscore',
       'module/image.uploader']
-    ,function(ko,saleRecordViewModel,saleProductViewModel){
-        saleRecord = new saleRecordViewModel();
-        saleProduct = new saleProductViewModel(saleRecord.saleProducts());
-        //ko.applyBindings(saleRecord);
+    ,function(ko,SaleRecordViewModel,SaleProductViewModel,SkuAutoComplete){
+        saleRecord = new SaleRecordViewModel();
+        saleProduct = new SaleProductViewModel();
 
-        //for sku autocomplete
-        var products = [];
-        $('#SKUInput').typeahead({
-            source: function (query, process) {
-                products = [
-                    {sku: '#4322', name: 'one asda one asdaone asda', cost: '233', quantity: '2', picture: '/mac/img/user.jpg', price: '244', description: 'this is a product'},
-                    {sku: '#4321', name: 'one asda one asdaone asda', cost: '233', quantity: '2', picture: '/mac/img/user.jpg', price: '244', description: 'this is a product'}
-                ];
-                var results = _.map(products, function (product) {
-                    return product.sku;
-                });
-                process(results);
-            },
-            highlighter: function (selectedSKU) {
-                var product = _.find(products, function (item) {
-                    return item.sku = selectedSKU;
-                });
-                return '<img class="pull-left" style="margin-top: 4px;margin-right: 10px;" src="' + product.picture + '" alt="" width="40px" height="40px">' +
-                    '<div class="pull-right">' +
-                    '<div>' + product.sku + '</div>' +
-                    '<div style="color:#cccccc">' + product.name + '</div>' +
-                    '</div>' +
-                    '<div class="clearfix"></div>';
-            },
-            updater: function (selectedSKU) {
-                var product = _.find(products, function (item) {
-                    return item.sku = selectedSKU;
-                });
-                saleProduct.price(product.price);
-                $('#quantity').focus();
-                return selectedSKU;
-            }
+        saleProduct.sku.extend({
+            validation: { validator: uniqueInObservableArray, message: '该产品已存在于进货单中', params: saleRecord.saleProducts()}
         });
-});
+
+        saleProduct.sku.extend({
+            validation: { validator: existsInArray, message: '该产品不存在于库存中', params: products}
+        });
+        //ko.applyBindings(saleRecord);
+        var skuAutoComplete = new SkuAutoComplete(function(selectedSKU,products){
+            return selectedSKU;
+        });
+
+    });

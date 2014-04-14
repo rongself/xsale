@@ -2,6 +2,7 @@
 namespace Application\Controller;
 
 use Application\Entity\Product;
+use Application\Service\ProductService;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
@@ -25,13 +26,10 @@ class ProductController extends AbstractActionController
 
     public function getProductsJsonAction()
     {
-        /**
-         * @var \Doctrine\ORM\EntityManager $objectManager
-         */
-        $objectManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
-        $products = $objectManager->getRepository('\Application\Entity\Product')->findAll();
+        $query = $this->getRequest()->getQuery('query');
+        $productService = $this->getServiceLocator()->get('ProductManager');
+        $products = $productService->SearchProductsBySku($query);
         $returnData = array();
-        //@todo All product return the same images
         foreach ($products as $product) {
             $row = array();
             $row['id']   = $product->getId();

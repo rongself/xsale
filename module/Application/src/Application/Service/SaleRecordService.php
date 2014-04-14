@@ -8,26 +8,34 @@
 
 namespace Application\Service;
 
+use Application\Entity\Order;
+use Application\Entity\OrderCart;
 use Application\Entity\Product;
-use Application\Entity\ProductImage;
-use Application\Entity\StockItem;
-use Application\Entity\StockRecord;
 use Zend\Di\ServiceLocator;
 
-class StockRecordService extends AbstractService {
+class SaleRecordService {
 
-    public function __construct($sm)
+    /**
+     * @var \Doctrine\ORM\EntityManager
+     */
+    protected $objectManager;
+
+    public function __construct(ServiceLocatorInterface $sm)
     {
-        parent::__construct($sm);
+        $this->objectManager = $sm->get('Doctrine\ORM\EntityManager');
     }
     public function create($data){
         $now = new \DateTime();
-        $stockRecord = new StockRecord();
-        $stockItemTempl = new StockItem();
+        $saleRecord = new Order();
+        $orderItem = new OrderCart();
         $productTempl = new Product();
-        $stockRecord->setTotalPrice($data->totalPrice);
-        $stockRecord->setCreateTime($now);
-        foreach($data->stockProducts as $product){
+        $customer = $this->objectManager->getRepository('Application\Entity\Customer')->findOneBy(array('phoneNumber'=>$data->phoneNumber));
+        if(isset($customer)){
+            $saleRecord->setCustomer($customer);
+        }
+        $saleRecord->setTotalPrice($data->totalPrice);
+        $saleRecord->setCreateTime($now);
+        foreach($data->saleProducts as $product){
             /**@var $productEntity \Application\Entity\Product*/
             $productEntity = $this->objectManager->getRepository('Application\Entity\Product')->findOneBy(array('sku'=>$product->sku));
             if($productEntity==null){
@@ -48,13 +56,13 @@ class StockRecordService extends AbstractService {
                 $productEntity->setPrice($product->price);
                 $productEntity->setDescription($product->description);
             }
-            $stockItem = clone $stockItemTempl;
+            $stockItem = clone $orderItem;
             $stockItem->setProduct($productEntity);
             $stockItem->setPrice($product->cost);
             $stockItem->setQuantity($product->stock);
             $stockItem->setCreateTime($now);
-            $stockItem->setStockRecord($stockRecord);
-            $stockRecord->addStockItem($stockItem);
+            $stockItem->setStockRecord($saleRecord);
+            $saleRecord->addStockItem($stockItem);
             //whether sku exist,always add pictures
             $imageTemp = new ProductImage();
             $i = 0;
@@ -74,7 +82,7 @@ class StockRecordService extends AbstractService {
                 $i++;
             }
         }
-        $this->objectManager->persist($stockRecord);
+        $this->objectManager->persist($saleRecord);
         $this->objectManager->flush();
     }
 } 

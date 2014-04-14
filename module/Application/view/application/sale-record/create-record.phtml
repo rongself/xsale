@@ -1,13 +1,12 @@
 <div class='row'>
     <div class="col-md-12">
         <div class="pull-right">
-            <button type="submit" class="btn btn-success">结账</button>
-            <button type="reset" class="btn btn-default">重置表单</button>
+            <button type="submit" class="btn btn-success" data-bind="click:saleRecord.submit" >结账</button>
+            <button type="reset" class="btn btn-default" data-bind="click:saleRecord.reset" >重置表单</button>
         </div>
     </div>
 </div>
 <div class="row">
-
     <div class="col-md-6">
         <div class="widget wgreen">
 
@@ -42,12 +41,6 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-lg-4 control-label visible-lg">手机号</label>
-                            <div class="col-lg-8">
-                               <input type="text" class="form-control" data-bind="value:saleProduct.phoneNumber" placeholder="输入会员的手机号码,非会员留空">
-                            </div>
-                        </div>
-                        <div class="form-group">
                             <label class="col-lg-4 control-label visible-lg">备注</label>
                             <div class="col-lg-8">
                                 <textarea class="form-control" rows="3" data-bind="value:saleProduct.remark" placeholder="输入备注信息"></textarea>
@@ -65,52 +58,86 @@
             <div class="widget-foot">
                 <!-- Footer goes here -->
             </div>
-        </div>  
-
+        </div>
     </div>
     <div class="col-md-6">
-        <div class="widget">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="widget wgreen">
 
-            <div class="widget-head">
-                <div class="pull-left">此账单包括产品:</div>
-                <div class="widget-icons pull-right">
-                    <a href="#" class="wminimize"><i class="icon-chevron-up"></i></a> 
-                    <a href="#" class="wclose"><i class="icon-remove"></i></a>
-                </div>  
-                <div class="clearfix"></div>
+                    <div class="widget-head">
+                        <div class="pull-left">客户信息</div>
+                        <div class="widget-icons pull-right">
+                            <a href="#" class="wminimize"><i class="icon-chevron-up"></i></a>
+                            <a href="#" class="wclose"><i class="icon-remove"></i></a>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="widget-content">
+                        <div class="padd">
+                            <!-- Form starts.  -->
+                            <form class="form-horizontal" role="form">
+                                <div class="form-group">
+                                    <label class="col-lg-4 control-label visible-lg">手机号</label>
+                                    <div class="col-lg-8">
+                                        <input type="text" class="form-control" data-bind="value:saleRecord.phoneNumber" placeholder="输入会员的手机号码,非会员留空">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="widget-foot">
+                        <!-- Footer goes here -->
+                    </div>
+                </div>
             </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="widget">
 
-            <div class="widget-content">
-                <table class="table table-striped table-bordered table-hover">
-                    <thead>
-                        <tr>
-                            <th>款号</th>
-                            <th>售价</th>
-                            <th>数量</th>
-                            <th>操作</th>
-                        </tr>
-                    </thead>
-                    <tbody data-bind="foreach:saleRecord.saleProducts" id="recordContent">
-                        <tr>
-                            <td data-bind="text:sku"></td>
-                            <td data-bind="text:quantity"></td>
-                            <td data-bind="text:price"></td>
-                            <td>
-                                <button class="btn btn-xs btn-success"><i class="icon-ok"></i> </button>
-                                <button class="btn btn-xs btn-warning"><i class="icon-pencil"></i> </button>
-                                <button class="btn btn-xs btn-danger" data-bind="click:function(){saleRecord.removeItem(sku);}"><i class="icon-remove"></i> </button>
+                    <div class="widget-head">
+                        <div class="pull-left">此账单包括产品:</div>
+                        <div class="widget-icons pull-right">
+                            <a href="#" class="wminimize"><i class="icon-chevron-up"></i></a>
+                            <a href="#" class="wclose"><i class="icon-remove"></i></a>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
 
-                            </td>
-                        </tr>
-                        <tfoot>
+                    <div class="widget-content">
+                        <table class="table table-striped table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th>款号</th>
+                                <th>售价</th>
+                                <th>数量</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody data-bind="foreach:saleRecord.saleProducts" id="recordContent">
+                            <tr>
+                                <td data-bind="text:sku"></td>
+                                <td data-bind="text:quantity"></td>
+                                <td data-bind="text:price"></td>
+                                <td>
+                                    <button class="btn btn-xs btn-success"><i class="icon-ok"></i> </button>
+                                    <button class="btn btn-xs btn-warning"><i class="icon-pencil"></i> </button>
+                                    <button class="btn btn-xs btn-danger" data-bind="click:function(){saleRecord.removeItem(sku);}"><i class="icon-remove"></i> </button>
+
+                                </td>
+                            </tr>
+                            <tfoot>
                             <tr>
                                 <td colspan="4"><div class="pull-right"><h3 data-bind="text:'总计:'+saleRecord.totalPrice()+'￥'"></h3></div></td>
                             </tr>
-                        </tfoot>
-                    </tbody>
-                </table>
-            </div>
+                            </tfoot>
+                            </tbody>
+                        </table>
+                    </div>
 
+                </div>
+            </div>
         </div>
     </div>
 </div>

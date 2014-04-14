@@ -24,9 +24,6 @@ class StockRecordController extends AbstractActionController
             $jsonStr = $this->getRequest()->getPost('stockRecord');
             $data = json_decode($jsonStr);
             $stockRecordService->create($data);
-            //set stock record
-            //$stockRecordEntity = new XsStockRecords();
-
             return new jsonModel(array('success'=>true,'errors'=>null));
         }
     }

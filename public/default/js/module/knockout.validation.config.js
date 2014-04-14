@@ -1,4 +1,4 @@
-define(['knockout','validation'], function(ko) {
+define(['knockout','validation','underscore'], function(ko) {
     ko.validation.rules.pattern.message = 'Invalid.';
     ko.validation.configure({
         registerExtenders: true,
@@ -13,8 +13,14 @@ define(['knockout','validation'], function(ko) {
             console.log(item.sku()+'==='+val);
             return item.sku() === val;
         })
-        console.log(exists === null);
         return exists === null;
+    };
+
+    existsInArray = function(val,array) {
+        var exists = _.find(array, function(item) {
+            return item.sku === val;
+        })
+        return exists !== null;
     };
     ko.validation.registerExtenders();
 });

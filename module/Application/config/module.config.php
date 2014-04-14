@@ -67,6 +67,11 @@ return array(
         'aliases' => array(
             'translator' => 'MvcTranslator',
         ),
+        'factories'=>array(
+            'ProductManager'=>function($sm){
+                return new Application\Service\ProductService($sm);
+             },
+        ),
     ),
     'translator' => array(
         'locale' => 'zh_CN',
@@ -106,7 +111,8 @@ return array(
             'application/index/index' => __DIR__ . '/../view/application/index/index.phtml',
             'error/404'               => __DIR__ . '/../view/error/404.phtml',
             'error/index'             => __DIR__ . '/../view/error/index.phtml',
-            'imageuploader'           =>__DIR__.'/../view/shared/imageuploader.phtml'
+            'imageuploader'           =>__DIR__.'/../view/shared/imageuploader.phtml',
+            'sku-autocomplete'       =>__DIR__.'/../view/shared/sku-autocomplete.phtml'
         ),
         'template_path_stack' => array(
             __DIR__ . '/../view',

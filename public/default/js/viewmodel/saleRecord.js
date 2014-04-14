@@ -1,10 +1,13 @@
 /**
  * Created by Ron on 14-3-1.
  */
-define(['knockout','viewmodel/saleProduct'],function(ko,saleProductViewModel){
+define(['knockout','viewmodel/saleProduct','lib/json2','knockoutMapping','validation','validationConfig'],function(ko,saleProductViewModel,JSON,koMapping){
     return function() {
         var self = this;
         self.saleProducts = ko.observableArray(null);
+        self.phoneNumber = ko.observable().extend({
+            number:{message:'手机号格式不正确'}
+        });
         self.totalPrice = ko.computed(function() {
             var sum = 0;
             for (var item in self.saleProducts()) {
@@ -16,7 +19,6 @@ define(['knockout','viewmodel/saleProduct'],function(ko,saleProductViewModel){
             var product = new saleProductViewModel();
             product.sku(saleProductInstance.sku());
             product.quantity(saleProductInstance.quantity());
-            product.phoneNumber(saleProductInstance.phoneNumber());
             product.price(saleProductInstance.price());
             product.remark(saleProductInstance.remark());
             var exists = ko.utils.arrayFirst(self.saleProducts(),function(item){
@@ -40,19 +42,26 @@ define(['knockout','viewmodel/saleProduct'],function(ko,saleProductViewModel){
         }
 
         self.submit = function () {
-            if(self!=null&&typeof self.stockProducts() == 'object'&&self.stockProducts().length>0){
-                var data = koMapping.toJSON(self);
-                $.post('/stock-record/create-record',{stockRecord:data},function(result){
-                    if(result.success){
-                        self.clear();
-                        alert('进货单已成功提交');
-                    }
-                },'json');
+            var model = ko.validatedObservable(this);
+            if((model.isValid())){
+                if(self!=null&&typeof self.saleProducts() == 'object'&&self.saleProducts().length>0){
+                    var data = koMapping.toJSON(self);
+                    $.post('/sale-record/create-record',{saleRecord:data},function(result){
+                        if(result.success){
+                            self.clear();
+                            alert('进货单已成功提交');
+                        }
+                    },'json');
+                }else{
+                    alert('进货单中还未加入任何产品');
+                    return false;
+                }
+                model.errors.showAllMessages(false);
+                return true;
             }else{
-                alert('进货单中还未加入任何产品');
+                model.errors.showAllMessages();
                 return false;
             }
-            return true;
         }
         self.submitAndContinue = function () {
             if(self.submit()){

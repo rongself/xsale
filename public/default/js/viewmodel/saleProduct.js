@@ -12,10 +12,8 @@ define(['knockout','validation','validationConfig'], function(ko) {
             required: { message: '数量不能为空' },
             number:{message:'数量必须位数字'}
         });
-        self.phoneNumber = ko.observable().extend({
-            number:{message:'手机号格式不正确'}
-        });
         self.price = ko.observable().extend({
+            required: { message: '零售价不能为空' },
             number:{message:'零售价必须为数字'}
         });
         self.remark = ko.observable();
@@ -23,7 +21,6 @@ define(['knockout','validation','validationConfig'], function(ko) {
         self.reset = function(){
             self.sku('');
             self.quantity('');
-            self.phoneNumber('');
             self.price('');
             self.remark('');
         }
