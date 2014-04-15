@@ -53,12 +53,14 @@ class Module
 
     public function getControllerConfig()
     {
-        return array( 'factories' => array(
-            'Application\Controller\Product' => function(ServiceManager $sm) {
-                return new ProductController(
-                    new ProductService($sm)
-                );
-            }
-        ));
+        return array(
+            'factories' => array(
+                'Application\Controller\Product' => function (ServiceManager $sm) {
+                    return new ProductController(
+                        $sm->getServiceLocator()->get('ProuctService')
+                    );
+                }
+            )
+        );
     }
 }

@@ -83,23 +83,6 @@ return array(
             ),
         ),
     ),
-    'di' => array(
-        'allowed_controllers' => array(
-            // this config is required, otherwise the MVC won't even attempt to ask Di for the controller!
-            'Application\Controller\Product',
-        ),
-
-        'instance' => array(
-            'preference' => array(
-                // these allow injecting correct EventManager and ServiceManager
-                // (taken from the main ServiceManager) into the controller,
-                // because Di doesn't know how to retrieve abstract types. These
-                // dependencies are inherited from Zend\Mvc\Controller\AbstractController
-                'Zend\EventManager\EventManagerInterface' => 'EventManager',
-                'Zend\ServiceManager\ServiceLocatorInterface' => 'ServiceManager',
-            ),
-        ),
-    ),
     'controllers' => array(
         'invokables' => array(
             'Application\Controller\Index' => 'Application\Controller\IndexController',

@@ -9,11 +9,13 @@
 namespace Application\Service;
 
 
+use Zend\ModuleManager\ModuleManager;
+
 class ProductService extends  AbstractService
 {
     public function save($data)
     {
-
+        new ModuleManager;
     }
 
     public function SearchProductsBySku($query)
