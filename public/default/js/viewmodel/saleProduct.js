@@ -6,7 +6,7 @@ define(['knockout','validation','validationConfig'], function(ko) {
         var self = this;
         self.sku = ko.observable().extend({
             required: { message: '产品款号不能为空' },
-            validation: { validator: uniqueInObservableArray, message: '该产品已存在于进货单中', params: saleProducts}
+            isProductExists:self
         });
         self.quantity = ko.observable().extend({
             required: { message: '数量不能为空' },

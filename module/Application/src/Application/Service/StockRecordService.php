@@ -77,4 +77,12 @@ class StockRecordService extends AbstractService {
         $this->objectManager->persist($stockRecord);
         $this->objectManager->flush();
     }
-} 
+
+    /**
+     * @return \Doctrine\ORM\EntityRepository
+     */
+    function getRepository()
+    {
+        // TODO: Implement getRepository() method.
+    }
+}

@@ -16,8 +16,9 @@ class ProductService extends  AbstractService
 
     }
 
-    public function SearchProductsBySku($query){
-        $products = $this->objectManager->getRepository("\Application\Entity\Product")->createQueryBuilder('o')
+    public function SearchProductsBySku($query)
+    {
+        $products = $this->getRepository()->createQueryBuilder('o')
             ->where('o.sku LIKE :query')
             ->setParameter('query', $query.'%')
             ->setMaxResults(5)
@@ -26,7 +27,19 @@ class ProductService extends  AbstractService
         return $products;
     }
 
-    public function getAllProducts(){
-        $products = $this->objectManager->getRepository("\Application\Entity\Product")->findAll();
+    public function getAllProducts()
+    {
+        return $this->getRepository()->findAll();
     }
-} 
+
+    public function IsProductExists($sku)
+    {
+        $result = $this->getRepository()->findOneBy(array('sku'=>$sku));
+        return $result!==null;
+    }
+
+    function getRepository()
+    {
+        return $this->objectManager->getRepository('Application\Entity\Product');
+    }
+}

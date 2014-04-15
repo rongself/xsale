@@ -1,17 +1,18 @@
 <?php
 namespace Application\Controller;
 
-use Application\Entity\Product;
 use Application\Service\ProductService;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\JsonModel;
-use Zend\View\Model\ViewModel;
 class ProductController extends AbstractActionController
 {
-
-    public function init()
+    /**
+     * @var \Application\Service\ProductService
+     */
+    private $productService;
+    public function __construct(ProductService $productService)
     {
-        /* Initialize action controller here */
+        $this->productService = $productService;
     }
 
     public function indexAction()
@@ -27,8 +28,7 @@ class ProductController extends AbstractActionController
     public function getProductsJsonAction()
     {
         $query = $this->getRequest()->getQuery('query');
-        $productService = $this->getServiceLocator()->get('ProductManager');
-        $products = $productService->SearchProductsBySku($query);
+        $products = $this->productService->SearchProductsBySku($query);
         $returnData = array();
         foreach ($products as $product) {
             $row = array();
@@ -48,6 +48,11 @@ class ProductController extends AbstractActionController
         }
 
         return new jsonModel($returnData);
+    }
+
+    public function ajaxIsProductExists(){
+        $sku = $this->getRequest()->getPost('sku');
+        $this->productService->IsProductExists($sku);
     }
 
 

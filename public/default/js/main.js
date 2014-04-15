@@ -11,10 +11,20 @@ require.config({
         underscore:'lib/underscore.min',
         loadBar:'lib/jquery.loadingbar.min',
         knockoutMapping:'lib/knockout.mapping'
+    },
+    shim:{
+        'bootstrap':{
+            deps:['jquery'],
+            exports:"$.fn.popover"
+        },
+        'typeahead':{
+            deps:['bootstrap'],
+            exports:"$.fn.typeahead"
+        }
     }
 });
-require(["jquery"], function($) {
-    require(['bootstrap'], function() {
+require(["jquery",'bootstrap'], function($) {
+
         PRODUCT_IMAGE_PATH = '/uploads/img/';
         /* Navigation */
 
@@ -126,7 +136,6 @@ require(["jquery"], function($) {
         /* Modal fix */
 
         $('.modal').appendTo($('body'));
-    });
 });
 
 

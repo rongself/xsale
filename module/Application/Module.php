@@ -9,7 +9,9 @@
 
 namespace Application;
 
+use Application\Controller\ProductController;
 use Application\Model\ProductTable;
+use Application\Service\ProductService;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
 
@@ -43,9 +45,20 @@ class Module
         return array(
             'factories' => array(
                 'Application\Service\StockRecordService' => function(ServiceManager $sm) {
-                        return new Application\Service\StockRecordService($sm);
+                        return new \Application\Service\StockRecordService($sm);
                 },
             ),
         );
+    }
+
+    public function getControllerConfig()
+    {
+        return array( 'factories' => array(
+            'Application\Controller\Product' => function(ServiceManager $sm) {
+                return new ProductController(
+                    new ProductService($sm)
+                );
+            }
+        ));
     }
 }

@@ -2,13 +2,14 @@ require(['knockout',
         'viewmodel/stockRecord',
         'viewmodel/stockProduct',
         'module/sku.autocomplete',
+        'module/image.uploader',
         'underscore',
-        'lib/json2',
-        'module/image.uploader']
-    , function (ko, StockRecordViewModel, StockProductViewModel,SkuAutoComplete) {
+        'lib/json2']
+    , function (ko, StockRecordViewModel, StockProductViewModel,SkuAutoComplete,ImageUploader) {
 
         stockRecord = new StockRecordViewModel();
         stockProduct = new StockProductViewModel();
+        uploader = new ImageUploader();
 
         // ko.applyBindings(stockRecord);
 

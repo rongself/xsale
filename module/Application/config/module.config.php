@@ -68,9 +68,9 @@ return array(
             'translator' => 'MvcTranslator',
         ),
         'factories'=>array(
-            'ProductManager'=>function($sm){
-                return new Application\Service\ProductService($sm);
-             },
+//            'ProductManager'=>function($sm){
+//                return new Application\Service\ProductService($sm);
+//             },
         ),
     ),
     'translator' => array(
@@ -80,6 +80,23 @@ return array(
                 'type'     => 'gettext',
                 'base_dir' => __DIR__ . '/../language',
                 'pattern'  => '%s.mo',
+            ),
+        ),
+    ),
+    'di' => array(
+        'allowed_controllers' => array(
+            // this config is required, otherwise the MVC won't even attempt to ask Di for the controller!
+            'Application\Controller\Product',
+        ),
+
+        'instance' => array(
+            'preference' => array(
+                // these allow injecting correct EventManager and ServiceManager
+                // (taken from the main ServiceManager) into the controller,
+                // because Di doesn't know how to retrieve abstract types. These
+                // dependencies are inherited from Zend\Mvc\Controller\AbstractController
+                'Zend\EventManager\EventManagerInterface' => 'EventManager',
+                'Zend\ServiceManager\ServiceLocatorInterface' => 'ServiceManager',
             ),
         ),
     ),

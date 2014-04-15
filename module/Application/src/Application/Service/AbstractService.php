@@ -24,4 +24,9 @@ abstract class AbstractService {
             $this->objectManager = $sm->get('Doctrine\ORM\EntityManager');
         }
     }
+
+    /**
+     * @return \Doctrine\ORM\EntityRepository
+     */
+    abstract function getRepository();
 } 

@@ -34,12 +34,12 @@ class OrderCart
     private $createTime;
 
     /** 
-     * @ORM\Column(nullable=true)
+     * @ORM\Column(type="integer",nullable=true)
      */
     private $order_id;
 
     /** 
-     * @ORM\Column(nullable=true)
+     * @ORM\Column(type="integer",nullable=true)
      */
     private $product_id;
 

@@ -1,4 +1,4 @@
-define(['typeahead','underscore','lib/json2'],function(){
+define(['jquery','typeahead','underscore','lib/json2'],function($){
     return function(updaterCallback){
         //for sku autocomplete
         var products = [];
