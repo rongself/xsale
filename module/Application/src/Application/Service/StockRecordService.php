@@ -12,14 +12,9 @@ use Application\Entity\Product;
 use Application\Entity\ProductImage;
 use Application\Entity\StockItem;
 use Application\Entity\StockRecord;
-use Zend\Di\ServiceLocator;
 
 class StockRecordService extends AbstractService {
 
-    public function __construct($sm)
-    {
-        parent::__construct($sm);
-    }
     public function create($data){
         $now = new \DateTime();
         $stockRecord = new StockRecord();

@@ -15,15 +15,14 @@ class ProductService extends  AbstractService
 {
     public function save($data)
     {
-        new ModuleManager;
     }
 
-    public function SearchProductsBySku($query)
+    public function SearchProductsBySku($query,$limit=5)
     {
         $products = $this->getRepository()->createQueryBuilder('o')
             ->where('o.sku LIKE :query')
             ->setParameter('query', $query.'%')
-            ->setMaxResults(5)
+            ->setMaxResults($limit)
             ->getQuery()
             ->getResult();
         return $products;

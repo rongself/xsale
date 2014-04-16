@@ -13,6 +13,7 @@
         "zendframework/zftool": "dev-master",
         "doctrine/doctrine-orm-module": "0.7.*",
         "zendframework/zend-developer-tools": "dev-master",
+        "ocramius/ocra-di-compiler": "dev-master",
         "bjyoungblood/bjy-profiler": "1.0.*"
     }
 }

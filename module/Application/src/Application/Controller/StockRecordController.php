@@ -11,19 +11,27 @@ use Zend\View\Model\ViewModel;
 class StockRecordController extends AbstractActionController
 {
 
-    protected $productTable;
+    /**
+     * @var StockRecordService
+     */
+    protected $stockRecordService;
+
+    public function __construct(StockRecordService $stockRecordService)
+    {
+        $this->stockRecordService = $stockRecordService;
+    }
+
     public function indexAction()
     {
-        // action body
+
     }
 
     public function createRecordAction()
     {
-        $stockRecordService = new StockRecordService($this->getServiceLocator());
         if($this->getRequest()->isPost()){
             $jsonStr = $this->getRequest()->getPost('stockRecord');
             $data = json_decode($jsonStr);
-            $stockRecordService->create($data);
+            $this->stockRecordService->create($data);
             return new jsonModel(array('success'=>true,'errors'=>null));
         }
     }

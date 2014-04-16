@@ -23,6 +23,24 @@ return array(
             )
         )
     ),
+//    'di' => array(
+//        'allowed_controllers' => array(
+//            // this config is required, otherwise the MVC won't even attempt to ask Di for the controller!
+//            'Application\Controller\Product',
+//        ),
+//
+//        'instance' => array(
+//            'preference' => array(
+//                // these allow injecting correct EventManager and ServiceManager
+//                // (taken from the main ServiceManager) into the controller,
+//                // because Di doesn't know how to retrieve abstract types. These
+//                // dependencies are inherited from Zend\Mvc\Controller\AbstractController
+//                'Zend\EventManager\EventManagerInterface' => 'EventManager',
+//                'Zend\ServiceManager\ServiceLocatorInterface' => 'ServiceManager',
+//                //'Application\Service\AbstractService'=>'ProductService'
+//            ),
+//        ),
+//    ),
     'router' => array(
         'routes' => array(
             'home' => array(
@@ -63,14 +81,18 @@ return array(
         'abstract_factories' => array(
             'Zend\Cache\Service\StorageCacheAbstractServiceFactory',
             'Zend\Log\LoggerAbstractServiceFactory',
+            //'Application\Service\ServiceAbstractFactory'
         ),
         'aliases' => array(
             'translator' => 'MvcTranslator',
         ),
         'factories'=>array(
-//            'ProductManager'=>function($sm){
-//                return new Application\Service\ProductService($sm);
-//             },
+            'ProductService'=>function(Zend\ServiceManager\ServiceManager $sm){
+                return new Application\Service\ProductService($sm->get('Doctrine\ORM\EntityManager'));
+             },
+            'StockRecordService' => function(Zend\ServiceManager\ServiceManager $sm) {
+                return new \Application\Service\StockRecordService($sm->get('Doctrine\ORM\EntityManager'));
+             },
         ),
     ),
     'translator' => array(
@@ -89,13 +111,26 @@ return array(
             'Application\Controller\Account' => 'Application\Controller\AccountController',
             'Application\Controller\Customer' => 'Application\Controller\CustomerController',
             'Application\Controller\Error' => 'Application\Controller\ErrorController',
-            'Application\Controller\Product' => 'Application\Controller\ProductController',
+            //'Application\Controller\Product' => 'Application\Controller\ProductController',
             'Application\Controller\SaleRecord' => 'Application\Controller\SaleRecordController',
             'Application\Controller\Setting' => 'Application\Controller\SettingController',
             'Application\Controller\Statistics' => 'Application\Controller\StatisticsController',
-            'Application\Controller\StockRecord' => 'Application\Controller\StockRecordController',
+            //'Application\Controller\StockRecord' => 'Application\Controller\StockRecordController',
             'Application\Controller\FileUploader' => 'Application\Controller\FileUploaderController'
         ),
+        'factories' => array(
+            'Application\Controller\Product' => function ($sm) {
+                return new Application\Controller\ProductController(
+                    $sm->getServiceLocator()->get('ProductService')
+                );
+            },
+            'Application\Controller\StockRecord' => function ($sm) {
+                return new Application\Controller\StockRecordController(
+                    $sm->getServiceLocator()->get('StockRecordService')
+                );
+            }
+
+        )
     ),
     'view_manager' => array(
         'strategies' => array(

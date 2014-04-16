@@ -21,14 +21,18 @@ define(['knockout','validation','underscore'], function(ko) {
         message: '该产品不存在于库存中',
         validator: function(val, parms, callback) {
             $.ajax({
-                url: '/Product/ajaxIsProductExists',
+                url: '/Product/ajax-is-product-exists',
                 type: 'POST', // or whatever http method the server endpoint needs
-                data: { sku: val } // args to send server
+                data: { sku: val }, // args to send server
+                dataType:'json'
             })
             .done(function(response, statusText, xhr) {
-                console.log(val);
-                console.log(response);
-                callback(false); // tell ko.validation that this value is valid
+                if(response.result==true){
+                    callback(true);
+                }else{
+                    callback(false);
+                }
+               // tell ko.validation that this value is valid
             })
             .fail(function(xhr, statusText, errorThrown) {
                 callback(false); // tell ko.validation that his value is NOT valid

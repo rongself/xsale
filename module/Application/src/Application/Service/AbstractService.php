@@ -8,21 +8,17 @@
 
 namespace Application\Service;
 
+use Zend\ServiceManager\ServiceLocatorAwareInterface;
 
-use Zend\Server\Cache;
-
-abstract class AbstractService {
+abstract class AbstractService{
     protected $cache;
     /**
      * @var \Doctrine\ORM\EntityManager
      */
     protected $objectManager;
-    public function __construct($sm)
+    public function __construct($entityManager)
     {
-        $this->cache = new Cache();
-        if(!isset($this->objectManager)){
-            $this->objectManager = $sm->get('Doctrine\ORM\EntityManager');
-        }
+        $this->objectManager = $entityManager;
     }
 
     /**

@@ -50,9 +50,10 @@ class ProductController extends AbstractActionController
         return new jsonModel($returnData);
     }
 
-    public function ajaxIsProductExists(){
+    public function ajaxIsProductExistsAction(){
         $sku = $this->getRequest()->getPost('sku');
-        $this->productService->IsProductExists($sku);
+        $return = $this->productService->IsProductExists($sku);
+        return new JsonModel(array('result'=>$return));
     }
 
 

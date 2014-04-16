@@ -35,7 +35,7 @@ define(['knockout','viewmodel/stockProduct','lib/json2','knockoutMapping'], func
                 self.stockProducts.removeAll();
             }
         }
-        self.submit = function () {
+        self.submitAndContinue = function () {
             if(self!=null&&typeof self.stockProducts() == 'object'&&self.stockProducts().length>0){
                 var data = koMapping.toJSON(self);
                 $.post('/stock-record/create-record',{stockRecord:data},function(result){
@@ -50,8 +50,8 @@ define(['knockout','viewmodel/stockProduct','lib/json2','knockoutMapping'], func
             }
             return true;
         }
-        self.submitAndContinue = function () {
-            if(self.submit()){
+        self.submit = function () {
+            if(self.submitAndContinue()){
                 location.href = '/StockRecord/index';
             }
         }
