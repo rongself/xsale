@@ -16,9 +16,14 @@ abstract class AbstractService{
      * @var \Doctrine\ORM\EntityManager
      */
     protected $objectManager;
-    public function __construct($entityManager)
+    public function __construct(\Doctrine\ORM\EntityManager $entityManager)
     {
         $this->objectManager = $entityManager;
+    }
+
+    public function getAll()
+    {
+        return $this->getRepository()->findAll();
     }
 
     /**

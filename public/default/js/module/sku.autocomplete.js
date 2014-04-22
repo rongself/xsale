@@ -3,28 +3,29 @@ define(['jquery','typeahead','underscore','lib/json2'],function($){
         //for sku autocomplete
         var products = [];
         $('#SKUInput').typeahead({
+            items:5,
             source: function (query, process) {
-//                if(typeof products == 'object' && products.length <= 0){
-//                    $.getJSON('/Product/get-products-json',{query:query},function(data){
-//                        products = data;
-//                        var results = _.map(products, function (product) {
-//                            return product.sku;
-//                        });
-//                        process(results);
-//                    });
-//                }else{
-//                    var results = _.map(products, function (product) {
-//                        return product.sku;
-//                    });
-//                    process(results);
-//                }
-                $.getJSON('/Product/get-products-json',{query:query},function(data){
-                    products = data;
+                if(typeof products == 'object' && products.length <= 0){
+                    $.getJSON('/Product/get-products-json',{query:query},function(data){
+                        products = data;
+                        var results = _.map(products, function (product) {
+                            return product.sku;
+                        });
+                        process(results);
+                    });
+                }else{
                     var results = _.map(products, function (product) {
                         return product.sku;
                     });
                     process(results);
-                });
+                }
+//                $.getJSON('/Product/get-products-json',{query:query},function(data){
+//                    products = data;
+//                    var results = _.map(products, function (product) {
+//                        return product.sku;
+//                    });
+//                    process(results);
+//                });
             },
             highlighter: function (selectedSKU) {
                 var product = _.find(products, function (item) {

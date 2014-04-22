@@ -2,13 +2,19 @@
 namespace Application\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
+use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
 class CustomerController extends AbstractActionController
 {
 
-    public function init()
+    /**
+     * @var \Application\Service\CustomerService
+     */
+    private $customerService;
+
+    public function __construct(\Application\Service\CustomerService $customerService)
     {
-        /* Initialize action controller here */
+        $this->customerService = $customerService;
     }
 
     public function indexAction()
@@ -26,7 +32,11 @@ class CustomerController extends AbstractActionController
         // action body
     }
 
-
+    public function getCustomersJsonAction()
+    {
+        $returnData = $this->customerService->getAutoCompleteSource();
+        return new JsonModel($returnData);
+    }
 }
 
 

@@ -25,6 +25,15 @@ define(['knockout','validation','validationConfig'], function(ko) {
             self.remark('');
         }
         self.submitTo = function(saleRecordInstance){
+            if(self.sku.isValidating()){
+                $('#submitTo').button('loading');
+                setTimeout(function(){
+                    self.submitTo(saleRecordInstance);
+                },50);
+                return false;
+            }else{
+                $('#submitTo').button('reset');
+            }
             var model = ko.validatedObservable(this);
             if((model.isValid())){
                 saleRecordInstance.addItem(this);

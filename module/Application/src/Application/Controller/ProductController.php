@@ -27,8 +27,7 @@ class ProductController extends AbstractActionController
 
     public function getProductsJsonAction()
     {
-        $query = $this->getRequest()->getQuery('query');
-        $products = $this->productService->SearchProductsBySku($query);
+        $products = $this->productService->getAll();
         $returnData = array();
         foreach ($products as $product) {
             $row = array();

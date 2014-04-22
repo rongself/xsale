@@ -40,6 +40,11 @@ class Customer
      */
     private $createTime;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true, name="is_vip")
+     */
+    private $isVip;
+
     /** 
      * @ORM\Column(type="text", nullable=true, name="remark")
      */
@@ -173,6 +178,29 @@ class Customer
     public function getCreateTime()
     {
         return $this->createTime;
+    }
+
+    /**
+     * Set isVip
+     *
+     * @param string $isVip
+     * @return Customer
+     */
+    public function setIsVip($isVip)
+    {
+        $this->isVip = $isVip;
+
+        return $this;
+    }
+
+    /**
+     * Get isVip
+     *
+     * @return string
+     */
+    public function getIsVip()
+    {
+        return $this->isVip;
     }
 
     /**

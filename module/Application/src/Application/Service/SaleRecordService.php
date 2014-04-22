@@ -13,14 +13,14 @@ use Application\Entity\OrderCart;
 use Application\Entity\Product;
 use Zend\Di\ServiceLocator;
 
-class SaleRecordService {
+class SaleRecordService extends AbstractService{
 
     /**
      * @var \Doctrine\ORM\EntityManager
      */
     protected $objectManager;
 
-    public function __construct(ServiceLocatorInterface $sm)
+    public function __construct(ServiceLocatorInterface $sm,CustomerService $customerService)
     {
         $this->objectManager = $sm->get('Doctrine\ORM\EntityManager');
     }
@@ -40,21 +40,7 @@ class SaleRecordService {
             $productEntity = $this->objectManager->getRepository('Application\Entity\Product')->findOneBy(array('sku'=>$product->sku));
             if($productEntity==null){
                 // if sku is not exists,add it
-                $productEntity = clone $productTempl;
-                $productEntity->setName($product->name);
-                $productEntity->setCost($product->cost);
-                $productEntity->setStock($product->stock);
-                $productEntity->setPrice($product->price);
-                $productEntity->setDescription($product->description);
-                $productEntity->setSku($product->sku);
-                $productEntity->setCreateTime($now);
-            }else{
-                // if sku exists, update the information
-                $productEntity->setName($product->name);
-                $productEntity->setCost($product->cost);
-                $productEntity->setStock((int)$productEntity->getStock()+(int)$product->stock);
-                $productEntity->setPrice($product->price);
-                $productEntity->setDescription($product->description);
+                throw new Exception();
             }
             $stockItem = clone $orderItem;
             $stockItem->setProduct($productEntity);
@@ -64,25 +50,17 @@ class SaleRecordService {
             $stockItem->setStockRecord($saleRecord);
             $saleRecord->addStockItem($stockItem);
             //whether sku exist,always add pictures
-            $imageTemp = new ProductImage();
-            $i = 0;
-            foreach ($product->pictures as $picture) {
-                $image = clone $imageTemp;
-                if($i==0){
-                    //set as default image(0)
-                    $image->setType(0);
-                    $productEntity->setPicture($picture);
-                }else{
-                    //set as description image(1)
-                    $image->setType(1);
-                }
-                $image->setUrl($picture);
-                $image->setCreateTime($now);
-                $productEntity->addProductImage($image);
-                $i++;
-            }
+
         }
         $this->objectManager->persist($saleRecord);
         $this->objectManager->flush();
     }
-} 
+
+    /**
+     * @return \Doctrine\ORM\EntityRepository
+     */
+    function getRepository()
+    {
+        return  $customer = $this->objectManager->getRepository('Application\Entity\Order');
+    }
+}

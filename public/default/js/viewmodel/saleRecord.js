@@ -42,6 +42,15 @@ define(['knockout','viewmodel/saleProduct','lib/json2','knockoutMapping','valida
         }
 
         self.submit = function () {
+            if(self.phoneNumber.isValidating()){
+                $('#submitTo').button('loading');
+                setTimeout(function(){
+                    self.submit();
+                },50);
+                return false;
+            }else{
+                $('#submitTo').button('reset');
+            }
             var model = ko.validatedObservable(this);
             if((model.isValid())){
                 if(self!=null&&typeof self.saleProducts() == 'object'&&self.saleProducts().length>0){

@@ -93,6 +93,9 @@ return array(
             'StockRecordService' => function(Zend\ServiceManager\ServiceManager $sm) {
                 return new \Application\Service\StockRecordService($sm->get('Doctrine\ORM\EntityManager'));
              },
+            'CustomerService' => function(Zend\ServiceManager\ServiceManager $sm) {
+                    return new Application\Service\CustomerService($sm->get('Doctrine\ORM\EntityManager'));
+            },
         ),
     ),
     'translator' => array(
@@ -109,7 +112,7 @@ return array(
         'invokables' => array(
             'Application\Controller\Index' => 'Application\Controller\IndexController',
             'Application\Controller\Account' => 'Application\Controller\AccountController',
-            'Application\Controller\Customer' => 'Application\Controller\CustomerController',
+            //'Application\Controller\Customer' => 'Application\Controller\CustomerController',
             'Application\Controller\Error' => 'Application\Controller\ErrorController',
             //'Application\Controller\Product' => 'Application\Controller\ProductController',
             'Application\Controller\SaleRecord' => 'Application\Controller\SaleRecordController',
@@ -128,7 +131,12 @@ return array(
                 return new Application\Controller\StockRecordController(
                     $sm->getServiceLocator()->get('StockRecordService')
                 );
-            }
+            },
+            'Application\Controller\Customer' => function ($sm) {
+                return new Application\Controller\CustomerController(
+                    $sm->getServiceLocator()->get('CustomerService')
+                );
+            },
 
         )
     ),
@@ -147,7 +155,8 @@ return array(
             'error/404'               => __DIR__ . '/../view/error/404.phtml',
             'error/index'             => __DIR__ . '/../view/error/index.phtml',
             'imageuploader'           =>__DIR__.'/../view/shared/imageuploader.phtml',
-            'sku-autocomplete'       =>__DIR__.'/../view/shared/sku-autocomplete.phtml'
+            'sku-autocomplete'       =>__DIR__.'/../view/shared/sku-autocomplete.phtml',
+            'customer-autocomplete'  =>__DIR__.'/../view/shared/customer-autocomplete.phtml'
         ),
         'template_path_stack' => array(
             __DIR__ . '/../view',

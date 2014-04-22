@@ -5,10 +5,11 @@ require(['knockout',
       'viewmodel/saleRecord',
       'viewmodel/saleProduct',
       'module/sku.autocomplete',
+      'module/customer.autocomplete',
       'validation',
       'typeahead',
       'underscore']
-    ,function(ko,SaleRecordViewModel,SaleProductViewModel,SkuAutoComplete){
+    ,function(ko,SaleRecordViewModel,SaleProductViewModel,SkuAutoComplete,CustomerAutoComplete){
         saleRecord = new SaleRecordViewModel();
         saleProduct = new SaleProductViewModel();
         saleProduct.sku.extend({
@@ -16,6 +17,9 @@ require(['knockout',
         });
         var skuAutoComplete = new SkuAutoComplete(function(selectedSKU,products){
             return selectedSKU;
+        });
+        var CustomerAutoComplete = new CustomerAutoComplete(function(seleted){
+            return seleted;
         });
         ko.applyBindings(saleRecord);
     });

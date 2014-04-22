@@ -9,10 +9,11 @@
 namespace Application\Entity;
 
 use JsonSerializable;
+use Traversable;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-abstract class AbstractEntity implements JsonSerializable {
+abstract class AbstractEntity implements JsonSerializable,Traversable {
 
     public function __construct(array $data = null)
     {
