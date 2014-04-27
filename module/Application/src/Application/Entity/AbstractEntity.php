@@ -13,7 +13,7 @@ use Traversable;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-abstract class AbstractEntity implements JsonSerializable,Traversable {
+abstract class AbstractEntity implements JsonSerializable {
 
     public function __construct(array $data = null)
     {

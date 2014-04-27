@@ -37,11 +37,12 @@ define(['knockout','viewmodel/saleProduct','lib/json2','knockoutMapping','valida
         }
         self.clear = function(){
             if(self.saleProducts().length>0){
-                self.saleProducts(null);
+                self.saleProducts.removeAll();
             }
+            self.phoneNumber(null);
         }
 
-        self.submit = function () {
+        self.submitAndContinue = function (callback) {
             if(self.phoneNumber.isValidating()){
                 $('#submitTo').button('loading');
                 setTimeout(function(){
@@ -58,11 +59,14 @@ define(['knockout','viewmodel/saleProduct','lib/json2','knockoutMapping','valida
                     $.post('/sale-record/create-record',{saleRecord:data},function(result){
                         if(result.success){
                             self.clear();
-                            alert('进货单已成功提交');
+                            alert('销售记录已成功提交');
+                            callback();
+                        }else{
+                            alert(result.error[0])
                         }
                     },'json');
                 }else{
-                    alert('进货单中还未加入任何产品');
+                    alert('销售记录中还未加入任何产品');
                     return false;
                 }
                 model.errors.showAllMessages(false);
@@ -72,10 +76,10 @@ define(['knockout','viewmodel/saleProduct','lib/json2','knockoutMapping','valida
                 return false;
             }
         }
-        self.submitAndContinue = function () {
-            if(self.submit()){
-                location.href = '/StockRecord/index';
-            }
+        self.submit = function () {
+            self.submitAndContinue(function(){
+                location.href = '/sale-record/index';
+            });
         }
         self.reset = function () {
             self.clear();

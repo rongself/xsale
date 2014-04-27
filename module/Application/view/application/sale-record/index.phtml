@@ -34,31 +34,36 @@
                                 </span>
                             </th>
                             <th>账单号</th>
-                            <th>总数量</th>
+                            <th>顾客电话</th>
                             <th>总价</th>
                             <th>结账时间</th>
                             <th>操作</th>
                         </tr>
                     </thead>
                     <tbody>
-
+                        <?php foreach($this->paginator->getCurrentItems() as $item):?>
                         <tr data-href="/saleRecord/edit-record/slid/1">
                             <td>                            
                                 <span class="uni">
-                                    <input type="checkbox" value="check1">
+                                    <?php $id = $item->getId();?>
+                                    <input type="checkbox" class="record-id" value="<?php echo $id?>">
                                 </span>
                             </td>
-                            <td>#98619</td>
-                            <td>30</td>
-                            <td>892</td>
-                            <td>2014-03-15</td>
+                            <td><?php echo $this->escapeHtml($id);?></td>
+                            <td><?php
+                                    $customer = $item->getCustomer();
+                                    echo isset($customer) ? $this->escapeHtml($customer->getPhoneNumber()):'-';
+                                ?></td>
+                            <td><?php echo $this->escapeHtml($item->getTotalPrice());?></td>
+                            <td><?php echo $this->escapeHtml($item->getCreateTime()->format('Y-m-d H:s:i'));?></td>
                             <td>
 
-                                <button class="btn btn-xs btn-default"><i class="icon-pencil"></i> </button>
-                                <button class="btn btn-xs btn-danger"><i class="icon-remove"></i> </button>
+                                <a class="btn btn-xs btn-default"><i class="icon-pencil"></i> </a>
+                                <a onclick="if(!confirm('要删除此订单吗?'))return false;" href="<?php echo $this->url('sale-record/wildcard',array('action'=>'delete','id'=>$id))?>" class="btn btn-xs btn-danger"><i class="icon-remove"></i> </a>
 
                             </td>
-                        </tr>                                                      
+                        </tr>
+                    <?php endforeach;?>
                     </tbody>
                 </table>
 
@@ -72,15 +77,15 @@
                         </select>
                     </div>
 
-
-                    <ul class="pagination pull-right">
-                        <li><a href="#">Prev</a></li>
-                        <li><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">Next</a></li>
-                    </ul>
+                    <?php //var_dump($this->paginator);exit;?>
+                    <?php
+                        echo $this->paginationControl($this->paginator,
+                            'Sliding', 'paginator-control-bar'
+                             ,array(
+                                'route' => 'sale-record/wildcard'
+                             )
+                        );
+                    ?>
 
                     <div class="clearfix"></div> 
 

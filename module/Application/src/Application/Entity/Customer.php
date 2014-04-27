@@ -51,9 +51,17 @@ class Customer
     private $remark;
 
     /** 
-     * @ORM\OneToOne(targetEntity="Application\Entity\Order", mappedBy="customer", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Application\Entity\Order", mappedBy="customer", cascade={"persist"})
      */
-    private $order;
+    private $orders;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->orders = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -227,14 +235,27 @@ class Customer
     }
 
     /**
-     * Set order
+     * Add order
      *
      * @param \Application\Entity\Order $order
      * @return Customer
      */
-    public function setOrder(\Application\Entity\Order $order = null)
+    public function addOrder(\Application\Entity\Order $order = null)
     {
-        $this->order = $order;
+        $this->orders[] = $order;
+
+        return $this;
+    }
+
+    /**
+     * Remove order
+     *
+     * @param \Application\Entity\Order $order
+     * @return Customer
+     */
+    public function removeOrder(\Application\Entity\Order $order = null)
+    {
+        $this->orders->removeElement($order);
 
         return $this;
     }
@@ -244,8 +265,8 @@ class Customer
      *
      * @return \Application\Entity\Order 
      */
-    public function getOrder()
+    public function getOrders()
     {
-        return $this->order;
+        return $this->orders;
     }
 }

@@ -1,5 +1,6 @@
 <?php
 namespace Application\Entity;
+use Application\Entity\Exception\ValidationException;
 use Doctrine\ORM\Mapping AS ORM;
 
 /** 
@@ -240,6 +241,10 @@ class Product
      */
     public function setStock($stock)
     {
+        if(intval($stock)<0)
+        {
+            throw new ValidationException($this->getSku().':库存不足','stock');
+        }
         $this->stock = $stock;
 
         return $this;

@@ -35,13 +35,14 @@ define(['knockout','viewmodel/stockProduct','lib/json2','knockoutMapping'], func
                 self.stockProducts.removeAll();
             }
         }
-        self.submitAndContinue = function () {
+        self.submitAndContinue = function (callback) {
             if(self!=null&&typeof self.stockProducts() == 'object'&&self.stockProducts().length>0){
                 var data = koMapping.toJSON(self);
                 $.post('/stock-record/create-record',{stockRecord:data},function(result){
                     if(result.success){
                         self.clear();
                         alert('进货单已成功提交');
+                        callback();
                     }
                 },'json');
             }else{
@@ -51,9 +52,9 @@ define(['knockout','viewmodel/stockProduct','lib/json2','knockoutMapping'], func
             return true;
         }
         self.submit = function () {
-            if(self.submitAndContinue()){
-                location.href = '/StockRecord/index';
-            }
+            self.submitAndContinue(function(){
+                location.href = '/stock-record/index';
+            });
         }
         self.reset = function () {
             self.clear();

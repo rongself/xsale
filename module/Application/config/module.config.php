@@ -23,58 +23,54 @@ return array(
             )
         )
     ),
-//    'di' => array(
-//        'allowed_controllers' => array(
-//            // this config is required, otherwise the MVC won't even attempt to ask Di for the controller!
-//            'Application\Controller\Product',
-//        ),
-//
-//        'instance' => array(
-//            'preference' => array(
-//                // these allow injecting correct EventManager and ServiceManager
-//                // (taken from the main ServiceManager) into the controller,
-//                // because Di doesn't know how to retrieve abstract types. These
-//                // dependencies are inherited from Zend\Mvc\Controller\AbstractController
-//                'Zend\EventManager\EventManagerInterface' => 'EventManager',
-//                'Zend\ServiceManager\ServiceLocatorInterface' => 'ServiceManager',
-//                //'Application\Service\AbstractService'=>'ProductService'
-//            ),
-//        ),
-//    ),
     'router' => array(
         'routes' => array(
             'home' => array(
-                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'type'    => 'Segment',
                 'options' => array(
-                    'route'    => '/',
+                    'route'    => '/[:controller[/:action]]',
+                    'constraints' => array(
+                        'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
                     'defaults' => array(
-                        'controller' => 'Application\Controller\Index',
-                        'action'     => 'index',
+                        'controller'=>'Index',
+                        'action' => 'index',
+                        '__NAMESPACE__' => 'Application\Controller'
                     ),
                 ),
                 'may_terminate' => true,
                 'child_routes' => array(
-                    'default' => array(
-                        'type'    => 'Segment',
-                        'options' => array(
-                            'route'    => '[:controller[/:action]]',
-                            'constraints' => array(
-                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
-                            ),
-                            'defaults' => array(
-                                'action' => 'index',
-                                '__NAMESPACE__' => 'Application\Controller'
-                            ),
-                        ),
+                    'wildcard' => array(
+                        'type' => 'Wildcard'
+                    )
+                )
+            ),
+            'sale-record' => array(
+                'type'    => 'Segment',
+                'options' => array(
+                    'route'    => '/[:controller[/:action]]',
+                    'constraints' => array(
+                        'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
+                    'defaults' => array(
+                        'controller'=>'sale-record',
+                        'action' => 'index',
+                        '__NAMESPACE__' => 'Application\Controller'
                     ),
                 ),
+                'may_terminate' => true,
+                'child_routes' => array(
+                    'wildcard' => array(
+                        'type' => 'Wildcard'
+                    )
+                )
             ),
             // The following is a route to simplify getting started creating
             // new controllers and actions without needing to create a new
             // module. Simply drop new controllers in, and you can access them
             // using the path /application/:controller/:action
-
         ),
     ),
     'service_manager' => array(
@@ -93,8 +89,11 @@ return array(
             'StockRecordService' => function(Zend\ServiceManager\ServiceManager $sm) {
                 return new \Application\Service\StockRecordService($sm->get('Doctrine\ORM\EntityManager'));
              },
+            'SaleRecordService' => function(Zend\ServiceManager\ServiceManager $sm) {
+                return new \Application\Service\SaleRecordService($sm->get('Doctrine\ORM\EntityManager'));
+            },
             'CustomerService' => function(Zend\ServiceManager\ServiceManager $sm) {
-                    return new Application\Service\CustomerService($sm->get('Doctrine\ORM\EntityManager'));
+                return new Application\Service\CustomerService($sm->get('Doctrine\ORM\EntityManager'));
             },
         ),
     ),
@@ -115,7 +114,7 @@ return array(
             //'Application\Controller\Customer' => 'Application\Controller\CustomerController',
             'Application\Controller\Error' => 'Application\Controller\ErrorController',
             //'Application\Controller\Product' => 'Application\Controller\ProductController',
-            'Application\Controller\SaleRecord' => 'Application\Controller\SaleRecordController',
+            //'Application\Controller\SaleRecord' => 'Application\Controller\SaleRecordController',
             'Application\Controller\Setting' => 'Application\Controller\SettingController',
             'Application\Controller\Statistics' => 'Application\Controller\StatisticsController',
             //'Application\Controller\StockRecord' => 'Application\Controller\StockRecordController',
@@ -132,6 +131,11 @@ return array(
                     $sm->getServiceLocator()->get('StockRecordService')
                 );
             },
+            'Application\Controller\SaleRecord' => function ($sm) {
+                    return new Application\Controller\SaleRecordController(
+                        $sm->getServiceLocator()->get('SaleRecordService')
+                    );
+                },
             'Application\Controller\Customer' => function ($sm) {
                 return new Application\Controller\CustomerController(
                     $sm->getServiceLocator()->get('CustomerService')
@@ -156,7 +160,8 @@ return array(
             'error/index'             => __DIR__ . '/../view/error/index.phtml',
             'imageuploader'           =>__DIR__.'/../view/shared/imageuploader.phtml',
             'sku-autocomplete'       =>__DIR__.'/../view/shared/sku-autocomplete.phtml',
-            'customer-autocomplete'  =>__DIR__.'/../view/shared/customer-autocomplete.phtml'
+            'customer-autocomplete'  =>__DIR__.'/../view/shared/customer-autocomplete.phtml',
+            'paginator-control-bar'  =>__DIR__.'/../view/shared/paginator-control-bar.phtml'
         ),
         'template_path_stack' => array(
             __DIR__ . '/../view',

@@ -51,7 +51,7 @@ class OrderCart
 
     /** 
      * @ORM\ManyToOne(targetEntity="Application\Entity\Order", inversedBy="orderCarts", cascade={"persist"})
-     * @ORM\JoinColumn(name="order_id", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="order_id", referencedColumnName="id", nullable=false,onDelete="CASCADE")
      */
     private $order;
 

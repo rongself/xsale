@@ -26,13 +26,13 @@ class Order
     private $createTime;
 
     /** 
-     * @ORM\OneToMany(targetEntity="Application\Entity\OrderCart", mappedBy="order", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Application\Entity\OrderCart", mappedBy="order",cascade={"persist"})
      */
     private $orderCarts;
 
     /** 
-     * @ORM\OneToOne(targetEntity="Application\Entity\Customer", inversedBy="order", cascade={"persist"})
-     * @ORM\JoinColumn(name="customer_id", referencedColumnName="id", nullable=false, unique=true)
+     * @ORM\ManyToOne(targetEntity="Application\Entity\Customer", inversedBy="orders", cascade={"persist"})
+     * @ORM\JoinColumn(name="customer_id", referencedColumnName="id", nullable=true)
      */
     private $customer;
 
