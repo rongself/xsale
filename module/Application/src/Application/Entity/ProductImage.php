@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping AS ORM;
  * @ORM\Entity
  * @ORM\Table(name="xs_product_images")
  */
-class ProductImage
+class ProductImage extends AbstractEntity
 {
     /** 
      * @ORM\Id

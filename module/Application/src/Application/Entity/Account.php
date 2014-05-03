@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping AS ORM;
  * @ORM\Entity
  * @ORM\Table(name="xs_admins")
  */
-class Account
+class Account extends AbstractEntity
 {
     /** 
      * @ORM\Id
@@ -16,7 +16,7 @@ class Account
     private $id;
 
     /** 
-     * @ORM\Column(type="string", length=32, nullable=false, name="username")
+     * @ORM\Column(type="string", length=32, nullable=false, name="username",unique=true)
      */
     private $username;
 
@@ -31,7 +31,7 @@ class Account
     private $password;
 
     /** 
-     * @ORM\Column(type="datetime", nullable=true, name="create_time")
+     * @ORM\Column(type="datetime", nullable=false, name="create_time")
      */
     private $createTime;
 
@@ -76,7 +76,7 @@ class Account
      */
     public function setPassword($password)
     {
-        $this->password = $password;
+        $this->password = md5($password);
 
         return $this;
     }

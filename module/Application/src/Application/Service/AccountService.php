@@ -9,6 +9,8 @@
 namespace Application\Service;
 
 
+use Application\Entity\Account;
+
 class AccountService extends AbstractService{
 
     public function getPaginator()
@@ -48,5 +50,17 @@ class AccountService extends AbstractService{
     function getRepository()
     {
         return $this->objectManager->getRepository('Application\Entity\Account');
+    }
+
+    public function isUsernameExists($username)
+    {
+        $result = $this->getRepository()->findOneBy(array('username'=>$username));
+        return $result!==null;
+    }
+
+    public function create(Account $account)
+    {
+        $this->objectManager->persist($account);
+        $this->objectManager->flush();
     }
 }

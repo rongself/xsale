@@ -11,7 +11,8 @@ require.config({
         underscore:'lib/underscore.min',
         loadBar:'lib/jquery.loadingbar.min',
         knockoutMapping:'lib/knockout.mapping',
-        checkedAll:'module/checked.all.handle'
+        checkedAll:'module/checked.all.handle',
+        pace:'lib/pace.min'
     },
     shim:{
         'bootstrap':{
@@ -28,9 +29,9 @@ require.config({
         }
     }
 });
-require(["jquery",'bootstrap'], function($) {
+require(["jquery",'pace','bootstrap'], function($,pace) {
 
-        PRODUCT_IMAGE_PATH = '/uploads/img/';
+        pace.start();
         /* Navigation */
 
         $(window).resize(function()

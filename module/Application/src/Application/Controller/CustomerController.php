@@ -1,6 +1,8 @@
 <?php
 namespace Application\Controller;
 
+use Application\Entity\Customer;
+use Application\Entity\Exception\ValidationException;
 use Zend\Json\Json;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\JsonModel;
@@ -28,11 +30,24 @@ class CustomerController extends AbstractActionController
 
     public function createCustomerAction()
     {
+        $returnData = array('success'=>false,'error'=>array());
         if($this->getRequest()->isPost()){
-            $jsonData = $this->params()->fromPost('customer');
-            $customer = Json::decode($jsonData);
-            $this->customerService->create($customer);
+            try{
+                $jsonData = $this->params()->fromPost('customer');
+                $customer = new Customer(Json::decode($jsonData,Json::TYPE_ARRAY));
+                $customer->setCreateTime(new \DateTime());//@todo 这一行抛出异常被捕获处理后,会不会执行下一行??
+                $this->customerService->create($customer);
+            }catch (ValidationException $e){
+                $returnData['error'] = $e->getValidationError();
+                return new JsonModel($returnData);
+            }catch(\Exception $e){
+                $returnData['error'] = $e->getMessage();
+                return new JsonModel($returnData);
+            }
+            $returnData['success'] = true;
+            return new JsonModel($returnData);
         }
+
     }
 
     public function editCustomerAction()
@@ -57,6 +72,12 @@ class CustomerController extends AbstractActionController
             $this->customerService->deleteIn($ids);
             return new JsonModel(array('success'=>true,'error'=>array()));
         }
+    }
+
+    public function ajaxIsPhoneNumberExistsAction(){
+        $phoneNumber = $this->getRequest()->getPost('phoneNumber');
+        $return = $this->customerService->isPhoneNumberExists($phoneNumber);
+        return new JsonModel(array('result'=>$return));
     }
 
     public function getCustomersJsonAction()

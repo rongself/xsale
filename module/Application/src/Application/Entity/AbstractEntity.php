@@ -19,7 +19,6 @@ abstract class AbstractEntity implements JsonSerializable {
     {
         if($data!=null){
             $ref = new \ReflectionClass($this);
-            $methods = $ref->getMethods();
             foreach ($data as $key=>$value)
             {
                 $methodsName = 'set'.ucfirst($key);

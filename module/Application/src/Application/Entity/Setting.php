@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping AS ORM;
  * @ORM\Entity
  * @ORM\Table(name="xs_settings")
  */
-class Setting
+class Setting extends AbstractEntity
 {
     /** 
      * @ORM\Id

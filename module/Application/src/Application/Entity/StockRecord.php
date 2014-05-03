@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping AS ORM;
  * @ORM\Entity
  * @ORM\Table(name="xs_stock_records")
  */
-class StockRecord
+class StockRecord extends AbstractEntity
 {
     /** 
      * @ORM\Id

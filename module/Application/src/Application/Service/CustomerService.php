@@ -9,6 +9,8 @@
 namespace Application\Service;
 
 
+use Application\Entity\Customer;
+
 class CustomerService extends AbstractService {
 
     public function getAutoCompleteSource()
@@ -63,6 +65,18 @@ class CustomerService extends AbstractService {
             ->from('Application\Entity\Customer','o')
             ->where($qb->expr()->in('o.id',$ids));
         return $qb->getQuery()->execute();
+    }
+
+    public function create(Customer $customer)
+    {
+        $this->objectManager->persist($customer);
+        $this->objectManager->flush();
+    }
+
+    public function isPhoneNumberExists($phoneNumber)
+    {
+        $result = $this->getRepository()->findOneBy(array('phoneNumber'=>$phoneNumber));
+        return $result!==null;
     }
 
 }

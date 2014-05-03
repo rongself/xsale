@@ -31,7 +31,7 @@ define(['jquery','typeahead','underscore','lib/json2'],function($){
                 var product = _.find(products, function (item) {
                     return item.sku == selectedSKU;
                 });
-                return '<img class="pull-left" style="margin-top: 4px;margin-right: 10px;" src="' + PRODUCT_IMAGE_PATH + 'thumbnail/'+(product.picture?product.picture:'default.jpg') + '" alt="" width="40px" height="40px">' +
+                return '<img class="pull-left" style="margin-top: 4px;margin-right: 10px;" src="' +xsaleConfig.thumbnailPath+(product.picture?product.picture:'default.jpg') + '" alt="" width="40px" height="40px">' +
                     '<div class="pull-left">' +
                     '<div>' + product.sku + '</div>' +
                     '<div style="color:#cccccc">' + product.name + '</div>' +

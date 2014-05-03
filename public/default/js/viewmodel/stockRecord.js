@@ -42,7 +42,9 @@ define(['knockout','viewmodel/stockProduct','lib/json2','knockoutMapping'], func
                     if(result.success){
                         self.clear();
                         alert('进货单已成功提交');
-                        callback();
+                        if(typeof callback =='function'){
+                            callback();
+                        }
                     }
                 },'json');
             }else{

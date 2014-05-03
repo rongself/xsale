@@ -14,7 +14,7 @@
                         <div class="form-group">
                             <label class="control-label col-lg-3 visible-lg" for="name">姓名</label>
                             <div class="col-lg-9">
-                                <input type="text" class="form-control" id="name" placeholder="请输入账户所有人姓名">
+                                <input type="text" data-bind="value:name" class="form-control" id="name" placeholder="请输入账户所有人姓名">
                             </div>
                         </div>   
                         <!-- Email -->
@@ -25,28 +25,28 @@
                         <div class="form-group">
                             <label class="control-label col-lg-3 visible-lg" for="username">登录名</label>
                             <div class="col-lg-9">
-                                <input type="text" class="form-control" id="username" placeholder="请输入用于登录名">
+                                <input type="text" data-bind="value:username" class="form-control" id="username" placeholder="请输入用于登录名">
                             </div>
                         </div>
                         <!-- Password -->
                         <div class="form-group">
                             <label class="control-label col-lg-3 visible-lg" for="email">密码</label>
                             <div class="col-lg-9">
-                                <input type="password" class="form-control" id="password" placeholder="请输入密码6-15字符">
+                                <input type="password" data-bind="value:password" class="form-control" id="password" placeholder="请输入密码6-15字符">
                             </div>
                         </div>
                         <!-- RePassword -->
                         <div class="form-group">
                             <label class="control-label col-lg-3 visible-lg" for="email">重复密码</label>
                             <div class="col-lg-9">
-                                <input type="password" class="form-control" id="password" placeholder="请再次输入密码">
+                                <input type="password" data-bind="value:confirm" class="form-control" id="confirm" placeholder="请再次输入密码">
                             </div>
                         </div>
                         <!-- Accept box and button s-->
                         <div class="form-group">
                             <div class="col-lg-9 col-lg-offset-3">
-                                <button type="submit" class="btn btn-danger">添加用户</button>
-                                <button type="reset" class="btn btn-success">保存并继续添加</button>
+                                <button type="submit" data-bind="click:submit" data-loading-text="正在验证数据.." class="btn btn-success submitTo">添加用户</button>
+                                <button type="submit" data-bind="click:submitAndContinue" data-loading-text="正在验证数据.." class="btn btn-success submitTo">保存并继续添加</button>
                             </div>
                         </div>
 
@@ -59,3 +59,6 @@
         </div>  
     </div>
 </div>
+<?php
+$this->headScript()->appendScript("require(['main'],function(){require(['page/account/create-account']);});");
+?>

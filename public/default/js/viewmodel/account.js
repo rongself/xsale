@@ -4,28 +4,30 @@
 define(['knockout','knockoutMapping','pace','validation','validationConfig'], function(ko,koMapping,pace) {
     return function(){
         var self = this;
-        self.name = ko.observable();
-        self.phoneNumber = ko.observable().extend({
-            required:{message: '客户手机号不能为空'},
-            number:{message:'手机号格式不正确'},
-            isPhoneNumberExists:self
+        self.name = ko.observable().extend({
+            required:{message: '用户姓名不能为空'}
+        });;
+        self.username = ko.observable().extend({
+            required:{message: '登录名不能为空'},
+            isUsernameExists:self
         });
-        self.wechat = ko.observable();
-        self.qq = ko.observable();
-        self.isVip = ko.observable(false);
-        self.remark = ko.observable();
+        self.password = ko.observable().extend({
+            required:{message: '请输入密码'}
+        });
+        self.confirm = ko.observable().extend({
+            required:{message: '请再次输入密码'},
+            areSame: self.password
+        });
 
         self.reset = function(){
             self.name('');
-            self.phoneNumber('');
-            self.wechat('');
-            self.qq('');
-            self.isVip(false);
-            self.remark('');
+            self.username('');
+            self.password('');
+            self.confirm('');
         }
 
         self.submitAndContinue = function(callback){
-            if(self.phoneNumber.isValidating()){
+            if(self.username.isValidating()){
                 $('.submitTo').button('loading');
                 setTimeout(function(){
                     self.submitAndContinue(callback);
@@ -38,7 +40,7 @@ define(['knockout','knockoutMapping','pace','validation','validationConfig'], fu
             var data = koMapping.toJSON(self);
             var model = ko.validatedObservable(self);
             if((model.isValid())){
-                $.post('/customer/create-customer',{customer:data},function(result){
+                $.post('/account/create-account',{account:data},function(result){
                     if(result){
                         alert('添加成功');
                         self.reset();
@@ -59,7 +61,7 @@ define(['knockout','knockoutMapping','pace','validation','validationConfig'], fu
         }
         self.submit = function(){
             self.submitAndContinue(function(){
-                location.href = '/customer/index';
+                location.href = '/account/index';
             });
         }
     }

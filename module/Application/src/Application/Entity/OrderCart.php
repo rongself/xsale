@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping AS ORM;
  *     uniqueConstraints={@ORM\UniqueConstraint(name="orderanditem", columns={"order_id","product_id"})}
  * )
  */
-class OrderCart
+class OrderCart extends AbstractEntity
 {
     /** 
      * @ORM\Id

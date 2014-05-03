@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping AS ORM;
  * @ORM\Entity
  * @ORM\Table(name="xs_products", uniqueConstraints={@ORM\UniqueConstraint(name="sku_unique", columns={"sku"})})
  */
-class Product
+class Product extends AbstractEntity
 {
     /** 
      * @ORM\Id
@@ -17,7 +17,7 @@ class Product
     private $id;
 
     /** 
-     * @ORM\Column(type="string", length=30, nullable=true, name="sku")
+     * @ORM\Column(type="string", length=30, nullable=true, name="sku",unique=true)
      */
     private $sku;
 

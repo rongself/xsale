@@ -38,12 +38,14 @@ class SaleRecordService extends AbstractService{
         $now = new \DateTime();
         $saleRecord = new Order();
         $orderItem = new OrderCart();
-        $customer = $this->objectManager->getRepository('Application\Entity\Customer')->findOneBy(array('phoneNumber'=>$data->phoneNumber));
-        if(!isset($customer)){
-            $customer = new Customer();
-            $customer->setPhoneNumber($data->phoneNumber);
+        if($data->phoneNumber){
+            $customer = $this->objectManager->getRepository('Application\Entity\Customer')->findOneBy(array('phoneNumber'=>$data->phoneNumber));
+            if(!isset($customer)){
+                $customer = new Customer();
+                $customer->setPhoneNumber($data->phoneNumber);
+            }
+            $saleRecord->setCustomer($customer);
         }
-        $saleRecord->setCustomer($customer);
         $saleRecord->setTotalPrice($data->totalPrice);
         $saleRecord->setCreateTime($now);
         foreach($data->saleProducts as $product){

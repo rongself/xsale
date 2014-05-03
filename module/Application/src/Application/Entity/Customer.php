@@ -1,12 +1,13 @@
 <?php
 namespace Application\Entity;
+use Application\Entity\Exception\ValidationException;
 use Doctrine\ORM\Mapping AS ORM;
 
 /** 
  * @ORM\Entity
  * @ORM\Table(name="xs_customers")
  */
-class Customer
+class Customer extends AbstractEntity
 {
     /** 
      * @ORM\Id
@@ -21,7 +22,7 @@ class Customer
     private $name;
 
     /** 
-     * @ORM\Column(type="string", length=20, nullable=true, name="phone_number")
+     * @ORM\Column(type="string", length=20, nullable=false, name="phone_number",unique=true)
      */
     private $phoneNumber;
 
@@ -45,6 +46,11 @@ class Customer
      */
     private $isVip;
 
+    /**
+     * @ORM\Column(type="float", nullable=true, name="balance", precision=10, scale=0)
+     */
+    private $balance;
+
     /** 
      * @ORM\Column(type="text", nullable=true, name="remark")
      */
@@ -58,8 +64,9 @@ class Customer
     /**
      * Constructor
      */
-    public function __construct()
+    public function __construct(array $data = null)
     {
+        parent::__construct($data);
         $this->orders = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -104,6 +111,9 @@ class Customer
      */
     public function setPhoneNumber($phoneNumber)
     {
+        if(!$phoneNumber){
+            throw new ValidationException('手机号码不能为空','phoneNumber');
+        }
         $this->phoneNumber = $phoneNumber;
 
         return $this;
@@ -268,5 +278,21 @@ class Customer
     public function getOrders()
     {
         return $this->orders;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBalance()
+    {
+        return $this->balance;
+    }
+
+    /**
+     * @param mixed $balance
+     */
+    public function setBalance($balance)
+    {
+        $this->balance = $balance;
     }
 }

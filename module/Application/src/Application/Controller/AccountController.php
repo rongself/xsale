@@ -1,6 +1,8 @@
 <?php
 namespace Application\Controller;
 
+use Application\Entity\Account;
+use Zend\Json\Json;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
@@ -28,7 +30,24 @@ class AccountController extends AbstractActionController
 
     public function createAccountAction()
     {
-        return new ViewModel();
+        $returnData = array('success'=>false,'error'=>array());
+        if($this->getRequest()->isPost()){
+            try{
+                $jsonData = $this->params()->fromPost('account');
+                $account = new Account(Json::decode($jsonData,Json::TYPE_ARRAY));
+                $account->setCreateTime(new \DateTime());//@todo 这一行抛出异常被捕获处理后,会不会执行下一行??
+                $this->accountService->create($account);
+            }catch (ValidationException $e){
+                $returnData['error'] = $e->getValidationError();
+                return new JsonModel($returnData);
+            }catch(\Exception $e){
+                $returnData['error'] = $e->getMessage();
+                return new JsonModel($returnData);
+            }
+            $returnData['success'] = true;
+            return new JsonModel($returnData);
+        }
+
     }
 
     public function editAccountAction()
@@ -53,6 +72,12 @@ class AccountController extends AbstractActionController
             $this->accountService->deleteIn($ids);
             return new JsonModel(array('success'=>true,'error'=>array()));
         }
+    }
+
+    public function ajaxIsUsernameExistsAction(){
+        $username = $this->getRequest()->getPost('account');
+        $return = $this->accountService->isUsernameExists($username);
+        return new JsonModel(array('result'=>$return));
     }
 
     public function loginAction()
