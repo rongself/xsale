@@ -10,28 +10,17 @@ use Zend\View\Model\ViewModel;
 class SaleRecordController extends AbstractActionController
 {
     /**
-     * @var \Application\Service\CustomerService
-     */
-    private $customerService;
-    /**
      * @var \Application\Service\SaleRecordService
      */
     private $saleRecordService;
-    /**
-     * @var \Application\Service\ProductService
-     */
-    private $productService;
 
     public function __construct(SaleRecordService $saleRecordService)
     {
-//       $this->customerService = $customerService;
        $this->saleRecordService = $saleRecordService;
-//       $this->productService = $productService;
     }
 
     public function indexAction()
     {
-        //$keyword = trim($this->params()->fromQuery('k'));
         $page = intval($this->params('page',1));
         $paginator = $this->saleRecordService->getPaginator();
         $paginator->setCurrentPageNumber($page)->setItemCountPerPage(10);
@@ -71,10 +60,9 @@ class SaleRecordController extends AbstractActionController
     {
         if($this->getRequest()->isPost())
         {
-            $ids = Json::decode($this->params('ids'),Json::TYPE_ARRAY);
-            var_dump($ids);exit;
+            $ids = $this->params()->fromPost('ids');
             $this->saleRecordService->deleteIn($ids);
-            return new JsonModel(array(2,7));
+            return new JsonModel(array('success'=>true,'error'=>array()));
         }
     }
 

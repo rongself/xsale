@@ -45,6 +45,11 @@
 
         <link rel="shortcut icon" href="/mac/img/favicon/favicon.png">
 
+        <script type="text/javascript">
+            require(['lib/json2'],function(){
+                xsaleConfig = JSON.parse('<?php echo json_encode($this->xsaleConfig);?>');
+            });
+        </script>
         <?php echo $this->headLink() ?>
         <?php echo $this->headScript() ?>
 

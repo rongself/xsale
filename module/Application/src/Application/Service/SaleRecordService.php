@@ -71,15 +71,12 @@ class SaleRecordService extends AbstractService{
 
     public function getPaginator()
     {
-        $query = $this->objectManager->createQuery('SELECT o,c FROM Application\Entity\Order o LEFT JOIN o.customer c');
-        $paginator = new Paginator(
-            new DoctrinePaginator(new ORMPaginator($query))
-        );
-        return $paginator;
+        return parent::getPaginator('SELECT o,c FROM Application\Entity\Order o LEFT JOIN o.customer c');
     }
 
     /**
      * @param $id
+     * @return mixed
      */
     public function delete($id)
     {
@@ -90,6 +87,10 @@ class SaleRecordService extends AbstractService{
         return $qb->getQuery()->execute();
     }
 
+    /**
+     * @param array $ids
+     * @return mixed
+     */
     public function deleteIn(array $ids)
     {
         $qb = $this->objectManager->createQueryBuilder();

@@ -1,3 +1,8 @@
+<?php
+/**
+ * @var $this Zend\View\Renderer\PhpRenderer
+ */
+?>
 <div class="row">
     <div class="col-md-12">
         <div class="row">
@@ -30,7 +35,7 @@
                         <tr>
                             <th>
                                 <span class="uni">
-                                    <input type="checkbox" value="check1">
+                                    <input type="checkbox" id="checkAll">
                                 </span>
                             </th>
                             <th>账单号</th>
@@ -45,11 +50,11 @@
                         <tr data-href="/saleRecord/edit-record/slid/1">
                             <td>                            
                                 <span class="uni">
-                                    <?php $id = $item->getId();?>
-                                    <input type="checkbox" class="record-id" value="<?php echo $id?>">
+                                    <?php $id = $this->escapeHtml($item->getId());?>
+                                    <input type="checkbox" class="ids" value="<?php echo $id?>"/>
                                 </span>
                             </td>
-                            <td><?php echo $this->escapeHtml($id);?></td>
+                            <td><?php echo $id;?></td>
                             <td><?php
                                     $customer = $item->getCustomer();
                                     echo isset($customer) ? $this->escapeHtml($customer->getPhoneNumber()):'-';
@@ -70,14 +75,11 @@
                 <div class="widget-foot">
 
                     <div class="uni pull-left">
-                        <select class="form-control">
-                            <option>操作</option>
-                            <option>编辑</option>
-                            <option>删除</option>
+                        <select class="form-control" id="formControl">
+                            <option value="handle">操作</option>
+                            <option value="delete">删除</option>
                         </select>
                     </div>
-
-                    <?php //var_dump($this->paginator);exit;?>
                     <?php
                         echo $this->paginationControl($this->paginator,
                             'Sliding', 'paginator-control-bar'
@@ -86,7 +88,6 @@
                              )
                         );
                     ?>
-
                     <div class="clearfix"></div> 
 
                 </div>
@@ -95,15 +96,4 @@
         </div>
     </div>
 </div>
-<?php
-    $this->Script = <<<SCRIPT
-    <script type="text/javascript">
-        $('#record_list>tbody>tr').click(function(e){
-            location.href = $(this).attr('data-href');
-        });
-        $('#record_list>tbody>tr>td:has("button")').click(function(){
-            return false;
-        });
-    </script>    
-SCRIPT;
-?>
+<?php $this->headScript()->appendScript("require(['main'],function(){require(['page/sale-record/index']);});");?>

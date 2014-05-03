@@ -9,6 +9,9 @@
 namespace Application\Service;
 
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
+use Zend\Paginator\Paginator;
+use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator;
+use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
 
 abstract class AbstractService{
     protected $cache;
@@ -24,6 +27,19 @@ abstract class AbstractService{
     public function getAll()
     {
         return $this->getRepository()->findAll();
+    }
+
+    /**
+     * @param $queryStr
+     * @return Paginator
+     */
+    protected function getPaginator($queryStr)
+    {
+        $query = $this->objectManager->createQuery($queryStr);
+        $paginator = new Paginator(
+            new DoctrinePaginator(new ORMPaginator($query))
+        );
+        return $paginator;
     }
 
     /**

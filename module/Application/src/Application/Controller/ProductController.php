@@ -17,7 +17,10 @@ class ProductController extends AbstractActionController
 
     public function indexAction()
     {
-        // action body
+        $page = intval($this->params('page',1));
+        $paginator = $this->productService->getPaginator();
+        $paginator->setCurrentPageNumber($page)->setItemCountPerPage(10);
+        return array('paginator'=>$paginator);
     }
 
     public function editProductAction()
@@ -55,6 +58,24 @@ class ProductController extends AbstractActionController
         return new JsonModel(array('result'=>$return));
     }
 
+    public function deleteAction()
+    {
+        $id = $this->params('id');
+        $res = $this->productService->delete($id);
+        if($res){
+            return $this->redirect()->toRoute('product/wildcard');
+        }
+    }
+
+    public function deleteMultipleAction()
+    {
+        if($this->getRequest()->isPost())
+        {
+            $ids = $this->params()->fromPost('ids');
+            $this->productService->deleteIn($ids);
+            return new JsonModel(array('success'=>true,'error'=>array()));
+        }
+    }
 
 }
 

@@ -2,7 +2,7 @@
  * Created by Ron on 14-3-4.
  */
 define(['knockout','validation','validationConfig'], function(ko) {
-    return function(saleProducts) {
+    return function() {
         var self = this;
         self.sku = ko.observable().extend({
             required: { message: '产品款号不能为空' },

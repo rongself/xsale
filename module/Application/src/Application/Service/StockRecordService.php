@@ -80,4 +80,35 @@ class StockRecordService extends AbstractService {
     {
         // TODO: Implement getRepository() method.
     }
+
+    public function getPaginator()
+    {
+        return parent::getPaginator('SELECT o FROM Application\Entity\StockRecord o');
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function delete($id)
+    {
+        $qb = $this->objectManager->createQueryBuilder();
+        $qb->delete()
+            ->from('Application\Entity\StockRecord','o')
+            ->where($qb->expr()->eq('o.id',$id));
+        return $qb->getQuery()->execute();
+    }
+
+    /**
+     * @param array $ids
+     * @return mixed
+     */
+    public function deleteIn(array $ids)
+    {
+        $qb = $this->objectManager->createQueryBuilder();
+        $qb->delete()
+            ->from('Application\Entity\StockRecord','o')
+            ->where($qb->expr()->in('o.id',$ids));
+        return $qb->getQuery()->execute();
+    }
 }

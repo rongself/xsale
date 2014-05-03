@@ -49,13 +49,97 @@ return array(
             'sale-record' => array(
                 'type'    => 'Segment',
                 'options' => array(
-                    'route'    => '/[:controller[/:action]]',
+                    'route'    => '/sale-record[/:action]',
                     'constraints' => array(
                         'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
                     ),
                     'defaults' => array(
                         'controller'=>'sale-record',
+                        'action' => 'index',
+                        '__NAMESPACE__' => 'Application\Controller'
+                    ),
+                ),
+                'may_terminate' => true,
+                'child_routes' => array(
+                    'wildcard' => array(
+                        'type' => 'Wildcard'
+                    )
+                )
+            ),
+            'stock-record' => array(
+                'type'    => 'Segment',
+                'options' => array(
+                    'route'    => '/stock-record[/:action]',
+                    'constraints' => array(
+                        'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
+                    'defaults' => array(
+                        'controller'=>'stock-record',
+                        'action' => 'index',
+                        '__NAMESPACE__' => 'Application\Controller'
+                    ),
+                ),
+                'may_terminate' => true,
+                'child_routes' => array(
+                    'wildcard' => array(
+                        'type' => 'Wildcard'
+                    )
+                )
+            ),
+            'customer' => array(
+                'type'    => 'Segment',
+                'options' => array(
+                    'route'    => '/customer[/:action]',
+                    'constraints' => array(
+                        'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
+                    'defaults' => array(
+                        'controller'=>'customer',
+                        'action' => 'index',
+                        '__NAMESPACE__' => 'Application\Controller'
+                    ),
+                ),
+                'may_terminate' => true,
+                'child_routes' => array(
+                    'wildcard' => array(
+                        'type' => 'Wildcard'
+                    )
+                )
+            ),
+            'product' => array(
+                'type'    => 'Segment',
+                'options' => array(
+                    'route'    => '/product[/:action]',
+                    'constraints' => array(
+                        'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
+                    'defaults' => array(
+                        'controller'=>'product',
+                        'action' => 'index',
+                        '__NAMESPACE__' => 'Application\Controller'
+                    ),
+                ),
+                'may_terminate' => true,
+                'child_routes' => array(
+                    'wildcard' => array(
+                        'type' => 'Wildcard'
+                    )
+                )
+            ),
+            'account' => array(
+                'type'    => 'Segment',
+                'options' => array(
+                    'route'    => '/account[/:action]',
+                    'constraints' => array(
+                        'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
+                    'defaults' => array(
+                        'controller'=>'account',
                         'action' => 'index',
                         '__NAMESPACE__' => 'Application\Controller'
                     ),
@@ -95,6 +179,9 @@ return array(
             'CustomerService' => function(Zend\ServiceManager\ServiceManager $sm) {
                 return new Application\Service\CustomerService($sm->get('Doctrine\ORM\EntityManager'));
             },
+            'AccountService' => function(Zend\ServiceManager\ServiceManager $sm) {
+                return new Application\Service\AccountService($sm->get('Doctrine\ORM\EntityManager'));
+            },
         ),
     ),
     'translator' => array(
@@ -110,7 +197,7 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'Application\Controller\Index' => 'Application\Controller\IndexController',
-            'Application\Controller\Account' => 'Application\Controller\AccountController',
+            //'Application\Controller\Account' => 'Application\Controller\AccountController',
             //'Application\Controller\Customer' => 'Application\Controller\CustomerController',
             'Application\Controller\Error' => 'Application\Controller\ErrorController',
             //'Application\Controller\Product' => 'Application\Controller\ProductController',
@@ -139,6 +226,11 @@ return array(
             'Application\Controller\Customer' => function ($sm) {
                 return new Application\Controller\CustomerController(
                     $sm->getServiceLocator()->get('CustomerService')
+                );
+            },
+            'Application\Controller\Account' => function ($sm) {
+                return new Application\Controller\AccountController(
+                    $sm->getServiceLocator()->get('AccountService')
                 );
             },
 

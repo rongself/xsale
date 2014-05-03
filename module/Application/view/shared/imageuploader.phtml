@@ -1,3 +1,4 @@
+<?php $this->headLink()->appendStylesheet('/default/style/css/jquery.fileupload.css');?>
 <span class="btn btn-default fileinput-button">
     <i class="icon-plus"></i>
     <span>添加图片</span>
@@ -6,7 +7,7 @@
     <input id="fileupload" type="file" name="files[]" multiple>
 </span>
 <!-- ko foreach: stockProduct.pictures -->
-<img data-bind="attr:{src:PRODUCT_IMAGE_PATH+'thumbnail/'+$data}" alt="" width="31px" height="31px">
+<img data-bind="attr:{src:xsaleConfig.thumbnailPath+$data}" alt="" width="31px" height="31px">
 <!-- /ko -->
 
 <!-- The global progress bar -->

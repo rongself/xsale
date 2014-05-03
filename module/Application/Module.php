@@ -19,6 +19,11 @@ class Module
         $eventManager        = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
+
+        $serviceManager = $e->getApplication()->getServiceManager();
+        $viewModel = $e->getApplication()->getMvcEvent()->getViewModel();
+        $myService = $serviceManager->get('Config');
+        $viewModel->xsaleConfig = $myService['upload'];
     }
 
     public function getConfig()

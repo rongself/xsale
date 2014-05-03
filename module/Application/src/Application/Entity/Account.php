@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping AS ORM;
  * @ORM\Entity
  * @ORM\Table(name="xs_admins")
  */
-class Admin
+class Account
 {
     /** 
      * @ORM\Id
@@ -19,6 +19,11 @@ class Admin
      * @ORM\Column(type="string", length=32, nullable=false, name="username")
      */
     private $username;
+
+    /**
+     * @ORM\Column(type="string", length=32, nullable=false, name="name")
+     */
+    private $name;
 
     /** 
      * @ORM\Column(type="string", length=32, nullable=false, name="password")
@@ -107,5 +112,21 @@ class Admin
     public function getCreateTime()
     {
         return $this->createTime;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param mixed $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
     }
 }

@@ -10,7 +10,8 @@ require.config({
         typeahead:'lib/typeahead.min',
         underscore:'lib/underscore.min',
         loadBar:'lib/jquery.loadingbar.min',
-        knockoutMapping:'lib/knockout.mapping'
+        knockoutMapping:'lib/knockout.mapping',
+        checkedAll:'module/checked.all.handle'
     },
     shim:{
         'bootstrap':{
@@ -20,6 +21,10 @@ require.config({
         'typeahead':{
             deps:['bootstrap'],
             exports:"$.fn.typeahead"
+        },
+        'json2':{
+            deps:[],
+            exports:"JSON"
         }
     }
 });

@@ -39,6 +39,37 @@ class ProductService extends  AbstractService
         return $result!==null;
     }
 
+    public function getPaginator()
+    {
+        return parent::getPaginator('SELECT o FROM Application\Entity\Product o');
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function delete($id)
+    {
+        $qb = $this->objectManager->createQueryBuilder();
+        $qb->delete()
+            ->from('Application\Entity\Product','o')
+            ->where($qb->expr()->eq('o.id',$id));
+        return $qb->getQuery()->execute();
+    }
+
+    /**
+     * @param array $ids
+     * @return mixed
+     */
+    public function deleteIn(array $ids)
+    {
+        $qb = $this->objectManager->createQueryBuilder();
+        $qb->delete()
+            ->from('Application\Entity\Product','o')
+            ->where($qb->expr()->in('o.id',$ids));
+        return $qb->getQuery()->execute();
+    }
+
     function getRepository()
     {
         return $this->objectManager->getRepository('Application\Entity\Product');

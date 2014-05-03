@@ -1,3 +1,8 @@
+<?php
+/**
+ * @var $this Zend\View\Renderer\PhpRenderer
+ */
+?>
 <div class="row">
     <div class="col-md-12">
         <div class="row">
@@ -24,13 +29,12 @@
                 <div class="clearfix"></div>
             </div>
             <div class="widget-content medias">
-
                 <table id="product_list" class="table table-striped table-bordered table-hover">
                     <thead>
                         <tr>
                             <th>
                                 <span class="uni">
-                                    <input type="checkbox" value="check1">
+                                    <input type="checkbox" id="checkAll">
                                 </span>
                             </th>
                             <th>缩略图</th>
@@ -43,48 +47,53 @@
                         </tr>
                     </thead>
                     <tbody>
-
+                    <?php foreach($this->paginator->getCurrentItems() as $item):?>
                         <tr data-href="/product/edit-product">
-                            <td>                            
+                            <td>
+                                <?php $id = $this->escapeHtml($item->getId());?>
                                 <span class="uni">
-                                    <input type="checkbox" value="check1">
+                                    <input type="checkbox" class="ids" value="<?php echo $id;?>">
                                 </span>
                             </td>
-                            <td><img src="/mac/img/user.jpg" alt=""></td>
-                            <td>#86768</td>
-                            <td>欧尼娜 大码羽绒服女中长款加厚 欧洲站羽绒服女2013潮清仓</td>
-                            <td>202</td>
-                            <td>328</td>
-                            <td>45</td>
                             <td>
-                                <button class="btn btn-xs btn-default"><i class="icon-pencil"></i> </button>
-                                <button class="btn btn-xs btn-danger"><i class="icon-remove"></i> </button>
+                            <?php if($this->escapeHtml($item->getPicture())):?>
+                                <img src="<?php echo $this->layout()->xsaleConfig['thumbnailPath'].$this->escapeHtml($item->getPicture());?>" alt="">
+                            <?php else:?>
+                                <img src="<?php echo $this->layout()->xsaleConfig['thumbnailPath'].$this->layout()->xsaleConfig['defaultImage'];?>" alt="">
+                            <?php endif;?>
+                            </td>
+                            <td><?php echo $this->escapeHtml($item->getSku());?></td>
+                            <td><?php echo $this->escapeHtml($item->getName());?></td>
+                            <td><?php echo $this->escapeHtml($item->getCost());?></td>
+                            <td><?php echo $this->escapeHtml($item->getPrice());?></td>
+                            <td><?php echo $this->escapeHtml($item->getStock());?></td>
+                            <td>
+
+                                <a class="btn btn-xs btn-default"><i class="icon-pencil"></i> </a>
+                                <a onclick="if(!confirm('要删除此订单吗?'))return false;" href="<?php echo $this->url('product/wildcard',array('action'=>'delete','id'=>$id))?>" class="btn btn-xs btn-danger"><i class="icon-remove"></i> </a>
+
                             </td>
                         </tr>
-
+                    <?php endforeach;?>
                     </tbody>
                 </table>
 
                 <div class="widget-foot">
 
                     <div class="uni pull-left">
-                        <select class="form-control">
-                            <option>操作</option>
-                            <option>编辑</option>
-                            <option>删除</option>
+                        <select class="form-control" id="formControl">
+                            <option value="handle">操作</option>
+                            <option value="delete">删除</option>
                         </select>
                     </div>
-
-
-                    <ul class="pagination pull-right">
-                        <li><a href="#">Prev</a></li>
-                        <li><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">Next</a></li>
-                    </ul>
-
+                    <?php
+                    echo $this->paginationControl($this->paginator,
+                        'Sliding', 'paginator-control-bar'
+                        ,array(
+                            'route' => 'product/wildcard'
+                        )
+                    );
+                    ?>
                     <div class="clearfix"></div> 
 
                 </div>
@@ -93,15 +102,4 @@
         </div>
     </div>
 </div>
-<?php
-$this->Script = <<<SCRIPT
-    <script type="text/javascript">
-        $('#product_list>tbody>tr').click(function(e){
-            location.href = $(this).attr('data-href');
-        });
-        $('#product_list>tbody>tr>td:has("button")').click(function(){
-            return false;
-        });
-    </script>    
-SCRIPT;
-?>
+<?php $this->headScript()->appendScript("require(['main'],function(){require(['page/product/index']);});");?>

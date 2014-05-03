@@ -30,61 +30,58 @@
                         <tr>
                             <th>
                                 <span class="uni">
-                                    <input type="checkbox" value="check1">
+                                    <input type="checkbox" id="checkAll" value="check1">
                                 </span>
                             </th>
-                            <th>头像</th>
                             <th>姓名</th>
                             <th>手机号</th>
                             <th>微信号</th>
                             <th>QQ</th>
                             <th>是否为VIP</th>
+                            <th>添加时间</th>
                             <th>操作</th>
                         </tr>
                     </thead>
                     <tbody>
-
+                    <?php foreach($this->paginator->getCurrentItems() as $item):?>
                         <tr data-href="/customer/edit-customer">
-                            <td>                            
+                            <td>
+                                <?php $id = $this->escapeHtml($item->getId());?>
                                 <span class="uni">
-                                    <input type="checkbox" value="check1">
+                                    <input type="checkbox" class="ids" value="<?php echo $id?>">
                                 </span>
                             </td>
-                            <td><img src="/mac/img/user.jpg" alt=""></td>
-                            <td>蔡小啊</td>
-                            <td>15789865432</td>
-                            <td>WODEWEXIN</td>
-                            <td>9876543</td>
-                            <td>是</td>
+                            <td><?php echo $this->escapeHtml($item->getName());?></td>
+                            <td><?php echo $this->escapeHtml($item->getPhoneNumber());?></td>
+                            <td><?php echo $this->escapeHtml($item->getWeChat());?></td>
+                            <td><?php echo $this->escapeHtml($item->getQq());?></td>
+                            <td><?php echo $item->getIsVip()?'是':'否'?></td>
+                            <td><?php echo $this->escapeHtml($item->getCreateTime()->format('Y-m-d H:s:i'));?></td>
                             <td>
-                                <button class="btn btn-xs btn-default"><i class="icon-pencil"></i> </button>
-                                <button class="btn btn-xs btn-danger"><i class="icon-remove"></i> </button>
+                                <a class="btn btn-xs btn-default"><i class="icon-pencil"></i> </a>
+                                <a onclick="if(!confirm('要删除此订单吗?'))return false;" href="<?php echo $this->url('customer/wildcard',array('action'=>'delete','id'=>$id))?>" class="btn btn-xs btn-danger"><i class="icon-remove"></i> </a>
                             </td>
                         </tr>
-
+                    <?php endforeach;?>
                     </tbody>
                 </table>
 
                 <div class="widget-foot">
 
                     <div class="uni pull-left">
-                        <select class="form-control">
-                            <option>操作</option>
-                            <option>编辑</option>
-                            <option>删除</option>
+                        <select class="form-control" id="formControl">
+                            <option value="handle">操作</option>
+                            <option value="delete">删除</option>
                         </select>
                     </div>
-
-
-                    <ul class="pagination pull-right">
-                        <li><a href="#">Prev</a></li>
-                        <li><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">Next</a></li>
-                    </ul>
-
+                    <?php
+                    echo $this->paginationControl($this->paginator,
+                        'Sliding', 'paginator-control-bar'
+                        ,array(
+                            'route' => 'customer/wildcard'
+                        )
+                    );
+                    ?>
                     <div class="clearfix"></div> 
 
                 </div>
@@ -93,15 +90,4 @@
         </div>
     </div>
 </div>
-<?php
-$this->Script = <<<SCRIPT
-    <script type="text/javascript">
-        $('#product_list>tbody>tr').click(function(e){
-            location.href = $(this).attr('data-href');
-        });
-        $('#record-list>tbody>tr>td:has("button")').click(function(){
-            return false;
-        });
-    </script>    
-SCRIPT;
-?>
+<?php $this->headScript()->appendScript("require(['main'],function(){require(['page/customer/index']);});");?>

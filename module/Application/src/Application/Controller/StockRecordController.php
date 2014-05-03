@@ -23,7 +23,10 @@ class StockRecordController extends AbstractActionController
 
     public function indexAction()
     {
-
+        $page = intval($this->params('page',1));
+        $paginator = $this->stockRecordService->getPaginator();
+        $paginator->setCurrentPageNumber($page)->setItemCountPerPage(10);
+        return array('paginator'=>$paginator);
     }
 
     public function createRecordAction()
@@ -36,9 +39,23 @@ class StockRecordController extends AbstractActionController
         }
     }
 
-    public function deleteRecordAction()
+    public function deleteAction()
     {
-        // action body
+        $id = $this->params('id');
+        $res = $this->stockRecordService->delete($id);
+        if($res){
+            return $this->redirect()->toRoute('stock-record/wildcard');
+        }
+    }
+
+    public function deleteMultipleAction()
+    {
+        if($this->getRequest()->isPost())
+        {
+            $ids = $this->params()->fromPost('ids');
+            $this->stockRecordService->deleteIn($ids);
+            return new JsonModel(array('success'=>true,'error'=>array()));
+        }
     }
 
     public function editRecordAction()
