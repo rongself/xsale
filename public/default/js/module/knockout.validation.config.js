@@ -18,7 +18,7 @@ define(['knockout','validation','underscore'], function(ko) {
 
     ko.validation.rules['isProductExists'] = {
         async: true,
-        message: '该产品不存在于库存中',
+        message: '该产品不存在于库存中,也许你需要先进货:)',
         validator: function(val, parms, callback) {
             $.ajax({
                 url: '/Product/ajax-is-product-exists',

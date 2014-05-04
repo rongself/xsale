@@ -3,3 +3,8 @@
   display: block;
   padding-top: 10px;
 }
+.nav-fix{
+    position: fixed !important;
+    top: 51px;
+    left: 0px;
+}

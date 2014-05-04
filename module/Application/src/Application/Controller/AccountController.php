@@ -22,6 +22,13 @@ class AccountController extends AbstractActionController
 
     public function indexAction()
     {
+        /**
+         * @var $authService \Zend\Authentication\AuthenticationService
+         */
+        $authService = $this->getServiceLocator()->get('Zend\Authentication\AuthenticationService');
+        if(!$authService->hasIdentity()){
+            return $this->redirect()->toRoute('login');
+        }
         $page = intval($this->params('page',1));
         $paginator = $this->accountService->getPaginator();
         $paginator->setCurrentPageNumber($page)->setItemCountPerPage(10);
@@ -82,7 +89,47 @@ class AccountController extends AbstractActionController
 
     public function loginAction()
     {
-       $this->_helper->layout()->disableLayout();
+        /**
+         * @var $authService \Zend\Authentication\AuthenticationService
+         */
+        $authService = $this->getServiceLocator()->get('Zend\Authentication\AuthenticationService');
+        if($authService->hasIdentity()){
+            return $this->redirect()->toRoute('home');
+        }
+        $this->layout('layout/layout-blank');
+        $returnData = array('success'=>false,'error'=>array());
+        if($this->getRequest()->isPost()){
+            $jsonData = $this->getRequest()->getPost('login');
+            $data = Json::decode($jsonData,Json::TYPE_ARRAY);
+            // If you used another name for the authentication service, change it here
+            $adapter = $authService->getAdapter();
+            $adapter->setIdentityValue($data['username']);
+            $adapter->setCredentialValue($data['password']);
+            $authResult = $authService->authenticate();
+
+            //@todo remember me
+            if ($authResult->isValid()) {
+                $returnData['success'] = true;
+                return new JsonModel($returnData);
+            }else{
+                $returnData['error'] = '登录名或密码错误';
+                return new JsonModel($returnData);
+            }
+        }
+
+    }
+
+    public function logoutAction()
+    {
+        /**
+         * @var $authService \Zend\Authentication\AuthenticationService
+         */
+        $authService = $this->getServiceLocator()->get('Zend\Authentication\AuthenticationService');
+
+        if($authService->hasIdentity()){
+            $authService->clearIdentity();
+        }
+        return $this->redirect()->toRoute('login');
     }
 
 

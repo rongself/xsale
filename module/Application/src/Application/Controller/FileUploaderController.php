@@ -2,7 +2,7 @@
 
 namespace Application\Controller;
 
-use Application\Custom\UploadHandler;
+use Application\Lib\Upload\UploadHandler;
 use Zend\Config\Writer\Json;
 use Zend\Debug\Debug;
 use Zend\Mvc\Controller\AbstractActionController;

@@ -1,0 +1,45 @@
+<?php echo $this->doctype(); ?>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <?php echo $this->headTitle('XSale '. $this->translate('进销存系统'))->setSeparator(' - ')->setAutoEscape(false) ?>
+
+    <?php echo $this->headMeta()
+        ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+        ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+    ?>
+    <link href="/mac/style/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="/mac/style/font-awesome.css">
+    <link href="/mac/style/style.css" rel="stylesheet">
+    <link href="/default/style/css/default.css" rel="stylesheet">
+    <link rel="stylesheet" href="/mac/style/bootstrap-switch.css">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.min.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+    <!-- Font awesome icon -->
+    <!-- Stylesheets -->
+
+    <link href="/default/style/css/pace-theme-minimal.css" rel="stylesheet">
+
+    <script data-main="/default/js/main" src="/default/js/require.js" ></script>
+
+    <link rel="shortcut icon" href="/mac/img/favicon/favicon.png">
+
+    <script type="text/javascript">
+        require(['lib/json2'],function(){
+            xsaleConfig = JSON.parse('<?php echo json_encode($this->xsaleConfig);?>');
+        });
+    </script>
+    <?php echo $this->headLink() ?>
+    <?php echo $this->headScript() ?>
+
+</head>
+<body>
+<?php echo $this->layout()->content; ?>
+<?php echo $this->inlineScript();?>
+</body>
+</html>

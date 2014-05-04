@@ -5,6 +5,7 @@ require.config({
         knockout: 'lib/knockout',
         bootstrap: '/mac/js/bootstrap',
         custom: '/mac/js/custom',
+        switch:'/mac/js/bootstrap-switch.min',
         validation:'lib/knockout.validation',
         validationConfig:'module/knockout.validation.config',
         typeahead:'lib/typeahead.min',
@@ -26,6 +27,10 @@ require.config({
         'json2':{
             deps:[],
             exports:"JSON"
+        },
+        'switch':{
+            deps:['jquery'],
+            exports:"$.fn.bootstrapSwitch"
         }
     }
 });
@@ -34,6 +39,17 @@ require(["jquery",'pace','bootstrap'], function($,pace) {
         pace.start();
         /* Navigation */
 
+        $(window).scroll( function() {
+              if($(window).scrollTop()>$('header').outerHeight()-5){
+                  if(!$("#sidebarContent").hasClass('nav-fix')){
+                      $("#sidebarContent").addClass('nav-fix');
+                  }
+              }else{
+                  if($("#sidebarContent").hasClass('nav-fix')){
+                      $("#sidebarContent").removeClass('nav-fix');
+                  }
+              }
+        });
         $(window).resize(function()
         {
             if ($(window).width() >= 765) {
