@@ -13,7 +13,8 @@ require.config({
         loadBar:'lib/jquery.loadingbar.min',
         knockoutMapping:'lib/knockout.mapping',
         checkedAll:'module/checked.all.handle',
-        pace:'lib/pace.min'
+        pace:'lib/pace.min',
+        formPost:'module/formPost'
     },
     shim:{
         'bootstrap':{

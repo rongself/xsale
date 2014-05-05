@@ -1,7 +1,7 @@
 /**
  * Created by Ron on 14-5-4.
  */
-define(['knockout','knockoutMapping','pace','validation','validationConfig'], function(ko,koMapping,pace) {
+define(['knockout','knockoutMapping','formPost','validation','validationConfig'], function(ko,koMapping,formPost) {
     return function(){
         var self = this;
         self.username = ko.observable().extend({
@@ -20,25 +20,14 @@ define(['knockout','knockoutMapping','pace','validation','validationConfig'], fu
 
         self.submitAndContinue = function(callback){
             var data = koMapping.toJSON(self);
-            var model = ko.validatedObservable(self);
-            if((model.isValid())){
-                $.post('/account/login',{login:data},function(result){
-                    if(result.success){
-                        self.reset();
-                        model.errors.showAllMessages(false);
-                        if(typeof callback =='function'){
-                            callback();
-                    }
-                    }else{
-                        alert(result.error[0]);
-                    }
-                },'json')
-                    .fail(function(){
-                        alert('Ajax传输错误');
-                    });
-            }else{
-                model.errors.showAllMessages();
-            }
+            formPost.submit({
+                viewModel:self,
+                url:'/account/login',
+                data:{login:data},
+                success:function(){
+                    callback();
+                }
+            });
         }
         self.submit = function(){
             self.submitAndContinue(function(){

@@ -19,13 +19,6 @@ define(['jquery','typeahead','underscore','lib/json2'],function($){
                     });
                     process(results);
                 }
-//                $.getJSON('/Product/get-products-json',{query:query},function(data){
-//                    products = data;
-//                    var results = _.map(products, function (product) {
-//                        return product.sku;
-//                    });
-//                    process(results);
-//                });
             },
             highlighter: function (selectedSKU) {
                 var product = _.find(products, function (item) {

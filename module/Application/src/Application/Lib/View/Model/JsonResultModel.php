@@ -13,35 +13,30 @@ use Zend\View\Model\JsonModel;
 
 class JsonResultModel extends JsonModel {
 
-    private $result;
+    private $success;
 
     private $errors;
 
     public function __construct(array $errors = array())
     {
-        if(empty($errors))
-        {
-            $this->setResult(true);
-        }else{
-            $this->setErrors($errors);
-        }
+         $this->setErrors($errors);
     }
 
     /**
      * @return mixed
      */
-    public function getResult()
+    public function getSuccess()
     {
-        return $this->result;
+        return $this->success;
     }
 
     /**
      * @param mixed $result
      */
-    public function setResult($result = false)
+    private function setSuccess($result)
     {
-        $this->result = $result;
-        parent::setVariable('result',$result);
+        $this->success = $result;
+        parent::setVariable('success',$result);
     }
 
     /**
@@ -58,8 +53,9 @@ class JsonResultModel extends JsonModel {
      */
     public function addErrors($field,$error)
     {
-        $this->errors[$field] = $error;
-        $this->setErrors($this->errors);
+        $errors = $this->errors;
+        $errors[$field] = $error;
+        $this->setErrors($errors);
     }
 
     /**
@@ -68,6 +64,12 @@ class JsonResultModel extends JsonModel {
     public function setErrors(array $errors)
     {
         $this->errors = $errors;
+        if(empty($errors))
+        {
+            $this->setSuccess(true);
+        }else{
+            $this->setSuccess(false);
+        }
         parent::setVariable('errors',$errors);
     }
 

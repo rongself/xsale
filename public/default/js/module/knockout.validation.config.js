@@ -16,23 +16,32 @@ define(['knockout','validation','underscore'], function(ko) {
         return exists === null;
     };
 
-    ko.validation.rules['isProductExists'] = {
-        async: true,
-        message: '该产品不存在于库存中,也许你需要先进货:)',
-        validator: function(val, parms, callback) {
-            $.ajax({
-                url: '/Product/ajax-is-product-exists',
-                type: 'POST', // or whatever http method the server endpoint needs
-                data: { sku: val }, // args to send server
-                dataType:'json'
-            })
+    var isAjaxPending = false;
+    $('body').ajaxStart(function(){
+        isAjaxPending = true;
+    });
+    $('body').ajaxStop(function(){
+        isAjaxPending = false;
+    });
+    var startAjax = function(val,callback){
+        if(isAjaxPending){
+            setTimeout(startAjax(val,callback),1000);
+            return false;
+        }
+        $.ajax({
+            context:document.body,
+            url: '/Product/ajax-is-product-exists',
+            type: 'POST', // or whatever http method the server endpoint needs
+            data: { sku: val }, // args to send server
+            dataType:'json'
+        })
             .done(function(response, statusText, xhr) {
                 if(response.result==true){
                     callback(true);
                 }else{
                     callback(false);
                 }
-               // tell ko.validation that this value is valid
+                // tell ko.validation that this value is valid
             })
             .fail(function(xhr, statusText, errorThrown) {
                 callback(false); // tell ko.validation that his value is NOT valid
@@ -40,6 +49,12 @@ define(['knockout','validation','underscore'], function(ko) {
                 // validation message like so:
                 // callback({ isValid: false, message: xhr.responseText });
             });
+    }
+    ko.validation.rules['isProductExists'] = {
+        async: true,
+        message: '该产品不存在于库存中,也许你需要先进货:)',
+        validator: function(val, parms, callback) {
+            startAjax(val,callback);
         }
     };
     ko.validation.rules['isPhoneNumberExists'] = {

@@ -3,6 +3,7 @@ namespace Application\Controller;
 
 use Application\Entity\Customer;
 use Application\Entity\Exception\ValidationException;
+use Application\Lib\View\Model\JsonResultModel;
 use Zend\Json\Json;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\JsonModel;
@@ -30,7 +31,7 @@ class CustomerController extends AbstractActionController
 
     public function createCustomerAction()
     {
-        $returnData = array('success'=>false,'error'=>array());
+        $resultModel = new JsonResultModel();
         if($this->getRequest()->isPost()){
             try{
                 $jsonData = $this->params()->fromPost('customer');
@@ -38,14 +39,13 @@ class CustomerController extends AbstractActionController
                 $customer->setCreateTime(new \DateTime());//@todo 这一行抛出异常被捕获处理后,会不会执行下一行??
                 $this->customerService->create($customer);
             }catch (ValidationException $e){
-                $returnData['error'] = $e->getValidationError();
-                return new JsonModel($returnData);
+                $resultModel->setErrors($e->getValidationError());
+                return $resultModel;
             }catch(\Exception $e){
-                $returnData['error'] = $e->getMessage();
-                return new JsonModel($returnData);
+                $resultModel->addErrors('undefined',$e->getMessage());
+                return $resultModel;
             }
-            $returnData['success'] = true;
-            return new JsonModel($returnData);
+            return $resultModel;
         }
 
     }

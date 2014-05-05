@@ -19,7 +19,7 @@ class ValidationException extends \Exception {
      */
     public function __construct($message,$field = 0)
     {
-        $this->setValidationError($message,$field = 0);
+        $this->setValidationError($message,$field);
         parent::__construct($message);
     }
 
@@ -37,6 +37,6 @@ class ValidationException extends \Exception {
      */
     private  function setValidationError($message,$field = 0)
     {
-        $this->validationError[] = array($field=>$message);
+        $this->validationError[$field] = $message;
     }
 } 

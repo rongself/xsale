@@ -5,7 +5,7 @@
 ?>
 <?php echo $this->doctype(); ?>
 
-<html lang="en">
+<html lang="zh">
     <head>
         <meta charset="utf-8">
         <?php echo $this->headTitle('XSale '. $this->translate('进销存系统'))->setSeparator(' - ')->setAutoEscape(false) ?>
@@ -97,7 +97,15 @@
                 <ul class="nav navbar-nav pull-right">
                     <li class="dropdown pull-right">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <i class="icon-user"></i> 管理员 <b class="caret"></b>
+                            <i class="icon-user"></i>
+                                <?php
+                                if ($user = $this->identity()) {
+                                    echo $this->escapeHtml($user->getName());
+                                } else {
+                                    echo 'Not logged in';
+                                }
+                                ?>
+                            <b class="caret"></b>
                         </a>
 
                         <!-- Dropdown menu -->

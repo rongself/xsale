@@ -1,12 +1,12 @@
 /**
  * Created by Ron on 14-5-3.
  */
-define(['knockout','knockoutMapping','pace','validation','validationConfig'], function(ko,koMapping,pace) {
+define(['knockout','knockoutMapping','formPost','validation','validationConfig'], function(ko,koMapping,formPost) {
     return function(){
         var self = this;
         self.name = ko.observable().extend({
             required:{message: '用户姓名不能为空'}
-        });;
+        });
         self.username = ko.observable().extend({
             required:{message: '登录名不能为空'},
             isUsernameExists:self
@@ -38,26 +38,15 @@ define(['knockout','knockoutMapping','pace','validation','validationConfig'], fu
             }
 
             var data = koMapping.toJSON(self);
-            var model = ko.validatedObservable(self);
-            if((model.isValid())){
-                $.post('/account/create-account',{account:data},function(result){
-                    if(result){
-                        alert('添加成功');
-                        self.reset();
-                        model.errors.showAllMessages(false);
-                        if(typeof callback =='function'){
-                            callback();
-                        }
-                    }else{
-                        alert(result.error[0]);
-                    }
-                },'json')
-                    .fail(function(){
-                        alert('Ajax传输错误');
-                    });
-            }else{
-                model.errors.showAllMessages();
-            }
+            formPost.submit({
+                viewModel:self,
+                url:'/account/create-account',
+                data:{account:data},
+                success:function(){
+                    alert('添加成功');
+                    callback();
+                }
+            });
         }
         self.submit = function(){
             self.submitAndContinue(function(){

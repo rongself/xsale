@@ -2,6 +2,7 @@
 namespace Application\Controller;
 
 use Application\Entity\Account;
+use Application\Lib\View\Model\JsonResultModel;
 use Zend\Json\Json;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\JsonModel;
@@ -37,22 +38,21 @@ class AccountController extends AbstractActionController
 
     public function createAccountAction()
     {
-        $returnData = array('success'=>false,'error'=>array());
+        $resultModel = new JsonResultModel();
         if($this->getRequest()->isPost()){
             try{
                 $jsonData = $this->params()->fromPost('account');
                 $account = new Account(Json::decode($jsonData,Json::TYPE_ARRAY));
-                $account->setCreateTime(new \DateTime());//@todo 这一行抛出异常被捕获处理后,会不会执行下一行??
+                $account->setCreateTime(new \DateTime());//@todo 这一行抛出异常被捕获处理后,会不会执行下一行??会!
                 $this->accountService->create($account);
             }catch (ValidationException $e){
-                $returnData['error'] = $e->getValidationError();
-                return new JsonModel($returnData);
+                $resultModel->setErrors($e->getValidationError());
+                return $resultModel;
             }catch(\Exception $e){
-                $returnData['error'] = $e->getMessage();
-                return new JsonModel($returnData);
+                $resultModel->addErrors('error',$e->getMessage());
+                return $resultModel;
             }
-            $returnData['success'] = true;
-            return new JsonModel($returnData);
+            return $resultModel;
         }
 
     }
@@ -97,7 +97,7 @@ class AccountController extends AbstractActionController
             return $this->redirect()->toRoute('home');
         }
         $this->layout('layout/layout-blank');
-        $returnData = array('success'=>false,'error'=>array());
+        $resultModel = new JsonResultModel();
         if($this->getRequest()->isPost()){
             $jsonData = $this->getRequest()->getPost('login');
             $data = Json::decode($jsonData,Json::TYPE_ARRAY);
@@ -109,11 +109,10 @@ class AccountController extends AbstractActionController
 
             //@todo remember me
             if ($authResult->isValid()) {
-                $returnData['success'] = true;
-                return new JsonModel($returnData);
+                return $resultModel;
             }else{
-                $returnData['error'] = '登录名或密码错误';
-                return new JsonModel($returnData);
+                $resultModel->addErrors('password','登录名或密码错误');
+                return $resultModel;
             }
         }
 
