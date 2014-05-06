@@ -8,7 +8,7 @@ define(['knockout','validation','validationConfig'], function(ko) {
             required: { message: '产品款号不能为空' },
             isProductExists:self
         });
-        self.quantity = ko.observable().extend({
+        self.quantity = ko.observable(1).extend({
             required: { message: '数量不能为空' },
             number:{message:'数量必须位数字'}
         });

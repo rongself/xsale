@@ -14,7 +14,13 @@ define(['jquery','knockout'], function ($,ko) {
             options = $.extend(defaultOptions,options);
             var model = ko.validatedObservable(options.viewModel);
             if(model.isValid()){
-                $.post(options.url, options.data, function (result) {
+                $.ajax({
+                    url: options.url,
+                    type: 'POST',
+                    data: options.data,
+                    dataType:'json'
+                })
+                .done(function (result) {
                     if (result.success) {
                         options.viewModel.reset();
                         model.errors.showAllMessages(false);
@@ -33,7 +39,7 @@ define(['jquery','knockout'], function ($,ko) {
                         }
                     }
                 }, 'json')
-                    .fail(function () {
+                .fail(function () {
                         alert('网络传输错误,请稍后再试');
                         if (typeof options.fail == 'function') {
                             options.fail();

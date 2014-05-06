@@ -38,6 +38,15 @@ require.config({
 require(["jquery",'pace','bootstrap'], function($,pace) {
 
         pace.start();
+
+            $('.spinner .btn:first-of-type').on('click', function() {
+                $('.spinner input').val( parseInt($('.spinner input').val(), 10) + 1);
+                return false;
+            });
+            $('.spinner .btn:last-of-type').on('click', function() {
+                $('.spinner input').val( parseInt($('.spinner input').val(), 10) - 1);
+                return false;
+            });
         /* Navigation */
 
         $(window).scroll( function() {

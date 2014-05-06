@@ -70,7 +70,7 @@ class CustomerController extends AbstractActionController
         {
             $ids = $this->params()->fromPost('ids');
             $this->customerService->deleteIn($ids);
-            return new JsonModel(array('success'=>true,'error'=>array()));
+            return new JsonResultModel();
         }
     }
 
