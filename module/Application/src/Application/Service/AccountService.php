@@ -10,6 +10,8 @@ namespace Application\Service;
 
 
 use Application\Entity\Account;
+use Application\Entity\Exception\ValidationException;
+use Application\Lib\Authentication\Password;
 
 class AccountService extends AbstractService{
 
@@ -62,5 +64,20 @@ class AccountService extends AbstractService{
     {
         $this->objectManager->persist($account);
         $this->objectManager->flush();
+    }
+
+    public function changePassword($id, $oldPassword, $newPassword)
+    {
+        /**
+         * @var $result \Application\Entity\Account
+         */
+        $result = $this->getRepository()->findOneBy(array('password'=>Password::BuildPassword($oldPassword),'id'=>$id));
+
+        if($result===null){
+            throw new ValidationException('password','原密码错误');
+        }else{
+            $result->setPassword(Password::BuildPassword($newPassword));
+            $this->objectManager->flush($result);
+        }
     }
 }

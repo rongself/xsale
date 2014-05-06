@@ -263,7 +263,8 @@ return array(
             },
             'Application\Controller\Account' => function ($sm) {
                 return new Application\Controller\AccountController(
-                    $sm->getServiceLocator()->get('AccountService')
+                    $sm->getServiceLocator()->get('AccountService'),
+                    $sm->getServiceLocator()->get('Zend\Authentication\AuthenticationService')
                 );
             },
 

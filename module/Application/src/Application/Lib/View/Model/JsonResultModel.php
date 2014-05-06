@@ -37,6 +37,7 @@ class JsonResultModel extends JsonModel {
     {
         $this->success = $result;
         parent::setVariable('success',$result);
+        return $this;
     }
 
     /**
@@ -55,7 +56,7 @@ class JsonResultModel extends JsonModel {
     {
         $errors = $this->errors;
         $errors[$field] = $error;
-        $this->setErrors($errors);
+        return $this->setErrors($errors);
     }
 
     /**
@@ -71,6 +72,7 @@ class JsonResultModel extends JsonModel {
             $this->setSuccess(false);
         }
         parent::setVariable('errors',$errors);
+        return $this;
     }
 
 

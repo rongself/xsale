@@ -2,7 +2,10 @@
 namespace Application\Controller;
 
 use Application\Entity\Account;
+use Application\Entity\Exception\ValidationException;
 use Application\Lib\View\Model\JsonResultModel;
+use Application\Service\AccountService;
+use Zend\Authentication\AuthenticationService;
 use Zend\Json\Json;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\JsonModel;
@@ -12,22 +15,24 @@ class AccountController extends AbstractActionController
 {
 
     /**
-     * @var \Application\Service\AccountService
+     * @var AccountService
      */
     private $accountService;
 
-    public function __construct(\Application\Service\AccountService $accountService)
+    /**
+     * @var AuthenticationService
+     */
+    private $authenticationService;
+
+    public function __construct(AccountService $accountService,AuthenticationService $authenticationService)
     {
         $this->accountService = $accountService;
+        $this->authenticationService = $authenticationService;
     }
 
     public function indexAction()
     {
-        /**
-         * @var $authService \Zend\Authentication\AuthenticationService
-         */
-        $authService = $this->getServiceLocator()->get('Zend\Authentication\AuthenticationService');
-        if(!$authService->hasIdentity()){
+        if(!$this->authenticationService->hasIdentity()){
             return $this->redirect()->toRoute('login');
         }
         $page = intval($this->params('page',1));
@@ -62,6 +67,23 @@ class AccountController extends AbstractActionController
         return new ViewModel();
     }
 
+    public function changePasswordAction()
+    {
+        $resultModel = new JsonResultModel();
+        if($this->getRequest()->isPost()){
+            try{
+                $oldPassword = $this->params()->fromPost('password');
+                $newPassword = $this->params()->fromPost('newPassword');
+                $this->accountService->changePassword($this->authenticationService->getIdentity()->getId(),$oldPassword,$newPassword);
+            }catch (ValidationException $ve){
+                return $resultModel->setErrors($ve->getValidationError());
+            }catch(\Exception $e){
+                return $resultModel->addErrors('error','unknow error');
+            }
+        }
+        return $resultModel;
+    }
+
     public function deleteAction()
     {
         $id = $this->params('id');
@@ -89,11 +111,8 @@ class AccountController extends AbstractActionController
 
     public function loginAction()
     {
-        /**
-         * @var $authService \Zend\Authentication\AuthenticationService
-         */
-        $authService = $this->getServiceLocator()->get('Zend\Authentication\AuthenticationService');
-        if($authService->hasIdentity()){
+
+        if($this->authenticationService->hasIdentity()){
             return $this->redirect()->toRoute('home');
         }
         $this->layout('layout/layout-blank');
@@ -102,15 +121,15 @@ class AccountController extends AbstractActionController
             $jsonData = $this->getRequest()->getPost('login');
             $data = Json::decode($jsonData,Json::TYPE_ARRAY);
             // If you used another name for the authentication service, change it here
-            $adapter = $authService->getAdapter();
+            $adapter = $this->authenticationService->getAdapter();
             $adapter->setIdentityValue($data['username']);
             $adapter->setCredentialValue($data['password']);
-            $authResult = $authService->authenticate();
+            $authResult = $this->authenticationService->authenticate();
 
             //@todo remember me
             if ($authResult->isValid()) {
                 if($data['rememberMe']){
-                    $authService->getStorage()->getManager()->rememberMe(36000);
+                    $this->authenticationService->getStorage()->getManager()->rememberMe(36000);
                 }
                 return $resultModel;
             }else{
