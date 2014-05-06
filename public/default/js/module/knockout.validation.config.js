@@ -4,7 +4,7 @@ define(['knockout','validation','underscore'], function(ko) {
         registerExtenders: true,
         messagesOnModified: true,
         insertMessages: true,
-        parseInputAttributes: true,
+        parseInputAttributes: false,
         messageTemplate: null
     });
 
@@ -16,18 +16,7 @@ define(['knockout','validation','underscore'], function(ko) {
         return exists === null;
     };
 
-    var isAjaxPending = false;
-    $('body').ajaxStart(function(){
-        isAjaxPending = true;
-    });
-    $('body').ajaxStop(function(){
-        isAjaxPending = false;
-    });
     var startAjax = function(val,callback){
-        if(isAjaxPending){
-            setTimeout(startAjax(val,callback),1000);
-            return false;
-        }
         $.ajax({
             context:document.body,
             url: '/Product/ajax-is-product-exists',

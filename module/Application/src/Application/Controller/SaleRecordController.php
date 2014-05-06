@@ -2,6 +2,7 @@
 namespace Application\Controller;
 
 use Application\Entity\Exception\ValidationException;
+use Application\Lib\View\Model\JsonResultModel;
 use Application\Service\SaleRecordService;
 use Zend\Json\Json;
 use Zend\Mvc\Controller\AbstractActionController;
@@ -29,7 +30,7 @@ class SaleRecordController extends AbstractActionController
 
     public function createRecordAction()
     {
-        $returnData = array('success'=>false,'error'=>array());
+        $resultModel = new JsonResultModel();
         if($this->getRequest()->isPost()){
             $jsonData = $this->getRequest()->getPost('saleRecord');
             $saleRecord = Json::decode($jsonData);
@@ -38,11 +39,10 @@ class SaleRecordController extends AbstractActionController
             }
             catch (ValidationException $e)
             {
-                $returnData['error'] = $e->getValidationError();
-                return new JsonModel($returnData);
+                $resultModel->setErrors($e->getValidationError());
+                return $resultModel;
             }
-            $returnData['success'] = true;
-            return new JsonModel($returnData);
+            return $resultModel;
         }
 
     }

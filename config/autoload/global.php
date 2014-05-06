@@ -49,15 +49,17 @@ return array(
                 }
         ),
     ),
-    'authentication' => array(
-        'orm_default' => array(
-            'object_manager' => 'Doctrine\ORM\EntityManager',
-            'identity_class' => 'Application\Entity\Account',
-            'identity_property' => 'username',
-            'credential_property' => 'password',
-            'credential_callable' => function(\Application\Entity\Account $user, $passwordGiven) {
-                    return $user->getPassword()==md5($passwordGiven);
-                },
+    'doctrine' => array(
+        'authentication' => array(
+            'orm_default' => array(
+                'object_manager' => 'Doctrine\ORM\EntityManager',
+                'identity_class' => 'Application\Entity\Account',
+                'identity_property' => 'username',
+                'credential_property' => 'password',
+                'credential_callable' => function(\Application\Entity\Account $user, $passwordGiven) {
+                        return $user->getPassword()==md5($passwordGiven);
+                    },
+            ),
         ),
-    ),
+    )
 );

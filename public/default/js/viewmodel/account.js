@@ -44,7 +44,9 @@ define(['knockout','knockoutMapping','formPost','validation','validationConfig']
                 data:{account:data},
                 success:function(){
                     alert('添加成功');
-                    callback();
+                    if(typeof callback == 'function'){
+                        callback();
+                    }
                 }
             });
         }

@@ -53,7 +53,7 @@ class SaleRecordService extends AbstractService{
             $productEntity = $this->objectManager->getRepository('Application\Entity\Product')->findOneBy(array('sku'=>$product->sku));
             if($productEntity==null){
                 // if sku is not exists,add it
-                throw new ValidationException("Product doesn't exists",'sku');
+                throw new ValidationException("该产品不存在于库存中,也许你需要先进货:)",'sku');
             }
             $item = clone $orderItem;
             $stock = intval($productEntity->getStock());

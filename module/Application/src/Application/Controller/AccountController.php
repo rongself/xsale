@@ -109,6 +109,9 @@ class AccountController extends AbstractActionController
 
             //@todo remember me
             if ($authResult->isValid()) {
+                if($data['rememberMe']){
+                    $authService->getStorage()->getManager()->rememberMe(36000);
+                }
                 return $resultModel;
             }else{
                 $resultModel->addErrors('password','登录名或密码错误');

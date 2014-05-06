@@ -25,7 +25,9 @@ define(['knockout','knockoutMapping','formPost','validation','validationConfig']
                 url:'/account/login',
                 data:{login:data},
                 success:function(){
-                    callback();
+                    if(typeof callback == 'function'){
+                        callback();
+                    }
                 }
             });
         }
