@@ -26,8 +26,6 @@ define(['jquery','knockout'], function ($,ko) {
                         model.errors.showAllMessages(false);
                         if (typeof options.success == 'function') {
                             options.success();
-                        }else{
-                            throw 'options "success" must a function';
                         }
                     } else {
                         for (key in result.errors) {
@@ -43,8 +41,6 @@ define(['jquery','knockout'], function ($,ko) {
                         alert('网络传输错误,请稍后再试');
                         if (typeof options.fail == 'function') {
                             options.fail();
-                        }else{
-                            throw 'options "fail" must a function';
                         }
                     });
             }else{

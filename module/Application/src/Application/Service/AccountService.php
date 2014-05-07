@@ -60,24 +60,46 @@ class AccountService extends AbstractService{
         return $result!==null;
     }
 
+    /**
+     * @param Account $account
+     */
     public function create(Account $account)
     {
         $this->objectManager->persist($account);
         $this->objectManager->flush();
     }
 
+    /**
+     * @param $id
+     * @param $oldPassword
+     * @param $newPassword
+     * @throws \Application\Entity\Exception\ValidationException
+     */
     public function changePassword($id, $oldPassword, $newPassword)
     {
         /**
          * @var $result \Application\Entity\Account
          */
         $result = $this->getRepository()->findOneBy(array('password'=>Password::BuildPassword($oldPassword),'id'=>$id));
-
         if($result===null){
-            throw new ValidationException('password','原密码错误');
+            throw new ValidationException('原密码错误','password');
         }else{
-            $result->setPassword(Password::BuildPassword($newPassword));
+            $result->setPassword($newPassword);
             $this->objectManager->flush($result);
         }
+    }
+
+    /**
+     * @param $id
+     * @param $name
+     */
+    public function editAccount($id, $name)
+    {
+        /**
+         * @var $result \Application\Entity\Account
+         */
+        $result = $this->getRepository()->findOneBy(array('id'=>$id));
+        $result->setName($name);
+        $this->objectManager->flush($result);
     }
 }

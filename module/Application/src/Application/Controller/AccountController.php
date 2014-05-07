@@ -64,24 +64,36 @@ class AccountController extends AbstractActionController
 
     public function editAccountAction()
     {
-        return new ViewModel();
-    }
-
-    public function changePasswordAction()
-    {
+        $account = $this->authenticationService->getIdentity();
+        $id = $account->getId();
         $resultModel = new JsonResultModel();
         if($this->getRequest()->isPost()){
             try{
-                $oldPassword = $this->params()->fromPost('password');
-                $newPassword = $this->params()->fromPost('newPassword');
-                $this->accountService->changePassword($this->authenticationService->getIdentity()->getId(),$oldPassword,$newPassword);
+                $name = $this->params()->fromPost('name');
+                $this->accountService->editAccount($id,$name);
             }catch (ValidationException $ve){
                 return $resultModel->setErrors($ve->getValidationError());
             }catch(\Exception $e){
                 return $resultModel->addErrors('error','unknow error');
             }
         }
-        return $resultModel;
+        return array('account'=>$account);
+    }
+    public function changePasswordAction()
+    {
+        $resultModel = new JsonResultModel();
+        if($this->getRequest()->isPost()){
+            try{
+                $jsonData = $this->params()->fromPost('password');
+                $data = Json::decode($jsonData);
+                $this->accountService->changePassword($this->authenticationService->getIdentity()->getId(),$data->password,$data->newPassword);
+            }catch (ValidationException $ve){
+                return $resultModel->setErrors($ve->getValidationError());
+            }catch(\Exception $e){
+                return $resultModel->addErrors('error','unknow error');
+            }
+            return $resultModel;
+        }
     }
 
     public function deleteAction()

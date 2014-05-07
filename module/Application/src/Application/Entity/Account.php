@@ -1,5 +1,7 @@
 <?php
 namespace Application\Entity;
+use Application\Entity\Exception\ValidationException;
+use Application\Lib\Authentication\Password;
 use Doctrine\ORM\Mapping AS ORM;
 
 /** 
@@ -49,10 +51,12 @@ class Account extends AbstractEntity
      * Set username
      *
      * @param string $username
-     * @return Admin
+     * @return Account
+     * @throws ValidationException
      */
     public function setUsername($username)
     {
+        if(!isset($username)) throw new ValidationException('用户名不能为空','username');
         $this->username = $username;
 
         return $this;
@@ -72,12 +76,13 @@ class Account extends AbstractEntity
      * Set password
      *
      * @param string $password
-     * @return Admin
+     * @return Account
+     * @throws ValidationException
      */
     public function setPassword($password)
     {
-        $this->password = md5($password);
-
+        if(!isset($password)) throw new ValidationException('密码不能为空','password');
+        $this->password = Password::buildPassword($password);
         return $this;
     }
 
@@ -124,9 +129,12 @@ class Account extends AbstractEntity
 
     /**
      * @param mixed $name
+     * @return Account
+     * @throws ValidationException
      */
     public function setName($name)
     {
+        if(!isset($name)) throw new ValidationException('姓名不能为空','name');
         $this->name = $name;
     }
 }

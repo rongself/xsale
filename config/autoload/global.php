@@ -57,7 +57,7 @@ return array(
                 'identity_property' => 'username',
                 'credential_property' => 'password',
                 'credential_callable' => function(\Application\Entity\Account $user, $passwordGiven) {
-                        return $user->getPassword()==md5($passwordGiven);
+                        return $user->getPassword()==Application\Lib\Authentication\Password::buildPassword($passwordGiven);
                     },
             ),
         ),
