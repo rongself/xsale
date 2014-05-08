@@ -20,7 +20,7 @@ define(['knockout','validation','validationConfig'], function(ko) {
 
         self.reset = function(){
             self.sku('');
-            self.quantity('');
+            self.quantity(1);
             self.price('');
             self.remark('');
         }

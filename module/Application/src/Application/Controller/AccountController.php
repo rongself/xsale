@@ -48,7 +48,7 @@ class AccountController extends AbstractActionController
             try{
                 $jsonData = $this->params()->fromPost('account');
                 $account = new Account(Json::decode($jsonData,Json::TYPE_ARRAY));
-                $account->setCreateTime(new \DateTime());//@todo 这一行抛出异常被捕获处理后,会不会执行下一行??会!
+                $account->setCreateTime(new \DateTime());//@todo 这一行抛出异常被捕获处理后,会不会执行下一行??不会!
                 $this->accountService->create($account);
             }catch (ValidationException $e){
                 $resultModel->setErrors($e->getValidationError());

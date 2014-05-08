@@ -8,7 +8,9 @@
     top: 51px;
     left: 0px;
 }
-
+.title-font{
+    font-family: "Trebuchet MS", "Helvetica", sans-serif;
+}
 .spinner {
     width: 100px;
 }
