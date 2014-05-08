@@ -9,7 +9,7 @@ define(['knockout','knockoutMapping','formPost','validation','validationConfig']
         });
 
         self.reset = function(){
-            self.username('');
+            self.name('');
         }
 
         self.submitAndContinue = function(callback){
@@ -19,7 +19,7 @@ define(['knockout','knockoutMapping','formPost','validation','validationConfig']
                 url:'/account/edit-account',
                 data:{account:data},
                 success:function(){
-                    alert('添加成功');
+                    alert('修改成功');
                     if(typeof callback == 'function'){
                         callback();
                     }
@@ -28,7 +28,7 @@ define(['knockout','knockoutMapping','formPost','validation','validationConfig']
         }
         self.submit = function(){
             self.submitAndContinue(function(){
-                location.href = '/account/index';
+                location.reload();
             });
         }
     }

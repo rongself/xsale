@@ -69,13 +69,15 @@ class AccountController extends AbstractActionController
         $resultModel = new JsonResultModel();
         if($this->getRequest()->isPost()){
             try{
-                $name = $this->params()->fromPost('name');
-                $this->accountService->editAccount($id,$name);
+                $dataJson = $this->params()->fromPost('account');
+                $account = Json::decode($dataJson);
+                $this->accountService->editAccount($id,$account->name);
             }catch (ValidationException $ve){
                 return $resultModel->setErrors($ve->getValidationError());
             }catch(\Exception $e){
                 return $resultModel->addErrors('error','unknow error');
             }
+            return $resultModel;
         }
         return array('account'=>$account);
     }

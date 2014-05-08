@@ -74,5 +74,9 @@ define(['knockout','viewmodel/saleProduct','knockoutMapping','formPost','validat
                 location.href = '/sale-record/index';
             });
         }
+        self.show = function (elem){
+            alert();
+            $(elem).hide().slideDown();
+        }
     }
 });
