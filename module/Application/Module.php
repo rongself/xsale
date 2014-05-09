@@ -24,6 +24,22 @@ class Module
         $viewModel = $e->getApplication()->getMvcEvent()->getViewModel();
         $myService = $serviceManager->get('Config');
         $viewModel->xsaleConfig = $myService['upload'];
+
+        // Set event
+        $eventManager        = $e->getApplication()->getEventManager();
+        $eventManager->attach(array('dispatch',MvcEvent::EVENT_DISPATCH_ERROR,MvcEvent::EVENT_RENDER_ERROR), array($this, 'dispatchHandle'));
+    }
+
+    /**
+     * 路由分发后才能获取controller和action名称
+     * @param MvcEvent $e
+     */
+    public function dispatchHandle(MvcEvent $e)
+    {
+        //$serviceManager = $e->getApplication()->getServiceManager();
+        $viewModel = $e->getApplication()->getMvcEvent()->getViewModel();
+        $viewModel->controller = $e->getRouteMatch()->getParam("__CONTROLLER__");
+        $viewModel->action = $e->getRouteMatch()->getParam('action');
     }
 
     public function getConfig()

@@ -8,6 +8,10 @@
     top: 51px;
     left: 0px;
 }
+.sidebar ul li a.active{
+    border-right: solid 2px #0088cc;
+}
+
 .title-font{
     font-family: "Trebuchet MS", "Helvetica", sans-serif;
 }

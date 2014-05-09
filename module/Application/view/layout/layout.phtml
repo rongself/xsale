@@ -62,7 +62,6 @@
 
     </head>
     <body>
-
     <div class="navbar navbar-fixed-top bs-docs-nav" role="banner">
 
         <div class="conjtainer">
@@ -202,53 +201,52 @@
         <!-- Sidebar -->
         <div class="sidebar" id="sidebarContent">
             <div class="sidebar-dropdown"><a href="#">导航</a></div>
-            <?php echo $this->navigation()->menu() ?>
             <!--- Sidebar navigation -->
             <!-- If the main navigation has sub navigation, then add the class "has_sub" to "li" of main navigation. -->
             <ul id="nav">
                 <!-- Main menu with font awesome icon -->
-                <li><a href="/index/index" class="open"><i class="icon-home"></i> 首页</a>
+                <li><a href="<?php  echo $this->url('home')?>" class="open"><i class="icon-home"></i> 首页</a>
                 </li>
-                <li class="has_sub"><a href="/StockRecord/index"><i class="icon-list-alt"></i> 进货 <span class="pull-right"><i class="icon-chevron-right"></i></span></a>
-                    <ul>
-                        <li><a href="/StockRecord/index">所有进货单</a></li>
-                        <li><a href="/StockRecord/create-record">添加进货单</a></li>
+                <li class="has_sub"><a href="<?php echo $this->url('stock-record',array('action'=>'index'))?>"><i class="icon-list-alt"></i> 进货 <span class="pull-right"><i class="icon-chevron-right"></i></span></a>
+                    <ul <?php if($this->controller=='stock-record')echo 'style="display:block;"'?>>
+                        <li><a <?php if($this->action=='index'&&$this->controller=='stock-record')echo 'class="active"'?> href="<?php echo $this->url('stock-record',array('action'=>'index'))?>">所有进货单</a></li>
+                        <li><a <?php if($this->action=='create-record'&&$this->controller=='stock-record')echo 'class="active"'?> href="<?php echo $this->url('stock-record',array('action'=>'create-record'))?>">添加进货单</a></li>
                     </ul>
                 </li>
-                <li class="has_sub"><a href="/SaleRecord/index"><i class="icon-list-alt"></i> 出货 <span class="pull-right"><i class="icon-chevron-right"></i></span></a>
-                    <ul>
-                        <li><a href="/SaleRecord/index">所有销售记录</a></li>
-                        <li><a href="/SaleRecord/create-record">添加销售记录</a></li>
+                <li class="has_sub"><a href="<?php echo $this->url('sale-record',array('action'=>'index'))?>"><i class="icon-list-alt"></i> 出货 <span class="pull-right"><i class="icon-chevron-right"></i></span></a>
+                    <ul <?php if($this->controller=='sale-record')echo 'style="display:block;"'?>>
+                        <li><a <?php if($this->action=='index'&&$this->controller=='sale-record')echo 'class="active"'?> href="<?php echo $this->url('sale-record',array('action'=>'index'))?>">所有销售记录</a></li>
+                        <li><a <?php if($this->action=='create-record'&&$this->controller=='sale-record')echo 'class="active"'?> href="<?php echo $this->url('sale-record',array('action'=>'create-record'))?>">添加销售记录</a></li>
                     </ul>
                 </li>
-                <li class="has_sub"><a href="/Product/index"><i class="icon-list-alt"></i> 产品 <span class="pull-right"><i class="icon-chevron-right"></i></span></a>
-                    <ul>
-                        <li><a href="/Product/index">所有产品</a></li>
+                <li class="has_sub"><a href="<?php echo $this->url('product',array('action'=>'index'))?>"><i class="icon-list-alt"></i> 产品 <span class="pull-right"><i class="icon-chevron-right"></i></span></a>
+                    <ul <?php if($this->controller=='product')echo 'style="display:block;"'?>>
+                        <li><a <?php if($this->action=='index'&&$this->controller=='product')echo 'class="active"'?> href="<?php echo $this->url('product',array('action'=>'index'))?>">所有产品</a></li>
                     </ul>
                 </li>
-                <li class="has_sub"><a href="/customer/index"><i class="icon-list-alt"></i> 客户 <span class="pull-right"><i class="icon-chevron-right"></i></span></a>
-                    <ul>
-                        <li><a href="/customer/index">所有客户</a></li>
-                        <li><a href="/customer/create-customer">添加客户</a></li>
+                <li class="has_sub"><a href="<?php echo $this->url('customer',array('action'=>'index'))?>"><i class="icon-list-alt"></i> 客户 <span class="pull-right"><i class="icon-chevron-right"></i></span></a>
+                    <ul <?php if($this->controller=='customer')echo 'style="display:block;"'?>>
+                        <li><a <?php if($this->action=='index'&&$this->controller=='customer')echo 'class="active"'?> href="<?php echo $this->url('customer',array('action'=>'index'))?>">所有客户</a></li>
+                        <li><a <?php if($this->action=='create-customer'&&$this->controller=='customer')echo 'class="active"'?> href="<?php echo $this->url('customer',array('action'=>'create-customer'))?>">添加客户</a></li>
                     </ul>
                 </li>
-                <li class="has_sub"><a href="/statistics/index"><i class="icon-list-alt"></i> 统计 <span class="pull-right"><i class="icon-chevron-right"></i></span></a>
-                    <ul>
-                        <li><a href="/statistics/profit">利润统计</a></li>
-                        <li><a href="/statistics/sold">销量统计</a></li>
-                        <li><a href="/statistics/hot-sell">热销产品</a></li>
+                <li class="has_sub"><a href="<?php echo $this->url('statistics',array('action'=>'profit'))?>"><i class="icon-list-alt"></i> 统计 <span class="pull-right"><i class="icon-chevron-right"></i></span></a>
+                    <ul <?php if($this->controller=='statistics')echo 'style="display:block;"'?>>
+                        <li><a <?php if($this->action=='profit'&&$this->controller=='statistics')echo 'class="active"'?> href="<?php echo $this->url('statistics',array('action'=>'profit'))?>">利润统计</a></li>
+                        <li><a <?php if($this->action=='sold'&&$this->controller=='statistics')echo 'class="active"'?> href="<?php echo $this->url('statistics',array('action'=>'sold'))?>">销量统计</a></li>
+                        <li><a <?php if($this->action=='hot-sell'&&$this->controller=='statistics')echo 'class="active"'?> href="<?php echo $this->url('statistics',array('action'=>'hot-sell'))?>">热销产品</a></li>
                     </ul>
                 </li>
-                <li class="has_sub"><a href="/account/index"><i class="icon-list-alt"></i> 账户 <span class="pull-right"><i class="icon-chevron-right"></i></span></a>
-                    <ul>
-                        <li><a href="/account/index">所有账户</a></li>
-                        <li><a href="/account/create-account">添加账户</a></li>
+                <li class="has_sub"><a href="<?php echo $this->url('account',array('action'=>'index'))?>"><i class="icon-list-alt"></i> 账户 <span class="pull-right"><i class="icon-chevron-right"></i></span></a>
+                    <ul <?php if($this->controller=='account')echo 'style="display:block;"'?>>
+                        <li><a <?php if($this->action=='index'&&$this->controller=='account')echo 'class="active"'?> href="<?php echo $this->url('account',array('action'=>'index'))?>">所有账户</a></li>
+                        <li><a <?php if($this->action=='create-account'&&$this->controller=='account')echo 'class="active"'?> href="<?php echo $this->url('account',array('action'=>'create-account'))?>">添加账户</a></li>
                     </ul>
                 </li>
-                <li class="has_sub"><a href="/Setting/index"><i class="icon-list-alt"></i> 设置 <span class="pull-right"><i class="icon-chevron-right"></i></span></a>
-                    <ul>
-                        <li><a href="/Setting/system">系统设置</a></li>
-                        <li><a href="/Setting/others">其他设置</a></li>
+                <li class="has_sub"><a href="<?php echo $this->url('setting',array('action'=>'system'))?>"><i class="icon-list-alt"></i> 设置 <span class="pull-right"><i class="icon-chevron-right"></i></span></a>
+                    <ul <?php if($this->controller=='setting')echo 'style="display:block;"'?>>
+                        <li><a <?php if($this->action=='system'&&$this->controller=='setting')echo 'class="active"'?> href="<?php echo $this->url('setting',array('action'=>'system'))?>">系统设置</a></li>
+                        <li><a <?php if($this->action=='others'&&$this->controller=='setting')echo 'class="active"'?> href="<?php echo $this->url('setting',array('action'=>'others'))?>">其他设置</a></li>
                     </ul>
                 </li>
             </ul>

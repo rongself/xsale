@@ -181,6 +181,48 @@ return array(
                     )
                 )
             ),
+            'setting' => array(
+                'type'    => 'Segment',
+                'options' => array(
+                    'route'    => '/setting[/:action]',
+                    'constraints' => array(
+                        'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
+                    'defaults' => array(
+                        'controller'=>'setting',
+                        'action' => 'system',
+                        '__NAMESPACE__' => 'Application\Controller'
+                    ),
+                ),
+                'may_terminate' => true,
+                'child_routes' => array(
+                    'wildcard' => array(
+                        'type' => 'Wildcard'
+                    )
+                )
+            ),
+            'statistics' => array(
+                'type'    => 'Segment',
+                'options' => array(
+                    'route'    => '/statistics[/:action]',
+                    'constraints' => array(
+                        'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
+                    'defaults' => array(
+                        'controller'=>'statistics',
+                        'action' => 'profit',
+                        '__NAMESPACE__' => 'Application\Controller'
+                    ),
+                ),
+                'may_terminate' => true,
+                'child_routes' => array(
+                    'wildcard' => array(
+                        'type' => 'Wildcard'
+                    )
+                )
+            ),
             // The following is a route to simplify getting started creating
             // new controllers and actions without needing to create a new
             // module. Simply drop new controllers in, and you can access them
