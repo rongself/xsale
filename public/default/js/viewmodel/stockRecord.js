@@ -1,7 +1,7 @@
 /**
  * Created by Ron on 14-2-27.
  */
-define(['knockout','viewmodel/stockProduct','lib/json2','knockoutMapping'], function(ko,stockProductViewModel,JSON,koMapping) {
+define(['knockout','viewmodel/stockProduct','lib/json2','knockoutMapping','formPost'], function(ko,stockProductViewModel,JSON,koMapping,formPost) {
     return function() {
         var self = this;
         self.stockProducts = ko.observableArray(null);
@@ -36,22 +36,23 @@ define(['knockout','viewmodel/stockProduct','lib/json2','knockoutMapping'], func
             }
         }
         self.submitAndContinue = function (callback) {
-            if(self!=null&&typeof self.stockProducts() == 'object'&&self.stockProducts().length>0){
-                var data = koMapping.toJSON(self);
-                $.post('/stock-record/create-record',{stockRecord:data},function(result){
-                    if(result.success){
-                        self.clear();
-                        alert('进货单已成功提交');
-                        if(typeof callback =='function'){
-                            callback();
-                        }
-                    }
-                },'json');
-            }else{
+            if(!(self!=null&&typeof self.stockProducts() == 'object'&&self.stockProducts().length>0)){
                 alert('进货单中还未加入任何产品');
                 return false;
             }
-            return true;
+            var data = koMapping.toJSON(self);
+            formPost.submit({
+                viewModel:self,
+                url:'/stock-record/create-record',
+                data:{stockRecord:data},
+                success:function(){
+                    self.reset();
+                    alert('进货单已成功提交');
+                    if(typeof callback == 'function'){
+                        callback();
+                    }
+                }
+            });
         }
         self.submit = function () {
             self.submitAndContinue(function(){
