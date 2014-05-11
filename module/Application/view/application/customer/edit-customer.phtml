@@ -1,4 +1,76 @@
-<br /><br />
-<div id="view-content">
-	<p>View script for controller <b>Customer</b> and script/action name <b>editCustomer</b></p>
+<div class="row">
+    <div class="col-md-6 col-lg-offset-3">
+        <div class="widget wgreen">
+
+            <div class="widget-head">
+                <div class="pull-left">修改客户信息</div>
+                <div class="widget-icons pull-right">
+                    <a href="#" class="wminimize"><i class="icon-chevron-up"></i></a>
+                    <a href="#" class="wclose"><i class="icon-remove"></i></a>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="widget-content">
+                <div class="padd">
+                    <!-- Form starts.  -->
+                    <form class="form-horizontal" role="form">
+                        <input id="id" data-bind="value:id" data-value="<?php echo $this->escapeHtml($customer->getId());?>" type="hidden"/>
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label visible-lg">姓名</label>
+                            <div class="col-lg-8">
+                                <input id="name" type="text" data-bind="value:name" data-value="<?php echo $this->escapeHtml($customer->getName());?>" class="form-control" placeholder="输入客户姓名">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label">是否为VIP</label>
+                            <div class="col-lg-8">
+                                <div class="switch switch-small">
+                                    <input id="isVip" type="checkbox" checked name='switch-checkbox' data-bind="checked:isVip" data-value="<?php echo $this->escapeHtml($customer->getisVip())==1?'true':'false';?>" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label visible-lg">手机号码</label>
+                            <div class="col-lg-8">
+                                <input id="phoneNumber" type="text" data-bind="value:phoneNumber" data-value="<?php echo $this->escapeHtml($customer->getPhoneNumber());?>" class="form-control" placeholder="输入客户的手机号码">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label visible-lg">微信号</label>
+                            <div class="col-lg-8">
+                                <input id="wechat" type="text" data-bind="value:wechat" data-value="<?php echo $this->escapeHtml($customer->getWechat());?>" class="form-control" placeholder="输入客户的微信号">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label visible-lg">QQ</label>
+                            <div class="col-lg-8">
+                                <input id="qq" type="text" data-bind="value:qq" data-value="<?php echo $this->escapeHtml($customer->getQq());?>" class="form-control" placeholder="输入客户的QQ">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-4 control-label visible-lg">备注</label>
+                            <div class="col-lg-8">
+                                <textarea id="remark" class="form-control" rows="3" data-bind="value:remark" data-value="<?php echo $this->escapeHtml($customer->getRemark());?>" placeholder="输入备注信息"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <!-- Buttons -->
+                            <label class="col-lg-4 control-label visible-lg">&nbsp;</label>
+                            <div class="col-lg-8">
+                                <button type="submit"  data-bind="click:submitAndContinue"
+                                        data-loading-text="正在验证数据.." class="btn btn-success submitTo">保存</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="widget-foot">
+                <!-- Footer goes here -->
+            </div>
+        </div>
+
+    </div>
 </div>
+<?php
+$this->headScript()->appendScript("require(['main'],function(){require(['page/customer/edit-customer']);});");
+?>

@@ -52,7 +52,25 @@ class CustomerController extends AbstractActionController
 
     public function editCustomerAction()
     {
-        // action body
+
+        if($this->getRequest()->isPost()){
+            $resultModel = new JsonResultModel();
+            try{
+                $jsonData = $this->params()->fromPost('customer');
+                $customer = Json::decode($jsonData,Json::TYPE_ARRAY);
+                $this->customerService->edit($customer);
+            }catch (ValidationException $e){
+                $resultModel->setErrors($e->getValidationError());
+                return $resultModel;
+            }catch(\Exception $e){
+                $resultModel->addErrors('undefined',$e->getMessage());
+                return $resultModel;
+            }
+            return $resultModel;
+        }
+        $id = $this->params('id');
+        $customerInfo = $this->customerService->getCustomerById($id);
+        return array('customer'=>$customerInfo);
     }
 
     public function deleteAction()

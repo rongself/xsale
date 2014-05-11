@@ -11,6 +11,7 @@ namespace Application;
 
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
+use Zend\View\Model\JsonModel;
 
 class Module
 {
@@ -38,8 +39,11 @@ class Module
     {
         //$serviceManager = $e->getApplication()->getServiceManager();
         $viewModel = $e->getApplication()->getMvcEvent()->getViewModel();
-        $viewModel->controller = $e->getRouteMatch()->getParam("__CONTROLLER__");
-        $viewModel->action = $e->getRouteMatch()->getParam('action');
+        if(!($viewModel instanceof JsonModel))
+        {
+            $viewModel->controller = $e->getRouteMatch()->getParam("__CONTROLLER__");
+            $viewModel->action = $e->getRouteMatch()->getParam('action');
+        }
     }
 
     public function getConfig()

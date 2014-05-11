@@ -14,7 +14,9 @@ require.config({
         knockoutMapping:'lib/knockout.mapping',
         checkedAll:'module/checked.all.handle',
         pace:'lib/pace.min',
-        formPost:'module/formPost'
+        formPost:'module/formPost',
+        spin:'lib/spin',
+        ladda:'lib/ladda'
     },
     shim:{
         'bootstrap':{
@@ -38,15 +40,24 @@ require.config({
 require(["jquery",'pace','bootstrap'], function($,pace) {
 
         pace.start();
+        var $submitBtn = $('button[type="submit"]');
+        if($submitBtn.length>0){
+            $(document).ajaxStart(function(){
+                $submitBtn.button('loading');
+            });
+            $(document).ajaxStop(function(){
+                $submitBtn.button('reset');
+            });
+        }
 
-            $('.spinner .btn:first-of-type').on('click', function() {
-                $('.spinner input').val( parseInt($('.spinner input').val(), 10) + 1);
-                return false;
-            });
-            $('.spinner .btn:last-of-type').on('click', function() {
-                $('.spinner input').val( parseInt($('.spinner input').val(), 10) - 1);
-                return false;
-            });
+        $('.spinner .btn:first-of-type').on('click', function() {
+            $('.spinner input').val( parseInt($('.spinner input').val(), 10) + 1);
+            return false;
+        });
+        $('.spinner .btn:last-of-type').on('click', function() {
+            $('.spinner input').val( parseInt($('.spinner input').val(), 10) - 1);
+            return false;
+        });
         /* Navigation */
 
         $(window).scroll( function() {

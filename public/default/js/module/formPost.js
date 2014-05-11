@@ -22,11 +22,10 @@ define(['jquery','knockout'], function ($,ko) {
                 })
                 .done(function (result) {
                     if (result.success) {
-                        options.viewModel.reset();
-                        model.errors.showAllMessages(false);
                         if (typeof options.success == 'function') {
                             options.success();
                         }
+                        model.errors.showAllMessages(false);
                     } else {
                         for (key in result.errors) {
                             if (typeof options.viewModel[key] == 'function' && typeof result.errors[key] != 'undefined') {

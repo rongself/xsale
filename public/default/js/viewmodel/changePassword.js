@@ -29,6 +29,7 @@ define(['knockout','knockoutMapping','formPost','validation','validationConfig']
                 url:'/account/change-password',
                 data:{password:data},
                 success:function(){
+                    self.reset();
                     alert('保存成功');
                     if(typeof callback == 'function'){
                         callback();

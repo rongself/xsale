@@ -62,6 +62,7 @@ define(['knockout','viewmodel/saleProduct','knockoutMapping','formPost','validat
                 url:'/sale-record/create-record',
                 data:{saleRecord:data},
                 success:function(){
+                    self.reset();
                     alert('销售记录已成功提交');
                     if(typeof callback == 'function'){
                         callback();

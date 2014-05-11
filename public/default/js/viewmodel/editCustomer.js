@@ -4,11 +4,11 @@
 define(['knockout','knockoutMapping','formPost','validation','validationConfig'], function(ko,koMapping,formPost) {
     return function(){
         var self = this;
+        self.id = ko.observable();
         self.name = ko.observable();
         self.phoneNumber = ko.observable().extend({
             required:{message: '客户手机号不能为空'},
-            number:{message:'手机号格式不正确'},
-            isPhoneNumberExists:self
+            number:{message:'手机号格式不正确'}
         });
         self.wechat = ko.observable();
         self.qq = ko.observable();
@@ -24,7 +24,8 @@ define(['knockout','knockoutMapping','formPost','validation','validationConfig']
             self.remark('');
         }
 
-        self.submitAndContinue = function(callback){
+        self.submitAndContinue = function(callback,e){
+            e.preventDefault();
             if(self.phoneNumber.isValidating()){
                 $('.submitTo').button('loading');
                 setTimeout(function(){
@@ -38,11 +39,10 @@ define(['knockout','knockoutMapping','formPost','validation','validationConfig']
             var data = koMapping.toJSON(self);
             formPost.submit({
                 viewModel:self,
-                url:'/customer/create-customer',
+                url:'/customer/edit-customer',
                 data:{customer:data},
                 success:function(){
-                    self.reset();
-                    alert('添加成功');
+                    alert('保存成功');
                     if(typeof callback == 'function'){
                         callback();
                     }
@@ -54,5 +54,25 @@ define(['knockout','knockoutMapping','formPost','validation','validationConfig']
                 location.href = '/customer/index';
             });
         }
+        self.init = function(){
+            for(protype in self){
+                if(ko.isWriteableObservable(self[protype])){
+                    var $ele = $('#'+protype);
+                    if($ele.length>0){
+                        var value = $ele.attr('data-value');
+                        if(value!=''){
+                            if(value=='true'){
+                                value = true;
+                            }else if(value=='false'){
+                                value = false;
+                            }
+                            self[protype](value);
+                        }
+                    }
+                }
+            }
+        }
+
+        self.init();
     }
 });

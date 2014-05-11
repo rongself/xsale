@@ -17,6 +17,9 @@ class JsonResultModel extends JsonModel {
 
     private $errors;
 
+    /**
+     * @param array $errors
+     */
     public function __construct(array $errors = array())
     {
          $this->setErrors($errors);
@@ -31,7 +34,8 @@ class JsonResultModel extends JsonModel {
     }
 
     /**
-     * @param mixed $result
+     * @param $result
+     * @return $this
      */
     private function setSuccess($result)
     {
@@ -51,6 +55,7 @@ class JsonResultModel extends JsonModel {
     /**
      * @param $field
      * @param $error
+     * @return $this
      */
     public function addErrors($field,$error)
     {
@@ -60,7 +65,8 @@ class JsonResultModel extends JsonModel {
     }
 
     /**
-     * @param mixed $errors
+     * @param array $errors
+     * @return $this
      */
     public function setErrors(array $errors)
     {

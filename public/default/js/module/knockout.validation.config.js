@@ -7,7 +7,22 @@ define(['knockout','validation','underscore'], function(ko) {
         parseInputAttributes: false,
         messageTemplate: null
     });
-
+    ko.bindingHandlers.valueWithInit = {
+        init: function(element, valueAccessor, allBindingsAccessor, data) {
+            var property = valueAccessor(),
+                value = element.value;
+            data[property](value);
+            ko.applyBindingsToNode(element, { value: data[property] });
+        }
+    };
+    ko.bindingHandlers.checkedWithInit = {
+        init: function(element, valueAccessor, allBindingsAccessor, data) {
+            var property = valueAccessor(),
+                value = element.value==1?true:false;
+            data[property](true);
+            ko.applyBindingsToNode(element, { checked: data[property]});
+        }
+    };
     uniqueInObservableArray = function(val,observableArray) {
         var exists = ko.utils.arrayFirst(observableArray, function(item) {
             console.log(item.sku()+'==='+val);

@@ -43,6 +43,7 @@ define(['knockout','knockoutMapping','formPost','validation','validationConfig']
                 url:'/account/create-account',
                 data:{account:data},
                 success:function(){
+                    self.reset();
                     alert('添加成功');
                     if(typeof callback == 'function'){
                         callback();
