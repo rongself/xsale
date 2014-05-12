@@ -41,11 +41,14 @@ require(["jquery",'pace','bootstrap'], function($,pace) {
 
         pace.start();
         var $submitBtn = $('button[type="submit"]');
+        isAjaxRunning = false;
         if($submitBtn.length>0){
             $(document).ajaxStart(function(){
+                isAjaxRunning = true;
                 $submitBtn.button('loading');
             });
             $(document).ajaxStop(function(){
+                isAjaxRunning = false;
                 $submitBtn.button('reset');
             });
         }

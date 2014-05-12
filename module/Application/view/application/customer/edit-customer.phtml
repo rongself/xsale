@@ -25,7 +25,7 @@
                             <label class="col-lg-4 control-label">是否为VIP</label>
                             <div class="col-lg-8">
                                 <div class="switch switch-small">
-                                    <input id="isVip" type="checkbox" checked name='switch-checkbox' data-bind="checked:isVip" data-value="<?php echo $this->escapeHtml($customer->getisVip())==1?'true':'false';?>" />
+                                    <input id="isVip" type="checkbox" name='switch-checkbox' data-bind="bootstrapSwitch:isVip" data-value="<?php echo $this->escapeHtml($customer->getisVip())==1?'true':'false';?>" />
                                 </div>
                             </div>
                         </div>
