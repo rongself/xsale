@@ -3,19 +3,22 @@
  */
 define(['knockout','lib/jquery.fileupload'],function(ko){
     //for image upload
-    return function(){
+    return function(options){
+        var defaultOptions = {
+            observableArray:'',
+            url:'/FileUploader/image-uploader'
+        };
+        options = $.extend(defaultOptions,options);
         var self = this;
-        self.uploadViewModel = {
-            showProgress :ko.observable(false)
-        }
-        self.url ='/FileUploader/image-uploader';
-        $('#fileupload').fileupload({
-            url: self.url,
+        $('[data-file-upload]').fileupload({
+            url: options.url,
             dataType: 'json',
             done: function (e, data) {
-                $.each(data.files, function (index, file) {
-                    stockProduct.pictures.push(file.name);
-                });
+                if(options.observableArray!=''){
+                    $.each(data.files, function (index, file) {
+                        options.observableArray.push(file.name);
+                    });
+                }
             },
             progressall: function (e, data) {
                 var progress = parseInt(data.loaded / data.total * 100, 10);
@@ -25,6 +28,5 @@ define(['knockout','lib/jquery.fileupload'],function(ko){
                 );
             }
         }).prop('disabled', !$.support.fileInput).parent().addClass($.support.fileInput ? undefined : 'disabled');
-        ko.applyBindings(self.uploadViewModel);
     }
 });

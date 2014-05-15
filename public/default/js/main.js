@@ -15,8 +15,7 @@ require.config({
         checkedAll:'module/checked.all.handle',
         pace:'lib/pace.min',
         formPost:'module/formPost',
-        spin:'lib/spin',
-        ladda:'lib/ladda'
+        imageUploader:'module/image.uploader'
     },
     shim:{
         'bootstrap':{

@@ -1,6 +1,7 @@
 <?php
 namespace Application\Controller;
 
+use Application\Lib\View\Model\JsonResultModel;
 use Application\Service\ProductService;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\JsonModel;
@@ -25,7 +26,24 @@ class ProductController extends AbstractActionController
 
     public function editProductAction()
     {
-        // action body
+        if($this->getRequest()->isPost()){
+            $resultModel = new JsonResultModel();
+            try{
+                $jsonData = $this->params()->fromPost('product');
+                $product = Json::decode($jsonData,Json::TYPE_ARRAY);
+                $this->productService->edit($product);
+            }catch (ValidationException $e){
+                $resultModel->setErrors($e->getValidationError());
+                return $resultModel;
+            }catch(\Exception $e){
+                $resultModel->addErrors('undefined',$e->getMessage());
+                return $resultModel;
+            }
+            return $resultModel;
+        }
+        $id = $this->params('id');
+        $productinfo = $this->productService->getProductById($id);
+        return array('product'=>$productinfo);
     }
 
     public function getProductsJsonAction()

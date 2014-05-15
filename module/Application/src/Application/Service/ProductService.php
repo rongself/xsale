@@ -74,4 +74,13 @@ class ProductService extends  AbstractService
     {
         return $this->objectManager->getRepository('Application\Entity\Product');
     }
+
+    public function getProductById($id)
+    {
+        return $this->getRepository()->find($id);
+    }
+
+    public function edit($product)
+    {
+    }
 }

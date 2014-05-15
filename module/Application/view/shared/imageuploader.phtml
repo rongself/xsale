@@ -4,15 +4,7 @@
     <span>添加图片</span>
     <!-- The file input field used as target for the file upload widget -->
     <!-- TODO 上传按钮点击范围-->
-    <input id="fileupload" type="file" name="files[]" multiple>
+    <input id="fileupload" data-file-upload type="file" name="files[]" multiple>
 </span>
-<!-- ko foreach: stockProduct.pictures -->
-<img data-bind="attr:{src:xsaleConfig.thumbnailPath+$data}" alt="" width="31px" height="31px">
-<!-- /ko -->
-
-<!-- The global progress bar -->
-<div id="progress" data-bind="visible:showProgress" class="progress">
-    <div class="progress-bar progress-bar-info"></div>
-</div>
 <!-- The container for the uploaded files -->
 <div id="files" class="files"></div>

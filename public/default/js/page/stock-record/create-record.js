@@ -7,11 +7,11 @@ require(['knockout',
         'lib/json2']
     , function (ko, StockRecordViewModel, StockProductViewModel,SkuAutoComplete,ImageUploader) {
 
-        stockRecord = new StockRecordViewModel();
-        stockProduct = new StockProductViewModel();
-        uploader = new ImageUploader();
+        var stockRecord = new StockRecordViewModel();
+        var stockProduct = new StockProductViewModel();
+        var uploader = new ImageUploader({observableArray:stockProduct.pictures});
 
-        // ko.applyBindings(stockRecord);
+
 
         //set a validation need stockRecord instance
         stockProduct.sku.extend({
@@ -32,5 +32,7 @@ require(['knockout',
             $('#quantity').focus();
             return selectedSKU;
         });
+        ko.applyBindings(stockProduct,$('#stockProduct').get(0));
+        ko.applyBindings(stockRecord,$('#stockRecord').get(0));
         //form submit
     });

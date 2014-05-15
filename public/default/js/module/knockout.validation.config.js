@@ -79,6 +79,15 @@ define(['knockout','validation','underscore'], function(ko) {
             startAjax(val,callback);
         }
     };
+
+    uniqueInObservableArray = function(val,observableArray) {
+        var exists = ko.utils.arrayFirst(observableArray, function(item) {
+            console.log(item.sku()+'==='+val);
+            return item.sku() === val;
+        })
+        return exists === null;
+    };
+
     ko.validation.rules['isPhoneNumberExists'] = {
         async: true,
         message: '该手机号已存在',

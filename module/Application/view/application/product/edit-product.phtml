@@ -1,11 +1,11 @@
 <div class="row">
-    <div class="col-md-6 col-lg-offset-3">
+    <div class="col-md-4">
         <div class="widget wgreen">
 
             <div class="widget-head">
-                <div class="pull-left">添加进货单产品</div>
+                <div class="pull-left">修改产品信息</div>
                 <div class="widget-icons pull-right">
-                    <a href="#" class="wminimize"><i class="icon-chevron-up"></i></a> 
+                    <a href="#" class="wminimize"><i class="icon-chevron-up"></i></a>
                     <a href="#" class="wclose"><i class="icon-remove"></i></a>
                 </div>
                 <div class="clearfix"></div>
@@ -17,53 +17,49 @@
                         <div class="form-group">
                             <label class="col-lg-4 control-label  visible-lg">款号</label>
                             <div class="col-lg-8">
-                                <input type="text" class="form-control" placeholder="输入产品的唯一编号">
+                                <input type="text" id="sku" class="form-control" data-bind="value:sku" data-value="<?php echo $product->getSku();?>"  placeholder="输入产品的唯一编号">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-lg-4 control-label visible-lg ">图片</label>
-                            <div class="col-xs-3 col-lg-2">
-                                <button type="button" class="btn btn-default">添加图片</button>
-                            </div>
-                            <div class="col-xs-9 col-lg-6">
-                                <img src="/mac/img/user.jpg" alt="" width="31px" height="31px">
+                            <label class="col-lg-4 control-label  visible-lg">图片</label>
+                            <div class="col-xs-8 col-lg-8">
+                                <?php echo $this->partial('imageuploader');?>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-lg-4 control-label  visible-lg">名称</label>
                             <div class="col-lg-8">
-                                <input type="text" class="form-control" placeholder="输入产品名称">
+                                <input type="text" id="name" class="form-control" data-bind="value:name" data-value="<?php echo $product->getName();?>" placeholder="输入产品名称">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-lg-4 control-label  visible-lg">进货价</label>
                             <div class="col-lg-8">
-                               <input type="text" class="form-control" placeholder="输入产品进货价单价">
+                                <input type="text" id="cost" class="form-control" data-bind="value:cost" data-value="<?php echo $product->getCost();?>" placeholder="输入产品进货价单价">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-lg-4 control-label  visible-lg">数量+</label>
                             <div class="col-lg-8">
-                               <input type="text" class="form-control" placeholder="输入进货数量">
+                                <input type="text" id="stock" class="form-control" data-bind="value:stock" data-value="<?php echo $product->getStock();?>" placeholder="输入进货数量">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-lg-4 control-label  visible-lg">零售价</label>
                             <div class="col-lg-8">
-                                <input type="text" class="form-control" placeholder="输入产品零售价(只作为参考价)">
+                                <input type="text" id="price" class="form-control" data-bind="value:price" data-value="<?php echo $product->getPrice();?>" placeholder="输入产品零售价(只作为参考价)">
                             </div>
-                        </div>    
+                        </div>
                         <div class="form-group">
                             <label class="col-lg-4 control-label  visible-lg">描述</label>
                             <div class="col-lg-8">
-                                <textarea class="form-control" rows="3" placeholder="输入产品描述"></textarea>
+                                <textarea class="form-control" id="description" rows="3" data-bind="value:description" data-value="<?php echo $product->getDescription();?>" placeholder="输入产品描述"></textarea>
                             </div>
                         </div>
                         <div class="form-group">
                             <!-- Buttons -->
                             <div class="col-lg-offset-4 col-lg-12">
-                                <button type="submit" class="btn btn-success">添加产品</button>
-                                <button type="submit" class="btn btn-success">保存并继续添加</button>
+                                <button type="submit" class="btn btn-success" data-bind="click:submitAndContinue">添加此产品到进货单</button>
                             </div>
                         </div>
                     </form>
@@ -72,7 +68,10 @@
             <div class="widget-foot">
                 <!-- Footer goes here -->
             </div>
-        </div>  
+        </div>
 
     </div>
 </div>
+<?php
+$this->headScript()->appendScript("require(['main'],function(){require(['page/product/edit-product']);});");
+?>

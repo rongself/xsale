@@ -1,5 +1,5 @@
 /**
- * Created by Ron on 14-2-27.
+ * Created by Administrator on 14-5-13.
  */
 define(['knockout','validation','validationConfig'], function(ko) {
     return function() {
@@ -20,7 +20,6 @@ define(['knockout','validation','validationConfig'], function(ko) {
         self.price = ko.observable().extend({
             number:{message:'零售价必须为数字'}
         });
-        self.showProgress = ko.observable(false);
         self.description = ko.observable();
 
         self.reset = function(){
@@ -33,15 +32,19 @@ define(['knockout','validation','validationConfig'], function(ko) {
             self.description('');
         }
         self.submitTo = function(stockRecordInstance){
-            alert(stockRecordInstance);
-            var model = ko.validatedObservable(self);
-            if((model.isValid())){
-                stockRecordInstance.addItem(self);
-                self.reset();
-                model.errors.showAllMessages(false);
-            }else{
-                model.errors.showAllMessages();
-            }
+            var data = koMapping.toJSON(self);
+            formPost.submit({
+                viewModel:self,
+                url:'/customer/create-customer',
+                data:{customer:data},
+                success:function(){
+                    self.reset();
+                    alert('添加成功');
+                    if(typeof callback == 'function'){
+                        callback();
+                    }
+                }
+            });
         }
     }
 });
