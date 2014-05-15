@@ -1,9 +1,9 @@
 <div class='row'>
     <div class="col-md-12">
-        <div class="pull-right">
-            <button type="submit" class="btn btn-danger" data-bind="click:stockRecord.submit">保存进货单</button>
-            <button type="submit" class="btn btn-danger" data-bind="click:stockRecord.submitAndContinue">保存并继续添加</button>
-            <button type="reset" class="btn btn-default" data-bind="click:stockRecord.reset">重置表单</button>
+        <div class="pull-right" id="stockRecordSubmit">
+            <button type="submit" class="btn btn-danger" data-bind="click:submit">保存进货单</button>
+            <button type="submit" class="btn btn-danger" data-bind="click:submitAndContinue">保存并继续添加</button>
+            <button type="reset" class="btn btn-default" data-bind="click:reset">重置表单</button>
         </div>
     </div>
 </div>
@@ -26,14 +26,14 @@
                         <div class="form-group">
                             <label class="col-lg-4 control-label  visible-lg">款号</label>
                             <div class="col-lg-8">
-                                <input type="text" id="SKUInput" autocomplete="off" class="form-control" data-bind="value:stockProduct.sku " data-provide="typeahead" placeholder="输入产品的唯一编号">
+                                <input type="text" id="SKUInput" autocomplete="off" class="form-control" data-bind="value:sku " data-provide="typeahead" placeholder="输入产品的唯一编号">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-lg-4 control-label  visible-lg">图片</label>
                             <div id="progress" class="col-xs-8 col-lg-8">
                                 <?php echo $this->partial('imageuploader');?>
-                                <!-- ko foreach: stockProduct.pictures -->
+                                <!-- ko foreach: pictures -->
                                 <img data-bind="attr:{src:xsaleConfig.thumbnailPath+$data}" alt="" width="31px" height="31px">
                                 <!-- /ko -->
                                 <!-- The global progress bar -->
@@ -45,19 +45,19 @@
                         <div class="form-group">
                             <label class="col-lg-4 control-label  visible-lg">名称</label>
                             <div class="col-lg-8">
-                                <input type="text" class="form-control" data-bind="value:stockProduct.name" placeholder="输入产品名称">
+                                <input type="text" class="form-control" data-bind="value:name" placeholder="输入产品名称">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-lg-4 control-label  visible-lg">进货价</label>
                             <div class="col-lg-8">
-                               <input type="text" class="form-control" data-bind="valuestockProduct.cost" placeholder="输入产品进货价单价">
+                               <input type="text" class="form-control" data-bind="value:cost" placeholder="输入产品进货价单价">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-lg-4 control-label  visible-lg">数量+</label>
                             <div class="col-lg-8">
-                               <input type="text" id="quantity" class="form-control" data-bind="valuestockProduct.stock" placeholder="输入进货数量">
+                               <input type="text" id="quantity" class="form-control" data-bind="value:stock" placeholder="输入进货数量">
                             </div>
                         </div>
                         <div class="form-group">
@@ -110,7 +110,7 @@
                             <th>操作</th>
                         </tr>
                     </thead>
-                    <tbody data-bind="foreach:stockRecord.stockProducts" id="recordContent">
+                    <tbody data-bind="foreach:stockProducts" id="recordContent">
                         <tr>
                             <td data-bind="text:sku "></td>
                             <td data-bind="text:cost "></td>
@@ -118,7 +118,7 @@
                             <td>
                                 <button class="btn btn-xs btn-success"><i class="icon-ok"></i> </button>
                                 <button class="btn btn-xs btn-warning"><i class="icon-pencil"></i> </button>
-                                <button class="btn btn-xs btn-danger" data-bind="click:function(){stockRecord.removeItem(sku);}"><i class="icon-remove"></i> </button>
+                                <button class="btn btn-xs btn-danger" data-bind="click:function(){$data.removeItem(sku);}"><i class="icon-remove"></i> </button>
 
                             </td>
                         </tr>                                                       

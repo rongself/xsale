@@ -2,7 +2,7 @@
  * Created by Ron on 14-2-27.
  */
 define(['knockout','validation','validationConfig'], function(ko) {
-    return function() {
+    return function(stockRecord) {
         var self = this;
         self.sku = ko.observable().extend({
             required: { message: '产品款号不能为空' }
@@ -32,11 +32,11 @@ define(['knockout','validation','validationConfig'], function(ko) {
             self.price('');
             self.description('');
         }
-        self.submitTo = function(stockRecordInstance){
-            alert(stockRecordInstance);
+        self.submitTo = function(){
+            console.log(stockRecord);
             var model = ko.validatedObservable(self);
             if((model.isValid())){
-                stockRecordInstance.addItem(self);
+                stockRecord.addItem(self);
                 self.reset();
                 model.errors.showAllMessages(false);
             }else{

@@ -8,7 +8,7 @@ require(['knockout',
     , function (ko, StockRecordViewModel, StockProductViewModel,SkuAutoComplete,ImageUploader) {
 
         var stockRecord = new StockRecordViewModel();
-        var stockProduct = new StockProductViewModel();
+        var stockProduct = new StockProductViewModel(stockRecord);
         var uploader = new ImageUploader({observableArray:stockProduct.pictures});
 
 
@@ -34,5 +34,6 @@ require(['knockout',
         });
         ko.applyBindings(stockProduct,$('#stockProduct').get(0));
         ko.applyBindings(stockRecord,$('#stockRecord').get(0));
+        ko.applyBindings(stockRecord,$('#stockRecordSubmit').get(0));
         //form submit
     });
