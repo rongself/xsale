@@ -8,7 +8,7 @@
 
 namespace Application\Service;
 
-
+use Application\Entity\Product;
 use Zend\ModuleManager\ModuleManager;
 
 class ProductService extends  AbstractService
@@ -80,7 +80,24 @@ class ProductService extends  AbstractService
         return $this->getRepository()->find($id);
     }
 
-    public function edit($product)
+    public function edit(Product $product)
     {
+        $productEntity = $this->getProductBySku($product->getSku());
+        $productEntity->setCost($product->getCost());
+        $productEntity->setDescription($product->getDescription());
+        $productEntity->setName($product->getName());
+        $productEntity->setPrice($product->getPrice());
+        $productEntity->setStock($product->getStock());
+        $this->objectManager->flush();
+
+    }
+
+    /**
+     * @param $sku
+     * @return null|Product
+     */
+    public function getProductBySku($sku)
+    {
+        return $this->getRepository()->findOneBy(array('sku'=>$sku));
     }
 }

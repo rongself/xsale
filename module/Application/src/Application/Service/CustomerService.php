@@ -82,10 +82,7 @@ class CustomerService extends AbstractService {
     public function edit(array $customerArr)
     {
         if(!isset($customerArr['id'])) throw new \Exception('系统错误:修改id为空');
-        /**
-         * @var $customer Customer
-         */
-        $customer = $this->getRepository()->find($customerArr['id']);
+        $customer = $this->getCustomerById($customerArr['id']);
         $customer->setPhoneNumber($customerArr['phoneNumber']);
         $customer->setRemark($customerArr['remark']);
         $customer->setIsVip($customerArr['isVip']);

@@ -1,7 +1,7 @@
 /**
  * Created by Administrator on 14-5-13.
  */
-define(['knockout','validation','validationConfig'], function(ko) {
+define(['knockout','knockoutMapping','formPost','validation','validationConfig'], function(ko,koMapping,formPost) {
     return function() {
         var self = this;
         self.sku = ko.observable().extend({
@@ -35,11 +35,10 @@ define(['knockout','validation','validationConfig'], function(ko) {
             var data = koMapping.toJSON(self);
             formPost.submit({
                 viewModel:self,
-                url:'/customer/create-customer',
-                data:{customer:data},
+                url:'/product/edit-product',
+                data:{product:data},
                 success:function(){
-                    self.reset();
-                    alert('添加成功');
+                    alert('保存成功');
                     if(typeof callback == 'function'){
                         callback();
                     }

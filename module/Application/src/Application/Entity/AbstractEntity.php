@@ -32,19 +32,7 @@ abstract class AbstractEntity implements JsonSerializable {
 
     public function jsonSerialize()
     {
-
-//        $array = array();
-//        $ref = new \ReflectionClass($this);
-//        $methods = $ref->getMethods();
-//        foreach($methods as $methodsName){
-//            $prefix = substr($methodsName,0,3);
-//            if($prefix == 'get'){
-//                $varName = lcfirst(substr($methodsName,3));
-//                $array[$varName] = $this->$methodsName();
-//            }
-//        }
         return get_object_vars($this);
-
     }
 
 

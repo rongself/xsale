@@ -79,8 +79,11 @@ class Product extends AbstractEntity
     /**
      * Constructor
      */
-    public function __construct()
+    public function __construct(array $product=null)
     {
+        if($product!=null){
+            parent::__construct($product);
+        }
         $this->productImages = new \Doctrine\Common\Collections\ArrayCollection();
         $this->stockItems = new \Doctrine\Common\Collections\ArrayCollection();
     }

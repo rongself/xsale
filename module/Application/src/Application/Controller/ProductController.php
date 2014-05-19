@@ -1,8 +1,10 @@
 <?php
 namespace Application\Controller;
 
+use Application\Entity\Product;
 use Application\Lib\View\Model\JsonResultModel;
 use Application\Service\ProductService;
+use Zend\Json\Json;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\JsonModel;
 class ProductController extends AbstractActionController
@@ -31,7 +33,7 @@ class ProductController extends AbstractActionController
             try{
                 $jsonData = $this->params()->fromPost('product');
                 $product = Json::decode($jsonData,Json::TYPE_ARRAY);
-                $this->productService->edit($product);
+                $this->productService->edit(new Product($product));
             }catch (ValidationException $e){
                 $resultModel->setErrors($e->getValidationError());
                 return $resultModel;
