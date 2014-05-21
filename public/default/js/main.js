@@ -15,7 +15,8 @@ require.config({
         checkedAll:'module/checked.all.handle',
         pace:'lib/pace.min',
         formPost:'module/formPost',
-        imageUploader:'module/image.uploader'
+        imageUploader:'module/image.uploader',
+        message:'module/message'
     },
     shim:{
         'bootstrap':{
@@ -51,26 +52,6 @@ require(["jquery",'pace','bootstrap'], function($,pace) {
                 $submitBtn.button('reset');
             });
         }
-        message = {
-            show:function(message,type){
-                $('<div class="alert alert-'+type+'" style="position:fixed;bottom:-54px;left:0px;width:100%;z-index:100;margin:0px;">'+message+'</div>')
-                    .appendTo('body')
-                    .animate({'bottom':0},500);
-            },
-            close:function(){
-
-            },
-            error:function(message){
-                this.show(message,'danger');
-            },
-            success:function(){
-
-            },
-            info:function(){
-
-            }
-        }
-        message.error('test asdasdasdasdasd');
         $('.spinner .btn:first-of-type').on('click', function() {
             $('.spinner input').val( parseInt($('.spinner input').val(), 10) + 1);
             return false;

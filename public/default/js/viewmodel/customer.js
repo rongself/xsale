@@ -1,7 +1,7 @@
 /**
  * Created by Ron on 14-5-3.
  */
-define(['knockout','knockoutMapping','formPost','validation','validationConfig'], function(ko,koMapping,formPost) {
+define(['knockout','knockoutMapping','formPost','message','validation','validationConfig'], function(ko,koMapping,formPost,message) {
     return function(){
         var self = this;
         self.name = ko.observable();
@@ -42,7 +42,7 @@ define(['knockout','knockoutMapping','formPost','validation','validationConfig']
                 data:{customer:data},
                 success:function(){
                     self.reset();
-                    alert('添加成功');
+                    message.success('添加成功');
                     if(typeof callback == 'function'){
                         callback();
                     }

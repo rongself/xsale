@@ -1,7 +1,7 @@
 /**
  * Created by Ron on 14-5-7.
  */
-define(['knockout','knockoutMapping','formPost','validation','validationConfig'], function(ko,koMapping,formPost) {
+define(['knockout','knockoutMapping','formPost','message','validation','validationConfig'], function(ko,koMapping,formPost,message) {
     return function(){
         var self = this;
         self.name = ko.observable().extend({
@@ -19,7 +19,7 @@ define(['knockout','knockoutMapping','formPost','validation','validationConfig']
                 url:'/account/edit-account',
                 data:{account:data},
                 success:function(){
-                    alert('修改成功');
+                    message.success('修改成功');
                     if(typeof callback == 'function'){
                         callback();
                     }

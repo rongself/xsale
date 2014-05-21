@@ -1,7 +1,7 @@
 /**
  * Created by Ron on 14-3-1.
  */
-define(['knockout','viewmodel/saleProduct','knockoutMapping','formPost','validation','validationConfig'],function(ko,saleProductViewModel,koMapping,formPost){
+define(['knockout','viewmodel/saleProduct','knockoutMapping','formPost','message','validation','validationConfig'],function(ko,saleProductViewModel,koMapping,formPost,message){
     return function() {
         var self = this;
         self.saleProducts = ko.observableArray(null);
@@ -53,7 +53,7 @@ define(['knockout','viewmodel/saleProduct','knockoutMapping','formPost','validat
                 $('#submitTo').button('reset');
             }
             if(!(self!=null&&typeof self.saleProducts() == 'object'&&self.saleProducts().length>0)){
-                alert('销售记录中还未加入任何产品');
+                message.error('销售记录中还未加入任何产品');
                 return false;
             }
             var data = koMapping.toJSON(self);
@@ -63,7 +63,7 @@ define(['knockout','viewmodel/saleProduct','knockoutMapping','formPost','validat
                 data:{saleRecord:data},
                 success:function(){
                     self.reset();
-                    alert('销售记录已成功提交');
+                    message.success('销售记录已成功提交');
                     if(typeof callback == 'function'){
                         callback();
                     }
@@ -76,7 +76,6 @@ define(['knockout','viewmodel/saleProduct','knockoutMapping','formPost','validat
             });
         }
         self.show = function (elem){
-            alert();
             $(elem).hide().slideDown();
         }
     }

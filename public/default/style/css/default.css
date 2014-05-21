@@ -1,8 +1,10 @@
+/*for error message*/
 .validationMessage {
   color: #ac2925;
   display: block;
   padding-top: 10px;
 }
+/*for sidebar fix*/
 .nav-fix{
     position: fixed !important;
     top: 51px;
@@ -11,10 +13,11 @@
 .sidebar ul li a.active{
     border-right: solid 2px #0088cc;
 }
-
+/*for home title*/
 .title-font{
     font-family: "Trebuchet MS", "Helvetica", sans-serif;
 }
+/*for number input*/
 .spinner {
     width: 100px;
 }
@@ -49,4 +52,21 @@
     position: absolute;
     top: 0;
     left: 4px;
+}
+/*for alert*/
+
+.alert.alert-warning{
+    border-color: #FDC963;
+}
+
+.alert.alert-success{
+    border-color: #BFD3AF;
+}
+
+.alert.alert-info{
+
+}
+
+.alert.alert-danger{
+    border-color: #D6ACB2;
 }

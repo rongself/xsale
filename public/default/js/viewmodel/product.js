@@ -1,7 +1,7 @@
 /**
  * Created by Administrator on 14-5-13.
  */
-define(['knockout','validation','validationConfig'], function(ko) {
+define(['knockout','message','validation','validationConfig'], function(ko,message) {
     return function() {
         var self = this;
         self.sku = ko.observable().extend({
@@ -39,7 +39,7 @@ define(['knockout','validation','validationConfig'], function(ko) {
                 data:{customer:data},
                 success:function(){
                     self.reset();
-                    alert('添加成功');
+                    message.success('添加成功');
                     if(typeof callback == 'function'){
                         callback();
                     }

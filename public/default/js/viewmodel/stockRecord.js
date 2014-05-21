@@ -1,7 +1,7 @@
 /**
  * Created by Ron on 14-2-27.
  */
-define(['knockout','viewmodel/stockProduct','lib/json2','knockoutMapping','formPost'], function(ko,stockProductViewModel,JSON,koMapping,formPost) {
+define(['knockout','viewmodel/stockProduct','lib/json2','knockoutMapping','formPost','message'], function(ko,stockProductViewModel,JSON,koMapping,formPost,message) {
     return function() {
         var self = this;
         self.stockProducts = ko.observableArray(null);
@@ -37,7 +37,7 @@ define(['knockout','viewmodel/stockProduct','lib/json2','knockoutMapping','formP
         }
         self.submitAndContinue = function (callback) {
             if(!(self!=null&&typeof self.stockProducts() == 'object'&&self.stockProducts().length>0)){
-                alert('进货单中还未加入任何产品');
+                message.warning('进货单中还未加入任何产品');
                 return false;
             }
             var data = koMapping.toJSON(self);
@@ -47,7 +47,7 @@ define(['knockout','viewmodel/stockProduct','lib/json2','knockoutMapping','formP
                 data:{stockRecord:data},
                 success:function(){
                     self.reset();
-                    alert('进货单已成功提交');
+                    message.success('进货单已成功提交');
                     if(typeof callback == 'function'){
                         callback();
                     }

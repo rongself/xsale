@@ -1,7 +1,7 @@
 /**
  * Created by Ron on 14-5-5.
  */
-define(['jquery','knockout'], function ($,ko) {
+define(['jquery','knockout','message'], function ($,ko,message) {
     return {
         submit: function (options) {
             var defaultOptions = {
@@ -31,13 +31,13 @@ define(['jquery','knockout'], function ($,ko) {
                             if (typeof options.viewModel[key] == 'function' && typeof result.errors[key] != 'undefined') {
                                 options.viewModel[key].setError(result.errors[key]);
                             } else {
-                                alert(result.errors[key]);
+                                message.error(result.errors[key]);
                             }
                         }
                     }
                 }, 'json')
                 .fail(function () {
-                        alert('网络传输错误,请稍后再试');
+                        message.error('网络传输错误,请稍后再试');
                         if (typeof options.fail == 'function') {
                             options.fail();
                         }

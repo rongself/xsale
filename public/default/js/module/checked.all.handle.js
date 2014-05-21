@@ -1,4 +1,4 @@
-define(['jquery'],function($){
+define(['jquery','message'],function($,message){
     return function(options){
         var defaultOptions = {
             checkbox:'#checkAll',
@@ -31,19 +31,19 @@ define(['jquery'],function($){
                                 if(result.success){
                                     location.reload();
                                 }else{
-                                    alert('服务器返回错误');
+                                    message.error('服务器返回错误');
                                     $(self).val('handle');
                                 }
                             },'json')
                                 .fail(function(){
-                                    alert('Ajax传输失败');
+                                    message.error('Ajax传输失败');
                                     $(self).val('handle');
                                 });
                         }else{
                             $(self).val('handle');
                         }
                     }else{
-                        alert('未选择任何项目');
+                        message.error('未选择任何项目');
                         $(self).val('handle');
                     }
                     break;
