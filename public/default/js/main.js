@@ -16,7 +16,9 @@ require.config({
         pace:'lib/pace.min',
         formPost:'module/formPost',
         imageUploader:'module/image.uploader',
-        message:'module/message'
+        message:'module/message',
+        datetimepicker:'lib/bootstrap-datetimepicker.min',
+        flot:'/mac/js/jquery.flot'
     },
     shim:{
         'bootstrap':{

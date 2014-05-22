@@ -257,6 +257,9 @@ return array(
             'AccountService' => function(Zend\ServiceManager\ServiceManager $sm) {
                 return new Application\Service\AccountService($sm->get('Doctrine\ORM\EntityManager'));
             },
+            'StatisticsService' => function(Zend\ServiceManager\ServiceManager $sm) {
+                    return new Application\Service\StatisticsService($sm->get('Doctrine\ORM\EntityManager'));
+            },
         ),
     ),
     'translator' => array(
@@ -278,7 +281,7 @@ return array(
             //'Application\Controller\Product' => 'Application\Controller\ProductController',
             //'Application\Controller\SaleRecord' => 'Application\Controller\SaleRecordController',
             'Application\Controller\Setting' => 'Application\Controller\SettingController',
-            'Application\Controller\Statistics' => 'Application\Controller\StatisticsController',
+            //'Application\Controller\Statistics' => 'Application\Controller\StatisticsController',
             //'Application\Controller\StockRecord' => 'Application\Controller\StockRecordController',
             'Application\Controller\FileUploader' => 'Application\Controller\FileUploaderController'
         ),
@@ -309,6 +312,11 @@ return array(
                     $sm->getServiceLocator()->get('Zend\Authentication\AuthenticationService')
                 );
             },
+            'Application\Controller\Statistics' => function ($sm) {
+                    return new Application\Controller\StatisticsController(
+                        $sm->getServiceLocator()->get('StatisticsService')
+                    );
+                },
 
         )
     ),
