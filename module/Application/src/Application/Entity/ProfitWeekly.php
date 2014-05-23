@@ -22,9 +22,14 @@ class ProfitWeekly extends AbstractEntity{
      */
     private $id;
     /**
-     * @ORM\Column(type="float", nullable=true, name="profit", precision=10, scale=0)
-     */
+ * @ORM\Column(type="float", nullable=true, name="profit", precision=10, scale=0)
+ */
     private $profit;
+
+    /**
+     * @ORM\Column(type="float", nullable=true, name="price_amount", precision=10, scale=0)
+     */
+    private $priceAmount;
 
     /**
      * @ORM\Column(type="float",  nullable=false, name="month", precision=10, scale=0)
@@ -45,6 +50,7 @@ class ProfitWeekly extends AbstractEntity{
      * @ORM\Column(type="string",length=50, nullable=false, name="date")
      */
     private $date;
+
 
     /**
      * @return mixed
@@ -84,6 +90,22 @@ class ProfitWeekly extends AbstractEntity{
     public function getDate()
     {
         return $this->date;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProfit()
+    {
+        return $this->profit;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPriceAmount()
+    {
+        return $this->priceAmount;
     }
 
 } 

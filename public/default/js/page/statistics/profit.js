@@ -1,78 +1,48 @@
 /**
  * Created by Administrator on 14-5-22.
  */
-require(['jquery','datetimepicker','flot'],function($,datetimepicker,flot){
+require(['jquery','knockout','viewmodel/statistics','datetimepicker','chart','underscore'],function($,ko,Statistics,datetimepicker,chart,_){
     $('#startTime').datetimepicker();
     $('#endTime').datetimepicker();
-
+    var profitLists = new Statistics();
     /* Bar Chart starts */
+    var data = [];
+    $.getJSON('/statistics/ajax-get-total-profit-weekly',function(returnData){
+        var maxDate = _.max(returnData.priceData, function(item){ return item[0]; })[0];
+        var minDate = _.min(returnData.priceData, function(item){ return item[0]; })[0];
 
-    $.getJSON('/statistics/ajax-get-total-profit-weekly',function(data){
-        plotWithOptions(data);
+        data['profitData'] = returnData.profitData;
+        data['priceData'] = returnData.priceData;
+        var chartIns = new chart({data:[{ data: data['profitData'], label: "利润"},{ data: data['priceData'], label: "销售额"}]});
+        chartIns.apply();
+
+        profitLists.profitSum(returnData.sum.totalProfit);
+        profitLists.priceSum(returnData.sum.totalPriceAmount);
+        profitLists.startTime(getDateFromUTC(maxDate));
+        profitLists.endTime(getDateFromUTC(minDate));
     });
 
-    var stack = 0, bars = true, lines = false, steps = false;
-    function plotWithOptions(data) {
-        var plot = $.plot($("#bar-chart"),
-            [ { data: data, label: "利润"}], {
-                series: {
-                    lines: { show: true, fill: true},
-                    points: { show: true }
-                },
-                grid: { hoverable: true, clickable: true, borderWidth:0 },
-                colors: ["#1eafed", "#1eafed"],
-                xaxis: {
-                    mode: "time",
-                    timeformat: "%y/%m/%d"
-                }
-            });
-    }
-    function showTooltip(x, y, contents) {
-        $('<div id="tooltip">' + contents + '</div>').css( {
-            position: 'absolute',
-            //display: 'none',
-            top: y + 5,
-            border: '1px solid #000',
-            padding: '2px 8px',
-            color: '#ccc',
-            'background-color': '#000',
-            opacity: 0.9,
-            'z-index':101
-        }).appendTo("body").css({
-            left:function(){
-                var tipWidth = parseInt($('#tooltip').outerWidth());
-                if(x+5+tipWidth>=$('body').width())
-                {
-                    return x+5-tipWidth;
-                }else{
-                    return x+5;
-                }
+    function dailyFill(data,maxDate,minDate){
+        var secondsOfDay = 24*60*60*1000;
+        for(var i=minDate;i<maxDate;i+=secondsOfDay){
+            if(_.find(data,function(item){return item[0]==i})==null){
+                data.push([i,0]);
             }
-        }).fadeIn(200);
+        }
+        return _.sortBy(data, function(num){ return num[0]; });
     }
 
-    var previousPoint = null;
-    $("#bar-chart").bind("plothover", function (event, pos, item) {
-        $("#x").text(pos.x.toFixed(2));
-        $("#y").text(pos.y.toFixed(2));
-
-            if (item) {
-                if (previousPoint != item.dataIndex) {
-                    previousPoint = item.dataIndex;
-
-                    $("#tooltip").remove();
-                    var x = item.datapoint[0].toFixed(2),
-                        y = item.datapoint[1].toFixed(2);
-
-                    showTooltip(item.pageX, item.pageY,
-                        item.series.label + ":" + getDateFromUTC(x) + " = " + y);
-                }
+    function weeklyFill(data,maxDate,minDate){
+        var secondsOfWeek = 24*60*60*1000*7;
+        minDate = getLastDayOfThisWeek(minDate);
+        maxDate = getLastDayOfThisWeek(maxDate);
+        for(var i=minDate;i<maxDate;i+=secondsOfWeek){
+            if(_.find(data,function(item){return item[0]==i})==null){
+                data.push([i,0]);
             }
-            else {
-                $("#tooltip").remove();
-                previousPoint = null;
-            }
-    });
+        }
+        return _.sortBy(data, function(num){ return num[0]; });
+    }
 
     function getDateFromUTC(UTC){
         var dateTime = new Date(parseInt(UTC))
@@ -81,4 +51,6 @@ require(['jquery','datetimepicker','flot'],function($,datetimepicker,flot){
         var year = dateTime.getFullYear();
         return year+'/'+month+'/'+date
     }
+
+    ko.applyBindings(profitLists,$('#profitList').get(0));
 });

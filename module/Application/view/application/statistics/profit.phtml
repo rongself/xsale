@@ -39,16 +39,7 @@
                     <div id="bar-chart"></div>
 
                     <hr />
-
-                    <!--Bar chart stuffs -->
-                    <div class="btn-group stackControls">
-                        <input type="button" value="With stacking" class="btn btn-default">
-                        <input type="button" value="Without stacking" class="btn btn-default">
-                    </div>
-
                     <div class="btn-group graphControls">
-
-                        <input type="button" value="Bars" class="btn btn-default">
                         <input type="button" value="Lines" class="btn btn-default">
                         <input type="button" value="Lines with steps" class="btn btn-default">
                     </div>
@@ -64,7 +55,7 @@
 <div class="row">
     <div class="col-md-12">
 
-        <div class="widget">
+        <div class="widget" id="profitList">
             <div class="widget-head">
                 <div class="pull-left">利润明细</div>
                 <div class="widget-icons pull-right">
@@ -80,22 +71,22 @@
 
                         <div class="col-md-4">
                             <div class="well">
-                                <h2>$8488</h2>
-                                <p>销售总额 (23/23/2023 - 23/43/2021)</p>
+                                <h2 data-bind="text:priceSum()+'￥'"></h2>
+                                <p>销售总额 (<span data-bind="text:startTime"></span> - <span data-bind="text:endTime"></span>)</p>
                             </div>
                         </div>
 
                         <div class="col-md-4">
                             <div class="well">
-                                <h2>34%</h2>
-                                <p>利润率 (23/23/2023 - 23/43/2021)</p>                        
+                                <h2 data-bind="text:profitRate()+'%'"></h2>
+                                <p>利润率 (<span data-bind="text:startTime"></span> - <span data-bind="text:endTime"></span>)</p>
                             </div>
                         </div>
 
                         <div class="col-md-4">
                             <div class="well">
-                                <h2>$23232</h2>
-                                <p>总利润 (23/23/2023 - 23/43/2021)</p>
+                                <h2 data-bind="text:profitSum()+'￥'"></h2>
+                                <p>总利润 (<span data-bind="text:startTime"></span> - <span data-bind="text:endTime"></span>)</p>
                             </div>
                         </div>
 
@@ -132,7 +123,7 @@
                                         <td>565445</td>
                                         <td>Babu Raj</td>
                                         <td>6 Days ago</td>
-                                    </tr>                                                                        <tr>
+                                    </tr>
                                         <td>3</td>
                                         <td>Samsung Galaxy Metro</td>
                                         <td>$35</td>

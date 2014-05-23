@@ -36,12 +36,16 @@ class StatisticsController extends AbstractActionController
     public function ajaxGetTotalProfitWeeklyAction()
     {
         $data = $this->statisticsService->getTotalProfitWeekly();
-        $returnData = array();
+        //var_dump($data);exit;
+        $profitData = array();
+        $priceData = array();
         foreach($data as $item){
-            $returnData[] = [strtotime($item['date'].' UTC')*1000,$item['profit']];
+            $profitData[] = [strtotime($item['date'].' UTC')*1000,$item['profit']];
+            $priceData[] = [strtotime($item['date'].' UTC')*1000,$item['priceAmount']];
             //var_dump($item['date']);
         }
-        return new JsonModel($returnData);
+        $sum = $this->statisticsService->getSum();
+        return new JsonModel(array('profitData'=>$profitData,'priceData'=>$priceData,'sum'=>$sum));
     }
 }
 

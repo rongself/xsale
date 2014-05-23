@@ -16,9 +16,24 @@ class StatisticsService extends AbstractService{
     public function getTotalProfitWeekly()
     {
         return $this->objectManager->createQuery(
-            'SELECT p.date,p.profit FROM \Application\Entity\ProfitWeekly p'
+            'SELECT MAX(p.date) as date,p.profit,p.priceAmount FROM \Application\Entity\ProfitWeekly p GROUP BY p.week'
         )->getResult();
     }
+
+    public function getTotalProfitDaily()
+    {
+        return $this->objectManager->createQuery(
+            'SELECT p.date ,p.profit,p.priceAmount FROM \Application\Entity\ProfitWeekly p'
+        )->getResult();
+    }
+
+    public function getSum()
+    {
+        return $this->objectManager->createQuery(
+            'SELECT SUM(p.profit) as totalProfit,SUM(p.priceAmount) as totalPriceAmount FROM \Application\Entity\ProfitWeekly p'
+        )->getSingleResult();
+    }
+
     /**
      * @return \Doctrine\ORM\EntityRepository
      */

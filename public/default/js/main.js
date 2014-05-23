@@ -18,7 +18,9 @@ require.config({
         imageUploader:'module/image.uploader',
         message:'module/message',
         datetimepicker:'lib/bootstrap-datetimepicker.min',
-        flot:'/mac/js/jquery.flot'
+        flot:'/mac/js/jquery.flot',
+        date:'lib/date-utils',
+        chart:'module/chart.helper'
     },
     shim:{
         'bootstrap':{
