@@ -17,8 +17,11 @@ require.config({
         formPost:'module/formPost',
         imageUploader:'module/image.uploader',
         message:'module/message',
-        datetimepicker:'lib/bootstrap-datetimepicker.min',
+        datetimepicker:'/mac/js/bootstrap-datetimepicker',
+        moment:'lib/moment',
+        'moment.zh-CN':'lib/moment.zh-CN',
         flot:'/mac/js/jquery.flot',
+        flotResize:'/mac/js/jquery.flot.resize',
         date:'lib/date-utils',
         chart:'module/chart.helper'
     },
@@ -38,10 +41,18 @@ require.config({
         'switch':{
             deps:['jquery'],
             exports:"$.fn.bootstrapSwitch"
+        },
+        'flot':{
+            deps:['jquery'],
+            exports:"$.fn.plot"
+        },
+        'flotResize':{
+            deps:['flot'],
+            exports:"$.fn.plot"
         }
     }
 });
-require(["jquery",'pace','bootstrap'], function($,pace) {
+require(["jquery",'pace','bootstrap','moment','moment.zh-CN'], function($,pace) {
 
         pace.start();
         var $submitBtn = $('button[type="submit"]');

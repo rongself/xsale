@@ -17,30 +17,30 @@ class StockRecordService extends AbstractService {
 
     public function create($data){
         $now = new \DateTime();
+        $totalPrice = 0;
         $stockRecord = new StockRecord();
         $stockItemTempl = new StockItem();
         $productTempl = new Product();
-        $stockRecord->setTotalPrice($data->totalPrice);
-        $stockRecord->setCreateTime($now);
         foreach($data->stockProducts as $product){
+            $totalPrice +=round(floatval($product->cost)*intval($product->stock),2);
             /**@var $productEntity \Application\Entity\Product*/
             $productEntity = $this->objectManager->getRepository('Application\Entity\Product')->findOneBy(array('sku'=>$product->sku));
             if($productEntity==null){
                 // if sku is not exists,add it
                 $productEntity = clone $productTempl;
                 $productEntity->setName($product->name);
-                $productEntity->setCost($product->cost);
-                $productEntity->setStock($product->stock);
-                $productEntity->setPrice($product->price);
+                $productEntity->setCost(round(floatval($product->cost),2));
+                $productEntity->setStock(intval($product->stock));
+                $productEntity->setPrice(round(floatval($product->price),2));
                 $productEntity->setDescription($product->description);
                 $productEntity->setSku($product->sku);
                 $productEntity->setCreateTime($now);
             }else{
                 // if sku exists, update the information
                 $productEntity->setName($product->name);
-                $productEntity->setCost($product->cost);
+                $productEntity->setCost(round(floatval($product->cost),2));
                 $productEntity->setStock((int)$productEntity->getStock()+(int)$product->stock);
-                $productEntity->setPrice($product->price);
+                $productEntity->setPrice(round(floatval($product->price),2));
                 $productEntity->setDescription($product->description);
             }
             $stockItem = clone $stockItemTempl;
@@ -69,6 +69,9 @@ class StockRecordService extends AbstractService {
                 $i++;
             }
         }
+        $stockRecord->setTotalPrice($totalPrice);
+        $stockRecord->setCreateTime($now);
+        $stockRecord->setStockTime(new \DateTime($data->stockTime));
         $this->objectManager->persist($stockRecord);
         $this->objectManager->flush();
     }

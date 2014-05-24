@@ -1,7 +1,7 @@
 /**
- * Created by Administrator on 14-5-23.
+ * Created by Ron on 14-5-23.
  */
-define(['jquery','flot','underscore'],function($,plot,_){
+define(['jquery','flot','underscore','flotResize'],function($,plot,_){
     return function(options){
         var self = this;
         var defaultOptions = {

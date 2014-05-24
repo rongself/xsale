@@ -23,7 +23,7 @@ class StockItem extends AbstractEntity
 
     /**
      * @ORM\ManyToOne(targetEntity="Application\Entity\StockRecord", inversedBy="stockItems", cascade={"persist"})
-     * @ORM\JoinColumn(name="stock_record_id", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="stock_record_id", referencedColumnName="id", nullable=false,onDelete="CASCADE")
      */
     private $stockRecord;
 

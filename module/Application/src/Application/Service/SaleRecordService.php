@@ -38,6 +38,8 @@ class SaleRecordService extends AbstractService{
         $now = new \DateTime();
         $saleRecord = new Order();
         $orderItem = new OrderCart();
+        $totalPrice = 0;
+        $totalCost = 0;
         if($data->phoneNumber){
             $customer = $this->objectManager->getRepository('Application\Entity\Customer')->findOneBy(array('phoneNumber'=>$data->phoneNumber));
             if(!isset($customer)){
@@ -46,8 +48,6 @@ class SaleRecordService extends AbstractService{
             }
             $saleRecord->setCustomer($customer);
         }
-        $saleRecord->setTotalPrice($data->totalPrice);
-        $saleRecord->setCreateTime($now);
         foreach($data->saleProducts as $product){
             /**@var $productEntity \Application\Entity\Product*/
             $productEntity = $this->objectManager->getRepository('Application\Entity\Product')->findOneBy(array('sku'=>$product->sku));
@@ -59,13 +59,19 @@ class SaleRecordService extends AbstractService{
             $stock = intval($productEntity->getStock());
             $productEntity->setStock($stock-intval($product->quantity));
             $item->setProduct($productEntity);
-            $item->setPrice($product->price);
+            $item->setPrice(round($product->price,2));
             $item->setQuantity($product->quantity);
             $item->setCreateTime($now);
             $item->setOrder($saleRecord);
             $saleRecord->addOrderCart($item);
-            //@todo not work
+
+            $totalPrice +=round(floatval($product->price)*intval($product->quantity),2);
+            $totalCost +=round(floatval($productEntity->getCost())*intval($product->quantity),2);
         }
+        $saleRecord->setTotalPrice($totalPrice);
+        $saleRecord->setTotalCost($totalCost);
+        $saleRecord->setCreateTime($now);
+        $saleRecord->setOrderTime(new \DateTime($data->orderTime));
         $this->objectManager->persist($saleRecord);
         $this->objectManager->flush();
         return true;

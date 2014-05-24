@@ -3,10 +3,11 @@ require(['knockout',
         'viewmodel/stockProduct',
         'module/sku.autocomplete',
         'module/image.uploader',
+        'datetimepicker',
         'underscore',
         'lib/json2']
     , function (ko, StockRecordViewModel, StockProductViewModel,SkuAutoComplete,ImageUploader) {
-
+        $('#startTime').datetimepicker({pickTime: false,language: 'zh-CN'});
         var stockRecord = new StockRecordViewModel();
         var stockProduct = new StockProductViewModel(stockRecord);
         var uploader = new ImageUploader({observableArray:stockProduct.pictures});
@@ -35,5 +36,6 @@ require(['knockout',
         ko.applyBindings(stockProduct,$('#stockProduct').get(0));
         ko.applyBindings(stockRecord,$('#stockRecord').get(0));
         ko.applyBindings(stockRecord,$('#stockRecordSubmit').get(0));
+        ko.applyBindings(stockRecord,$('#recordInfo').get(0));
         //form submit
     });

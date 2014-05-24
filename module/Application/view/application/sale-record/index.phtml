@@ -60,7 +60,7 @@
                                     echo isset($customer) ? $this->escapeHtml($customer->getPhoneNumber()):'-';
                                 ?></td>
                             <td><?php echo $this->escapeHtml($item->getTotalPrice());?></td>
-                            <td><?php echo $this->escapeHtml($item->getCreateTime()->format('Y-m-d H:s:i'));?></td>
+                            <td><?php echo $this->escapeHtml($item->getOrderTime()->format('Y-m-d H:s:i'));?></td>
                             <td>
 
                                 <a class="btn btn-xs btn-default"><i class="icon-pencil"></i> </a>

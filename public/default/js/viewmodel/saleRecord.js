@@ -5,6 +5,9 @@ define(['knockout','viewmodel/saleProduct','knockoutMapping','formPost','message
     return function() {
         var self = this;
         self.saleProducts = ko.observableArray(null);
+        self.orderTime = ko.observable(moment().format("YYYY-MM-DD")).extend({
+            required: { message: '售出日期不能为空' }
+        });
         self.phoneNumber = ko.observable().extend({
             number:{message:'手机号格式不正确'}
         });

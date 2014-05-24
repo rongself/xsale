@@ -16,14 +16,24 @@ class Order extends AbstractEntity
     private $id;
 
     /** 
-     * @ORM\Column(type="float", nullable=true, name="total_price", precision=10, scale=0)
+     * @ORM\Column(type="float", nullable=false, name="total_price", precision=10, scale=0)
      */
     private $totalPrice;
 
+    /**
+     * @ORM\Column(type="float", nullable=false, name="total_cost", precision=10, scale=0)
+     */
+    private $totalCost;
+
     /** 
-     * @ORM\Column(type="datetime", nullable=true, name="create_time")
+     * @ORM\Column(type="datetime", nullable=false, name="create_time")
      */
     private $createTime;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=false, name="order_time")
+     */
+    private $orderTime;
 
     /** 
      * @ORM\OneToMany(targetEntity="Application\Entity\OrderCart", mappedBy="order",cascade={"persist"})
@@ -153,5 +163,37 @@ class Order extends AbstractEntity
     public function getCustomer()
     {
         return $this->customer;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOrderTime()
+    {
+        return $this->orderTime;
+    }
+
+    /**
+     * @param mixed $orderTime
+     */
+    public function setOrderTime($orderTime)
+    {
+        $this->orderTime = $orderTime;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTotalCost()
+    {
+        return $this->totalCost;
+    }
+
+    /**
+     * @param mixed $totalCost
+     */
+    public function setTotalCost($totalCost)
+    {
+        $this->totalCost = $totalCost;
     }
 }

@@ -5,6 +5,9 @@ define(['knockout','viewmodel/stockProduct','lib/json2','knockoutMapping','formP
     return function() {
         var self = this;
         self.stockProducts = ko.observableArray(null);
+        self.stockTime = ko.observable(moment().format("YYYY-MM-DD")).extend({
+            required: { message: '售出日期不能为空' }
+        });
         self.totalPrice = ko.computed(function() {
             var sum = 0;
             for (var item in self.stockProducts()) {

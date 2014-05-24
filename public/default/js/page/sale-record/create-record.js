@@ -6,10 +6,12 @@ require(['knockout',
       'viewmodel/saleProduct',
       'module/sku.autocomplete',
       'module/customer.autocomplete',
+      'datetimepicker',
       'validation',
       'typeahead',
       'underscore']
     ,function(ko,SaleRecordViewModel,SaleProductViewModel,SkuAutoComplete,CustomerAutoComplete){
+        $('#startTime').datetimepicker({pickTime: false,language: 'zh-CN'});
         saleRecord = new SaleRecordViewModel();
         saleProduct = new SaleProductViewModel();
         saleProduct.sku.extend({

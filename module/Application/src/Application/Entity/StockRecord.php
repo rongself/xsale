@@ -16,14 +16,14 @@ class StockRecord extends AbstractEntity
     private $id;
 
     /** 
-     * @ORM\Column(type="float", nullable=true, name="total_price", precision=10, scale=0)
+     * @ORM\Column(type="float", nullable=false, name="total_price", precision=10, scale=0)
      */
     private $totalPrice;
 
     /** 
-     * @ORM\Column(type="datetime", nullable=true, name="stock_date")
+     * @ORM\Column(type="datetime", nullable=false, name="stock_time")
      */
-    private $stockDate;
+    private $stockTime;
 
     /** 
      * @ORM\Column(type="datetime", nullable=false, name="create_time")
@@ -66,29 +66,6 @@ class StockRecord extends AbstractEntity
     public function getTotalPrice()
     {
         return $this->totalPrice;
-    }
-
-    /**
-     * Set stockDate
-     *
-     * @param \DateTime $stockDate
-     * @return StockRecord
-     */
-    public function setStockDate($stockDate)
-    {
-        $this->stockDate = $stockDate;
-
-        return $this;
-    }
-
-    /**
-     * Get stockDate
-     *
-     * @return \DateTime 
-     */
-    public function getStockDate()
-    {
-        return $this->stockDate;
     }
 
     /**
@@ -152,5 +129,21 @@ class StockRecord extends AbstractEntity
     public function getStockItems()
     {
         return $this->stockItems;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStockTime()
+    {
+        return $this->stockTime;
+    }
+
+    /**
+     * @param mixed $stockTime
+     */
+    public function setStockTime($stockTime)
+    {
+        $this->stockTime = $stockTime;
     }
 }
