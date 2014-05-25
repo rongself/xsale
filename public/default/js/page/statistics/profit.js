@@ -2,8 +2,8 @@
  * Created by Administrator on 14-5-22.
  */
 require(['jquery','knockout','viewmodel/statistics','datetimepicker','chart','underscore'],function($,ko,Statistics,datetimepicker,chart,_){
-    $('#startTime').datetimepicker({pickTime: false});
-    $('#endTime').datetimepicker({pickTime: false});
+    $('#startTime').datetimepicker({pickTime: false,language: 'zh-CN'});
+    $('#endTime').datetimepicker({pickTime: false,language: 'zh-CN'});
     var profitLists = new Statistics();
     /* Bar Chart starts */
     var data = [];

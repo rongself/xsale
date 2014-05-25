@@ -34,6 +34,82 @@ class StatisticsService extends AbstractService{
         )->getSingleResult();
     }
 
+    public function getTopSale($count=5,$lastDayCount=7)
+    {
+        $sth = $this->objectManager->getConnection()
+            ->prepare(
+                'SELECT
+                    SUM(oc.quantity) as sold,
+                    oc.product_id,
+                    p.picture,
+                    p.`name`,
+                    p.`sku`
+                FROM
+                    xs_order_cart oc
+                LEFT JOIN xs_products p ON oc.product_id = p.id
+                LEFT JOIN xs_orders o ON oc.order_id = o.id
+                WHERE o.order_time > ADDDATE(NOW(),:lastDayCount)
+                GROUP BY p.id
+                ORDER BY sold DESC
+                LIMIT :count'
+            );
+        $sth->bindParam(':lastDayCount',intval(-$lastDayCount));
+        $sth->bindParam(':count',$count,\PDO::PARAM_INT);
+        $sth->execute();
+        return $sth->fetchAll();
+    }
+
+    public function getRecentOrder($count=3)
+    {
+        $sth = $this->objectManager->getConnection()
+            ->prepare(
+                'SELECT
+                    oc.quantity,
+                    oc.price,
+                    o.order_time,
+                    oc.order_id,
+                    oc.product_id,
+                    p.picture,
+                    p.`name`,
+                    p.`sku`
+                FROM
+                    xs_order_cart oc
+                LEFT JOIN xs_products p ON oc.product_id = p.id
+                LEFT JOIN xs_orders o ON oc.order_id = o.id
+                ORDER BY
+                    o.order_time
+                LIMIT :count'
+            );
+        $sth->bindParam(':count',$count,\PDO::PARAM_INT);
+        $sth->execute();
+        return $sth->fetchAll();
+    }
+
+    public function getRecentStock($count=3)
+    {
+        $sth = $this->objectManager->getConnection()
+            ->prepare(
+                'SELECT
+                    si.quantity,
+                    si.price,
+                    sr.stock_time,
+                    si.stock_record_id,
+                    si.product_id,
+                    p.picture,
+                    p.`name`,
+                    p.`sku`
+                FROM
+                    xs_stock_items si
+                LEFT JOIN xs_products p ON  si.product_id = p.id
+                LEFT JOIN xs_stock_records sr ON  si.stock_record_id = sr.id
+                ORDER BY
+                    sr.stock_time
+                LIMIT :count'
+            );
+        $sth->bindParam(':count',$count,\PDO::PARAM_INT);
+        $sth->execute();
+        return $sth->fetchAll();
+    }
     /**
      * @return \Doctrine\ORM\EntityRepository
      */

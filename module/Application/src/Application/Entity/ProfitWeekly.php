@@ -9,7 +9,10 @@
 namespace Application\Entity;
 use Doctrine\ORM\Mapping AS ORM;
 
-
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="xsv_total_profit_weekly")
+ */
 class ProfitWeekly extends AbstractEntity{
 
     /**

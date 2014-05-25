@@ -15,7 +15,7 @@ class StatisticsController extends AbstractActionController
     }
     public function indexAction()
     {
-        // action body
+        var_dump($this->statisticsService->getRecentStock());exit;
     }
 
     public function profitAction()

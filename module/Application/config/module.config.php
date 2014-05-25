@@ -274,7 +274,7 @@ return array(
     ),
     'controllers' => array(
         'invokables' => array(
-            'Application\Controller\Index' => 'Application\Controller\IndexController',
+            //'Application\Controller\Index' => 'Application\Controller\IndexController',
             //'Application\Controller\Account' => 'Application\Controller\AccountController',
             //'Application\Controller\Customer' => 'Application\Controller\CustomerController',
             'Application\Controller\Error' => 'Application\Controller\ErrorController',
@@ -286,6 +286,11 @@ return array(
             'Application\Controller\FileUploader' => 'Application\Controller\FileUploaderController'
         ),
         'factories' => array(
+            'Application\Controller\Index' => function ($sm) {
+                    return new Application\Controller\IndexController(
+                        $sm->getServiceLocator()->get('StatisticsService')
+                    );
+                },
             'Application\Controller\Product' => function ($sm) {
                 return new Application\Controller\ProductController(
                     $sm->getServiceLocator()->get('ProductService')

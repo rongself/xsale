@@ -18,7 +18,7 @@ abstract class AbstractService{
     /**
      * @var \Doctrine\ORM\EntityManager
      */
-    protected $objectManager;
+    protected   $objectManager;
     public function __construct(\Doctrine\ORM\EntityManager $entityManager)
     {
         $this->objectManager = $entityManager;

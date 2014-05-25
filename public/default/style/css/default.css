@@ -1,3 +1,6 @@
+body{
+    font-family: "微软雅黑";
+}
 /*for error message*/
 .validationMessage {
   color: #ac2925;

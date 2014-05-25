@@ -10,26 +10,25 @@
 namespace Application\Controller;
 
 use Application\Entity\ProductImage;
+use Application\Service\StatisticsService;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Stdlib\DateTime;
 use Zend\View\Model\ViewModel;
 
 class IndexController extends AbstractActionController
 {
+    private $statisticsService;
+    public function __construct(StatisticsService $statisticsService)
+    {
+        $this->statisticsService = $statisticsService;
+    }
+
     public function indexAction()
     {
-//          //@todo one to many 映射错误
-//          $m = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
-//          $product = $m->getRepository('Application\Entity\Product')->find(10);
-//          $img = new ProductImage();
-//          $img->setProduct($product);
-//          $img->setUrl('xxxx');
-//          $img->setType(1);
-//          $img->setCreateTime(new \DateTime());
-//
-//          $product->addProductImage($img);
-//          $m->flush();
-//
-//        exit;
+        return array(
+            'recentOrder'=>$this->statisticsService->getRecentOrder(),
+            'recentStock'=>$this->statisticsService->getRecentStock(),
+            'topSale'=>$this->statisticsService->getTopSale(),
+        );
     }
 }
