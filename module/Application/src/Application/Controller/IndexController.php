@@ -28,7 +28,7 @@ class IndexController extends AbstractActionController
         return array(
             'recentOrder'=>$this->statisticsService->getRecentOrder(),
             'recentStock'=>$this->statisticsService->getRecentStock(),
-            'topSale'=>$this->statisticsService->getTopSale(),
+            'topSale'=>$this->statisticsService->getTopSale(10,30),
         );
     }
 }

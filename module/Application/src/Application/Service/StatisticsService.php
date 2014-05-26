@@ -8,30 +8,29 @@
 
 namespace Application\Service;
 
-use Application\Entity\ProfitWeekly;
 use Doctrine\ORM\Query;
 
 class StatisticsService extends AbstractService{
 
     public function getTotalProfitWeekly()
     {
-        return $this->objectManager->createQuery(
-            'SELECT MAX(p.date) as date,p.profit,p.priceAmount FROM \Application\Entity\ProfitWeekly p GROUP BY p.week'
-        )->getResult();
+        return $this->objectManager->getConnection()->fetchAll(
+            'SELECT MAX(p.date) as date,p.profit,p.price_amount FROM xsv_total_profit_weekly p GROUP BY p.week'
+        );
     }
 
     public function getTotalProfitDaily()
     {
-        return $this->objectManager->createQuery(
-            'SELECT p.date ,p.profit,p.priceAmount FROM \Application\Entity\ProfitWeekly p'
-        )->getResult();
+        return $this->objectManager->getConnection()->fetchAll(
+            'SELECT p.date ,p.profit,p.price_amount FROM xsv_total_profit_weekly p'
+        );
     }
 
     public function getSum()
     {
-        return $this->objectManager->createQuery(
-            'SELECT SUM(p.profit) as totalProfit,SUM(p.priceAmount) as totalPriceAmount FROM \Application\Entity\ProfitWeekly p'
-        )->getSingleResult();
+        return $this->objectManager->getConnection()->fetchAssoc(
+            'SELECT SUM(p.profit) as totalProfit,SUM(p.price_amount) as totalPriceAmount FROM xsv_total_profit_weekly p'
+        );
     }
 
     public function getTopSale($count=5,$lastDayCount=7)

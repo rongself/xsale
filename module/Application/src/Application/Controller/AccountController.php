@@ -6,8 +6,10 @@ use Application\Entity\Exception\ValidationException;
 use Application\Lib\View\Model\JsonResultModel;
 use Application\Service\AccountService;
 use Zend\Authentication\AuthenticationService;
+use Zend\Authentication\Storage\Session;
 use Zend\Json\Json;
 use Zend\Mvc\Controller\AbstractActionController;
+use Zend\Session\Container;
 use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
 
@@ -143,7 +145,8 @@ class AccountController extends AbstractActionController
             //@todo remember me
             if ($authResult->isValid()) {
                 if($data['rememberMe']){
-                    $this->authenticationService->getStorage()->getManager()->rememberMe(36000);
+                    $authNamespace = new Container(Session::NAMESPACE_DEFAULT);
+                    $authNamespace->getManager()->rememberMe(36000);
                 }
                 return $resultModel;
             }else{

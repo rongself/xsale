@@ -7,9 +7,12 @@ require(['knockout',
         'underscore',
         'lib/json2']
     , function (ko, StockRecordViewModel, StockProductViewModel,SkuAutoComplete,ImageUploader) {
-        $('#startTime').datetimepicker({pickTime: false,language: 'zh-CN'});
         var stockRecord = new StockRecordViewModel();
         var stockProduct = new StockProductViewModel(stockRecord);
+        $('#startTime').datetimepicker({pickTime: false,language: 'zh-CN'});
+        $('#startTime').on('dp.change', function(e){
+            stockRecord.stockTime(moment(e.date).format('YYYY-MM-DD'));
+        });
         var uploader = new ImageUploader({observableArray:stockProduct.pictures});
 
 

@@ -1,5 +1,5 @@
 <!-- Dashboard Graph starts -->
-
+<?php $conf = $this->layout()->xsaleConfig;?>
 <div class="row">
     <div class="col-md-8">
 
@@ -39,7 +39,7 @@
     <div class="col-md-4">
         <div class="widget">
                     <div class="widget-head">
-                        <div class="pull-left">过去7天销量TOP5</div>
+                        <div class="pull-left">过去30天销量TOP10</div>
                         <div class="widget-icons pull-right">
                             <a href="#" class="wminimize"><i class="icon-chevron-up"></i></a> 
                             <a href="#" class="wclose"><i class="icon-remove"></i></a>
@@ -52,9 +52,9 @@
                             <tbody>
                             <?php foreach($topSale as $sale):?>
                                 <tr>
-                                    <td><img src="<?php echo $this->layout()->xsaleConfig['thumbnailPath'].$sale['picture']?>" alt=""></td>
+                                    <td><img src="<?php echo $conf['thumbnailPath'].($sale['picture']?$sale['picture']:$conf['defaultImage']);?>" alt=""></td>
                                     <td>
-                                        <a href="<?php echo $this->url('product/wildcard',array('action'=>'detail','id'=>$sale['product_id']))?>">
+                                        <a href="<?php echo $this->url('product/wildcard',array('action'=>'detail','id'=>$sale['product_id']));?>">
                                             <?php echo $sale['sku'];?>
                                         </a>
                                         /<?php echo $sale['name'];?>
@@ -103,7 +103,7 @@
                                 <?php foreach($recentOrder as $order):?>
                                 <tr>
                                     <td>
-                                        <img src="<?php echo $this->layout()->xsaleConfig['thumbnailPath'].$order['picture']?>" alt="">
+                                        <img src="<?php echo $conf['thumbnailPath'].($order['picture']?$order['picture']:$conf['defaultImage']);?>" alt="">
                                     </td>
                                     <td>
                                         <a href="<?php echo $this->url('sale-record/wildcard',array('action'=>'detail','id'=>$order['order_id']))?>"><?php echo $order['order_id'];?></a>
@@ -153,7 +153,7 @@
                             <?php foreach($recentStock as $stock):?>
                                 <tr>
                                     <td>
-                                        <img src="<?php echo $this->layout()->xsaleConfig['thumbnailPath'].$stock['picture']?>" alt="">
+                                        <img src="<?php echo $conf['thumbnailPath'].($stock['picture']?$stock['picture']:$conf['defaultImage']);?>" alt="">
                                     </td>
                                     <td>
                                         <a href="<?php echo $this->url('stock-record/wildcard',array('action'=>'detail','id'=>$stock['stock_record_id']))?>"><?php echo $stock['stock_record_id'];?></a>

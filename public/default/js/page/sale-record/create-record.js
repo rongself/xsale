@@ -11,13 +11,20 @@ require(['knockout',
       'typeahead',
       'underscore']
     ,function(ko,SaleRecordViewModel,SaleProductViewModel,SkuAutoComplete,CustomerAutoComplete){
-        $('#startTime').datetimepicker({pickTime: false,language: 'zh-CN'});
         saleRecord = new SaleRecordViewModel();
         saleProduct = new SaleProductViewModel();
+        $('#startTime').datetimepicker({pickTime: false,language: 'zh-CN'});
+        $('#startTime').on('dp.change', function(e){
+            saleRecord.orderTime(moment(e.date).format('YYYY-MM-DD'));
+        });
         saleProduct.sku.extend({
             validation: { validator: uniqueInObservableArray, message: '该产品已存在于账单中', params: saleRecord.saleProducts()}
         });
         var skuAutoComplete = new SkuAutoComplete(function(selectedSKU,products){
+            var selectedProduct = _.find(products,function(item){return item.sku == selectedSKU});
+            if(selectedProduct.price){
+                saleProduct.price(selectedProduct.price);
+            }
             return selectedSKU;
         });
         var CustomerAutoComplete = new CustomerAutoComplete(function(seleted){
