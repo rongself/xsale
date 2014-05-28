@@ -1,7 +1,7 @@
 CREATE
 ALGORITHM=UNDEFINED
 SQL SECURITY DEFINER
-VIEW `NewView`AS
+VIEW `xsv_total_profit_weekly`AS
 SELECT
 	`oc`.`id` AS `id`,
 	sum(
