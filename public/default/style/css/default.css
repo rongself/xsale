@@ -73,3 +73,7 @@ body{
 .alert.alert-danger{
     border-color: #D6ACB2;
 }
+
+.panel.panel-info td{
+    border-bottom: none !important;
+}

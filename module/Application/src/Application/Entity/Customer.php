@@ -37,12 +37,12 @@ class Customer extends AbstractEntity
     private $qq;
 
     /** 
-     * @ORM\Column(type="datetime", nullable=true, name="create_time")
+     * @ORM\Column(type="datetime", nullable=false, name="create_time")
      */
     private $createTime;
 
     /**
-     * @ORM\Column(type="boolean", nullable=true, name="is_vip")
+     * @ORM\Column(type="boolean", nullable=false, name="is_vip")
      */
     private $isVip;
 

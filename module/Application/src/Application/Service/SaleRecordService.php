@@ -45,6 +45,8 @@ class SaleRecordService extends AbstractService{
             if(!isset($customer)){
                 $customer = new Customer();
                 $customer->setPhoneNumber($data->phoneNumber);
+                $customer->setIsVip(0);
+                $customer->setCreateTime($now);
             }
             $saleRecord->setCustomer($customer);
         }

@@ -61,6 +61,43 @@
                                 <a onclick="if(!confirm('要删除此进货单吗?'))return false;" href="<?php echo $this->url('stock-record/wildcard',array('action'=>'delete','id'=>$id))?>" class="btn btn-xs btn-danger"><i class="icon-remove"></i> </a>
                             </td>
                         </tr>
+                        <tr>
+                            <td style="width: 12px;">
+                                &nbsp;
+                            </td>
+                            <td colspan="4" class="stock-detail">
+                                <div class="panel panel-info" style="box-shadow: none;-webkit-box-shadow:none;">
+                                    <table class="table">
+                                        <tbody>
+                                        <?php foreach($item->getStockItems() as $stockItem):?>
+                                            <?php $product = $stockItem->getProduct();?>
+                                            <?php if(isset($product)):?>
+                                            <tr>
+                                                <?php $id = $this->escapeHtml($product->getId());?>
+                                                <td style="width:5%">
+                                                    <a href="<?php echo $this->url('product/wildcard',array('action'=>'detail','id'=>$id))?>">
+                                                        <?php echo $this->escapeHtml($product->getSku())?>
+                                                    </a>
+                                                </td>
+                                                <td style="width:40%">
+                                                    <a href="<?php echo $this->url('product/wildcard',array('action'=>'detail','id'=>$id))?>">
+                                                        <?php echo $this->escapeHtml($product->getName())?>
+                                                    </a>
+                                                </td>
+                                                <td style="width:20%">
+                                                    售价:<?php echo $this->escapeHtml($stockItem->getPrice())?>
+                                                </td>
+                                                <td style="width:20%">
+                                                    数量:<?php echo $this->escapeHtml($stockItem->getQuantity())?>
+                                                </td>
+                                            </tr>
+                                            <?php endif;?>
+                                        <?php endforeach;?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
                         <?php endforeach;?>
                     </tbody>
                 </table>
