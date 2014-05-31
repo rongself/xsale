@@ -6,6 +6,7 @@ require(['knockout',
       'viewmodel/saleProduct',
       'module/sku.autocomplete',
       'module/customer.autocomplete',
+      'module/number',
       'datetimepicker',
       'validation',
       'typeahead',
@@ -13,6 +14,8 @@ require(['knockout',
     ,function(ko,SaleRecordViewModel,SaleProductViewModel,SkuAutoComplete,CustomerAutoComplete){
         saleRecord = new SaleRecordViewModel();
         saleProduct = new SaleProductViewModel();
+        // for number type
+
         $('#startTime').datetimepicker({pickTime: false,language: 'zh-CN'});
         $('#startTime').on('dp.change', function(e){
             saleRecord.orderTime(moment(e.date).format('YYYY-MM-DD'));

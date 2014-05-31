@@ -67,14 +67,6 @@ require(["jquery",'pace','bootstrap','moment','moment.zh-CN'], function($,pace) 
                 $submitBtn.button('reset');
             });
         }
-        $('.spinner .btn:first-of-type').on('click', function() {
-            $('.spinner input').val( parseInt($('.spinner input').val(), 10) + 1);
-            return false;
-        });
-        $('.spinner .btn:last-of-type').on('click', function() {
-            $('.spinner input').val( parseInt($('.spinner input').val(), 10) - 1);
-            return false;
-        });
         /* Navigation */
 
         $(window).scroll( function() {
@@ -117,24 +109,24 @@ require(["jquery",'pace','bootstrap','moment','moment.zh-CN'], function($,pace) 
             }
 
         });
-//        $(".sidebar-dropdown a").on('click', function(e) {
-//            e.preventDefault();
-//
-//            if (!$(this).hasClass("open")) {
-//                // hide any open menus and remove all other classes
-//                $(".sidebar #nav").slideUp(350);
-//                $(".sidebar-dropdown a").removeClass("open");
-//
-//                // open our new menu and add the open class
-//                $(".sidebar #nav").slideDown(350);
-//                $(this).addClass("open");
-//            }
-//
-//            else if ($(this).hasClass("open")) {
-//                $(this).removeClass("open");
-//                $(".sidebar #nav").slideUp(350);
-//            }
-//        });
+        $(".sidebar-dropdown a").on('click', function(e) {
+            e.preventDefault();
+
+            if (!$(this).hasClass("open")) {
+                // hide any open menus and remove all other classes
+                $(".sidebar #nav").slideUp(350);
+                $(".sidebar-dropdown a").removeClass("open");
+
+                // open our new menu and add the open class
+                $(".sidebar #nav").slideDown(350);
+                $(this).addClass("open");
+            }
+
+            else if ($(this).hasClass("open")) {
+                $(this).removeClass("open");
+                $(".sidebar #nav").slideUp(350);
+            }
+        });
         
         /* Widget close */
 
