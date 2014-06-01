@@ -100,4 +100,14 @@ class ProductService extends  AbstractService
     {
         return $this->getRepository()->findOneBy(array('sku'=>$sku));
     }
+
+    public function getStockLessProduct($minLimiter)
+    {
+        $products = $this->getRepository()->createQueryBuilder('o')
+            ->where('o.stock<=:query')
+            ->setParameter('query',$minLimiter)
+            ->getQuery()
+            ->getResult();
+        return $products;
+    }
 }

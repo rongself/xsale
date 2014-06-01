@@ -31,7 +31,7 @@ define(['jquery','flot','underscore','flotResize'],function($,plot,_){
                 },
                 xaxis: {
                     mode: "time",
-                    timeformat: "%y/%m/%d"
+                    timeformat: "%y-%m-%d"
                 }
             });
         }

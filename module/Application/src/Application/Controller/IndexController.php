@@ -10,6 +10,7 @@
 namespace Application\Controller;
 
 use Application\Entity\ProductImage;
+use Application\Service\ProductService;
 use Application\Service\StatisticsService;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Stdlib\DateTime;
@@ -18,9 +19,11 @@ use Zend\View\Model\ViewModel;
 class IndexController extends AbstractActionController
 {
     private $statisticsService;
-    public function __construct(StatisticsService $statisticsService)
+    private $productService;
+    public function __construct(StatisticsService $statisticsService,ProductService $productService)
     {
         $this->statisticsService = $statisticsService;
+        $this->productService = $productService;
     }
 
     public function indexAction()
@@ -29,6 +32,7 @@ class IndexController extends AbstractActionController
             'recentOrder'=>$this->statisticsService->getRecentOrder(),
             'recentStock'=>$this->statisticsService->getRecentStock(),
             'topSale'=>$this->statisticsService->getTopSale(10,30),
+            'stockWarning'=>$this->productService->getStockLessProduct(2)
         );
     }
 }

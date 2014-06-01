@@ -7,21 +7,31 @@ require(['jquery','knockout','viewmodel/statistics','datetimepicker','chart','un
     var profitLists = new Statistics();
     /* Bar Chart starts */
     var data = [];
-    $.getJSON('/statistics/ajax-get-total-profit-weekly',function(returnData){
-        var maxDate = _.max(returnData.priceData, function(item){ return item[0]; })[0];
-        var minDate = _.min(returnData.priceData, function(item){ return item[0]; })[0];
+    var defaultStratTime = moment().add(-30,'days').format('YYYY-MM-DD');
+    var defaultEndTime = moment().format('YYYY-MM-DD');
+    $('#startTime input').val(defaultStratTime);
+    $('#endTime input').val(defaultEndTime);
+    function loadData(startTime,endTime){
+        $.getJSON(
+            '/statistics/ajax-get-total-profit-weekly',
+            {startDate:startTime,endDate:endTime},
+            function(returnData){
+                var maxDate = _.max(returnData.priceData, function(item){ return item[0]; })[0];
+                var minDate = _.min(returnData.priceData, function(item){ return item[0]; })[0];
 
-        data['profitData'] = returnData.profitData;
-        data['priceData'] = returnData.priceData;
-        var chartIns = new chart({data:[{ data: data['profitData'], label: "利润"},{ data: data['priceData'], label: "销售额"}]});
-        chartIns.apply();
+                data['profitData'] = returnData.profitData;
+                data['priceData'] = returnData.priceData;
+                var chartIns = new chart({data:[{ data: data['profitData'], label: "利润"},{ data: data['priceData'], label: "销售额"}]});
+                chartIns.apply();
 
-        profitLists.profitSum(returnData.sum.totalProfit);
-        profitLists.priceSum(returnData.sum.totalPriceAmount);
-        profitLists.startTime(getDateFromUTC(maxDate));
-        profitLists.endTime(getDateFromUTC(minDate));
-    });
-
+                profitLists.profitSum(returnData.sum.totalProfit);
+                profitLists.priceSum(returnData.sum.totalPriceAmount);
+                profitLists.startTime(getDateFromUTC(minDate));
+                profitLists.endTime(getDateFromUTC(maxDate));
+                profitLists.list(returnData.profitList);
+            }
+        );
+    }
     function dailyFill(data,maxDate,minDate){
         var secondsOfDay = 24*60*60*1000;
         for(var i=minDate;i<maxDate;i+=secondsOfDay){
@@ -52,5 +62,15 @@ require(['jquery','knockout','viewmodel/statistics','datetimepicker','chart','un
         return year+'/'+month+'/'+date
     }
 
+    $('#flushData').click(function(){
+        var startTime = $('#startTime input').val();
+        var endTime = $('#endTime input').val();
+        loadData(startTime,endTime);
+    });
+
+    loadData(
+        defaultStratTime,
+        defaultEndTime
+    );
     ko.applyBindings(profitLists,$('#profitList').get(0));
 });

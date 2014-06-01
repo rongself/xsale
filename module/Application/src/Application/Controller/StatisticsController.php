@@ -15,7 +15,7 @@ class StatisticsController extends AbstractActionController
     }
     public function indexAction()
     {
-        var_dump($data = $this->statisticsService->getSum());exit;
+        //var_dump($data = $this->statisticsService->getSum());exit;
     }
 
     public function profitAction()
@@ -35,16 +35,26 @@ class StatisticsController extends AbstractActionController
 
     public function ajaxGetTotalProfitWeeklyAction()
     {
-        $data = $this->statisticsService->getTotalProfitDaily();
+        $startDate = $this->params()->fromQuery('startDate',null);
+        $endDate = $this->params()->fromQuery('endDate',null);
+        if($startDate==null&&$endDate==null){
+            $data = $this->statisticsService->getTotalProfitDaily();
+            $sum = $this->statisticsService->getSum();
+        }else{
+            $data = $this->statisticsService->getTotalProfitDaily(new \DateTime($startDate),new \DateTime($endDate));
+            $sum = $this->statisticsService->getSum(new \DateTime($startDate),new \DateTime($endDate));
+        }
+
         $profitData = array();
         $priceData = array();
+        $profitList = array();
         foreach($data as $item){
             $date = new \DateTime($item['date']);
             $profitData[] = [$date->getTimestamp()*1000,$item['profit']];
             $priceData[] = [$date->getTimestamp()*1000,$item['price_amount']];
+            $profitList[] = array('date'=>$item['date'],'profit'=>$item['profit'],'priceAmount'=>$item['price_amount']);
         }
-        $sum = $this->statisticsService->getSum();
-        return new JsonModel(array('profitData'=>$profitData,'priceData'=>$priceData,'sum'=>$sum));
+        return new JsonModel(array('profitList'=>$profitList,'profitData'=>$profitData,'priceData'=>$priceData,'sum'=>$sum));
     }
 }
 

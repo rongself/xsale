@@ -1,19 +1,22 @@
 <div class="row">
-    <div class="col-xs-6">
-        <div id="startTime" class="input-append" data-date-format="YYYY-MM-DD">
-            <input type="text" class="form-control dtpicker" placeholder="开始时间">
+    <div class="col-xs-12">
+        <div class="pull-left">
+            <div id="startTime" class="input-append" data-date-format="YYYY-MM-DD" style="width: 180px;">
+                <input type="text" class="form-control dtpicker" placeholder="开始时间">
             <span class="add-on">
                 <i data-time-icon="icon-time" data-date-icon="icon-calendar" class="btn btn-info btn-lg icon-calendar"></i>
             </span>
+            </div>
         </div>
-    </div>
-    <div class="col-xs-6 col-md-pull-4" >
-        <div id="endTime" class="input-append" data-date-format="YYYY-MM-DD">
-            <input type="text" class="form-control dtpicker" placeholder="结束时间">
+        <div class="pull-left">
+            <div id="endTime" class="input-append" data-date-format="YYYY-MM-DD" style="width: 180px;">
+                <input type="text" class="form-control dtpicker" placeholder="结束时间">
             <span class="add-on">
                 <i data-time-icon="icon-time" data-date-icon="icon-calendar" class="btn btn-info btn-lg icon-calendar"></i>
             </span>
+            </div>
         </div>
+        <button type="submit" id="flushData" class="btn btn-success">刷新</button>
         <div class="clearfix"></div>
     </div>
 </div>
@@ -99,69 +102,16 @@
                             <table class="table table-striped table-hover table-responsive table-bordered">
                                 <thead>
                                     <tr>
-                                        <th>#</th>
-                                        <th>Name</th>
-                                        <th>Earnings</th>
-                                        <th>Order ID</th>
-                                        <th>Buyer</th>
-                                        <th>Date</th>
+                                        <th>日期</th>
+                                        <th>当天利润(元)</th>
+                                        <th>当天销售额(元)</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody data-bind="foreach:list">
                                     <tr>
-                                        <td>1</td>
-                                        <td>Sony Xperia Pro X1242</td>
-                                        <td>$25</td>
-                                        <td>534343</td>
-                                        <td>Ravi Kumar</td>
-                                        <td>3 Days ago</td>
-                                    </tr>     
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Apple iPhone 6G - Black</td>
-                                        <td>$15</td>
-                                        <td>565445</td>
-                                        <td>Babu Raj</td>
-                                        <td>6 Days ago</td>
-                                    </tr>
-                                        <td>3</td>
-                                        <td>Samsung Galaxy Metro</td>
-                                        <td>$35</td>
-                                        <td>976876</td>
-                                        <td>Ashok</td>
-                                        <td>8 Days ago</td>
-                                    </tr> 
-                                    <tr>
-                                        <td>4</td>
-                                        <td>Nokia Lumina Asha</td>
-                                        <td>$22</td>
-                                        <td>232454</td>
-                                        <td>Raja Ram</td>
-                                        <td>10 Days ago</td>
-                                    </tr> 
-                                    <tr>
-                                        <td>5</td>
-                                        <td>Motorola Razr 5304</td>
-                                        <td>$18</td>
-                                        <td>787876</td>
-                                        <td>Kumerasa</td>
-                                        <td>12 Days ago</td>
-                                    </tr> 
-                                    <tr>
-                                        <td>6</td>
-                                        <td>Micromox Canvas Small</td>
-                                        <td>$30</td>
-                                        <td>656543</td>
-                                        <td>Sagunai</td>
-                                        <td>15 Days ago</td>
-                                    </tr>                                                                                                                     
-                                    <tr>  
-                                        <td></td>
-                                        <td><strong>Total</strong></td>
-                                        <td><strong>$485</strong></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td data-bind="text:date"></td>
+                                        <td data-bind="text:priceAmount"></td>
+                                        <td data-bind="text:profit"></td>
                                     </tr>
                                 </tbody>
                             </table>

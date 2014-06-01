@@ -288,7 +288,8 @@ return array(
         'factories' => array(
             'Application\Controller\Index' => function ($sm) {
                     return new Application\Controller\IndexController(
-                        $sm->getServiceLocator()->get('StatisticsService')
+                        $sm->getServiceLocator()->get('StatisticsService'),
+                        $sm->getServiceLocator()->get('ProductService')
                     );
                 },
             'Application\Controller\Product' => function ($sm) {

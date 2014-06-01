@@ -19,18 +19,40 @@ class StatisticsService extends AbstractService{
         );
     }
 
-    public function getTotalProfitDaily()
+    public function getTotalProfitDaily(\DateTime $startDate=null,\DateTime $endDate=null)
     {
-        return $this->objectManager->getConnection()->fetchAll(
-            'SELECT p.date ,p.profit,p.price_amount FROM xsv_total_profit_weekly p'
-        );
+        $where = '';
+        if($startDate!==null&&$endDate!==null){
+            $where = 'WHERE p.date BETWEEN :startDate AND :endDate';
+            $startDate = $startDate->format('Y-m-d H:i:s');
+            $endDate = $endDate->format('Y-m-d H:i:s');
+        }
+        $sth = $this->objectManager->getConnection()
+            ->prepare(
+                'SELECT p.date ,p.profit,p.price_amount FROM xsv_total_profit_weekly p '.$where
+            );
+        $sth->bindParam(':startDate',$startDate);
+        $sth->bindParam(':endDate',$endDate);
+        $sth->execute();
+        return $sth->fetchAll();
     }
 
-    public function getSum()
+    public function getSum(\DateTime $startDate=null,\DateTime $endDate=null)
     {
-        return $this->objectManager->getConnection()->fetchAssoc(
-            'SELECT SUM(p.profit) as totalProfit,SUM(p.price_amount) as totalPriceAmount FROM xsv_total_profit_weekly p'
-        );
+        $where = '';
+        if($startDate!==null&&$endDate!==null){
+            $where = 'WHERE p.date BETWEEN :startDate AND :endDate';
+            $startDate = $startDate->format('Y-m-d H:i:s');
+            $endDate = $endDate->format('Y-m-d H:i:s');
+        }
+        $sth = $this->objectManager->getConnection()
+            ->prepare(
+                'SELECT SUM(p.profit) as totalProfit,SUM(p.price_amount) as totalPriceAmount FROM xsv_total_profit_weekly p '.$where
+            );
+        $sth->bindParam(':startDate',$startDate);
+        $sth->bindParam(':endDate',$endDate);
+        $sth->execute();
+        return $sth->fetch();
     }
 
     public function getTopSale($count=5,$lastDayCount=7)
@@ -77,6 +99,7 @@ class StatisticsService extends AbstractService{
                 LEFT JOIN xs_orders o ON oc.order_id = o.id
                 ORDER BY
                     o.order_time
+                DESC
                 LIMIT :count'
             );
         $sth->bindParam(':count',$count,\PDO::PARAM_INT);
@@ -103,6 +126,7 @@ class StatisticsService extends AbstractService{
                 LEFT JOIN xs_stock_records sr ON  si.stock_record_id = sr.id
                 ORDER BY
                     sr.stock_time
+                DESC
                 LIMIT :count'
             );
         $sth->bindParam(':count',$count,\PDO::PARAM_INT);
