@@ -37,12 +37,24 @@ class Module
      */
     public function dispatchHandle(MvcEvent $e)
     {
-        //$serviceManager = $e->getApplication()->getServiceManager();
+
+        $controllerIns = $e->getTarget();
         $viewModel = $e->getApplication()->getMvcEvent()->getViewModel();
+        $controller = $e->getRouteMatch()->getParam("__CONTROLLER__");
+        $action = $e->getRouteMatch()->getParam('action');
         if(!($viewModel instanceof JsonModel))
         {
-            $viewModel->controller = $e->getRouteMatch()->getParam("__CONTROLLER__");
-            $viewModel->action = $e->getRouteMatch()->getParam('action');
+            $viewModel->controller = $controller;
+            $viewModel->action = $action;
+        }
+
+        //check Identity globally
+        $auth = $e->getApplication()->getServiceManager()->get('Zend\Authentication\AuthenticationService');
+        if($controller!=='account'&&$action!=='login')
+        {
+            if(!$auth->hasIdentity()){
+                return $controllerIns->plugin('redirect')->toRoute('login');
+            }
         }
     }
 

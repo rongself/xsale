@@ -34,9 +34,6 @@ class AccountController extends AbstractActionController
 
     public function indexAction()
     {
-        if(!$this->authenticationService->hasIdentity()){
-            return $this->redirect()->toRoute('login');
-        }
         $page = intval($this->params('page',1));
         $paginator = $this->accountService->getPaginator();
         $paginator->setCurrentPageNumber($page)->setItemCountPerPage(10);
