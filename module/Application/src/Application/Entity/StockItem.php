@@ -17,7 +17,7 @@ class StockItem extends AbstractEntity
 
     /**
      * @ORM\ManyToOne(targetEntity="Application\Entity\Product", inversedBy="stockItems", cascade={"persist"})
-     * @ORM\JoinColumn(name="product_id", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="product_id", referencedColumnName="id", nullable=false,onDelete="NO ACTION")
      */
     private $product;
 

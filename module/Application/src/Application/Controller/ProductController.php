@@ -4,6 +4,7 @@ namespace Application\Controller;
 use Application\Entity\Product;
 use Application\Lib\View\Model\JsonResultModel;
 use Application\Service\ProductService;
+use Doctrine\DBAL\DBALException;
 use Zend\Json\Json;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\JsonModel;
@@ -20,6 +21,9 @@ class ProductController extends AbstractActionController
 
     public function indexAction()
     {
+        $headScript = $this->getServiceLocator()->get('viewhelpermanager')->get('headScript');
+        $this->Message()->listener($headScript);
+
         $page = intval($this->params('page',1));
         $paginator = $this->productService->getPaginator();
         $paginator->setCurrentPageNumber($page)->setItemCountPerPage(10);
@@ -81,10 +85,14 @@ class ProductController extends AbstractActionController
     public function deleteAction()
     {
         $id = $this->params('id');
-        $res = $this->productService->delete($id);
-        if($res){
+        try{
+            $this->productService->delete($id);
+        }catch (DBALException $e){
+            $this->Message()->error('删除失败,原因可能是进货记录或销售记录中包含了此产品,请先删除这些记录后再试');
             return $this->redirect()->toRoute('product/wildcard');
         }
+        $this->Message()->success('操作成功');
+        return $this->redirect()->toRoute('product/wildcard');
     }
 
     public function deleteMultipleAction()
@@ -92,8 +100,13 @@ class ProductController extends AbstractActionController
         if($this->getRequest()->isPost())
         {
             $ids = $this->params()->fromPost('ids');
-            $this->productService->deleteIn($ids);
-            return new JsonModel(array('success'=>true,'error'=>array()));
+            $model = new JsonResultModel();
+            try{
+                $this->productService->deleteIn($ids);
+            }catch (DBALException $e){
+                $model->addErrors('','删除失败,原因可能是存在此客户购买的进货记录或销售记录,请先删除这些记录后再试');
+            }
+            return $model;
         }
     }
 

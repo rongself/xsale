@@ -29,9 +29,12 @@ define(['jquery','message'],function($,message){
                         if(confirm('是否要删除这'+ids.length+'个项目?')){
                             $.post(options.deleteUrl,{ids:ids},function(result){
                                 if(result.success){
+                                    message.success('操作成功')
                                     location.reload();
                                 }else{
-                                    message.error('服务器返回错误');
+                                    for (key in result.errors) {
+                                       message.error(result.errors[key]);
+                                    }
                                     $(self).val('handle');
                                 }
                             },'json')

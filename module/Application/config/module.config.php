@@ -272,6 +272,11 @@ return array(
             ),
         ),
     ),
+    'controller_plugins' => array(
+        'invokables' => array(
+            'Message' => 'Application\Lib\Controller\Plugin\Message',
+        )
+    ),
     'controllers' => array(
         'invokables' => array(
             //'Application\Controller\Index' => 'Application\Controller\IndexController',
