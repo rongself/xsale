@@ -258,7 +258,11 @@ return array(
                 return new Application\Service\AccountService($sm->get('Doctrine\ORM\EntityManager'));
             },
             'StatisticsService' => function(Zend\ServiceManager\ServiceManager $sm) {
-                    return new Application\Service\StatisticsService($sm->get('Doctrine\ORM\EntityManager'));
+                    return new Application\Service\StatisticsService(
+                        $sm->get('Doctrine\ORM\EntityManager'),
+                        $sm->get('CustomerService'),
+                        $sm->get('ProductService')
+                    );
             },
         ),
     ),

@@ -16,14 +16,14 @@ class CustomerService extends AbstractService {
     public function getAutoCompleteSource()
     {
         //@todo auto-complete speed optimize
-        $products = $this->getRepository()->createQueryBuilder('o')
+        $customers = $this->getRepository()->createQueryBuilder('o')
             ->select('o.phoneNumber,o.isVip')
             //->where('o.phoneNumber LIKE :query')
             //->setParameter('query', $query.'%')
             //->setMaxResults($limit)
             ->getQuery()
             ->getResult();
-        return $products;
+        return $customers;
     }
     /**
      * @return \Doctrine\ORM\EntityRepository
@@ -101,4 +101,17 @@ class CustomerService extends AbstractService {
         return $this->getRepository()->find($id);
     }
 
+    /**
+     * @return int
+     */
+    public function getVipCount()
+    {
+        $qb = $this->objectManager->createQueryBuilder('c');
+        $resultArray =  $qb->select($qb->expr()->count('c.id'))
+                ->from('Application\Entity\Customer','c')
+                ->where($qb->expr()->eq('c.isVip',true))
+                ->getQuery()
+                ->getSingleResult();
+        return intval($resultArray[1]);
+    }
 }

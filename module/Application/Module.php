@@ -22,12 +22,26 @@ class Module
         $moduleRouteListener->attach($eventManager);
 
         $serviceManager = $e->getApplication()->getServiceManager();
+
         $viewModel = $e->getApplication()->getMvcEvent()->getViewModel();
-        $myService = $serviceManager->get('Config');
-        $viewModel->xsaleConfig = $myService['upload'];
+        $config = $serviceManager->get('Config');
+        $viewModel->xsaleConfig = $config['upload'];
+
+        /**
+         * @var $customerService CustomerService
+         */
+        $customerService = $serviceManager->get('CustomerService');
+        $viewModel->vipCount = $customerService->getVipCount();
+        /**
+         * StatisticsService
+         */
+        $statisticsService = $serviceManager->get('StatisticsService');
+        $sum = $statisticsService->getSum();
+        $viewModel->saleroom = $sum['totalPriceAmount'];
+        $viewModel->quantityOfSale = $sum['totalQuantity'];
 
         // Set event
-        $eventManager        = $e->getApplication()->getEventManager();
+        $eventManager = $e->getApplication()->getEventManager();
         $eventManager->attach(array('dispatch',MvcEvent::EVENT_DISPATCH_ERROR,MvcEvent::EVENT_RENDER_ERROR), array($this, 'dispatchHandle'));
     }
 

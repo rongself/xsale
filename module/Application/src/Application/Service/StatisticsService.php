@@ -47,7 +47,7 @@ class StatisticsService extends AbstractService{
         }
         $sth = $this->objectManager->getConnection()
             ->prepare(
-                'SELECT SUM(p.profit) as totalProfit,SUM(p.price_amount) as totalPriceAmount FROM xsv_total_profit_weekly p '.$where
+                'SELECT SUM(p.profit) as totalProfit,SUM(p.price_amount) as totalPriceAmount,SUM(p.quantity_amount) AS totalQuantity FROM xsv_total_profit_weekly p '.$where
             );
         $sth->bindParam(':startDate',$startDate);
         $sth->bindParam(':endDate',$endDate);
