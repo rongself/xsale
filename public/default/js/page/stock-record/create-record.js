@@ -9,13 +9,13 @@ require(['knockout',
     , function (ko, StockRecordViewModel, StockProductViewModel,SkuAutoComplete,ImageUploader) {
         var stockRecord = new StockRecordViewModel();
         var stockProduct = new StockProductViewModel(stockRecord);
+
         $('#startTime').datetimepicker({pickTime: false,language: 'zh-CN'});
         $('#startTime').on('dp.change', function(e){
             stockRecord.stockTime(moment(e.date).format('YYYY-MM-DD'));
         });
+
         var uploader = new ImageUploader({observableArray:stockProduct.pictures});
-
-
 
         //set a validation need stockRecord instance
         stockProduct.sku.extend({

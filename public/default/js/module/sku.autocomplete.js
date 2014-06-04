@@ -1,6 +1,7 @@
 define(['jquery','typeahead','underscore','lib/json2'],function($){
     return function(updaterCallback){
         //for sku autocomplete
+        var self = this;
         var products = [];
         $('#SKUInput').typeahead({
             items:5,
@@ -26,7 +27,7 @@ define(['jquery','typeahead','underscore','lib/json2'],function($){
                 });
                 return '<img class="pull-left" style="margin-top: 4px;margin-right: 10px;" src="' +xsaleConfig.thumbnailPath+(product.picture?product.picture:'default.jpg') + '" alt="" width="40px" height="40px">' +
                     '<div class="pull-left">' +
-                    '<div>' + product.sku + '</div>' +
+                    '<div>' + product.sku + ' (库存:'+product.stock+')</div>' +
                     '<div style="color:#cccccc">' + product.name + '</div>' +
                     '</div>' +
                     '<div class="clearfix"></div>';
@@ -35,5 +36,8 @@ define(['jquery','typeahead','underscore','lib/json2'],function($){
                 return updaterCallback(selectedItem,products);
             }
         });
+        self.resetSource = function(){
+            products = [];
+        }
     }
 });
