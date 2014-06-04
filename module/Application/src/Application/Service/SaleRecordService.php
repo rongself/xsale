@@ -91,7 +91,7 @@ class SaleRecordService extends AbstractService{
             ->from('Application\Entity\Order','o')
             ->getQuery()
             ->getSingleScalarResult();
-        return $result;
+        return intval($result);
     }
 
     /**

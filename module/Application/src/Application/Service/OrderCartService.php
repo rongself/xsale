@@ -18,7 +18,7 @@ class OrderCartService extends AbstractService{
             ->from('Application\Entity\OrderCart','o')
             ->getQuery()
             ->getSingleScalarResult();
-        return $result;
+        return intval($result);
     }
     /**
      * @return \Doctrine\ORM\EntityRepository
