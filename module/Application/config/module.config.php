@@ -251,6 +251,9 @@ return array(
             'SaleRecordService' => function(Zend\ServiceManager\ServiceManager $sm) {
                 return new \Application\Service\SaleRecordService($sm->get('Doctrine\ORM\EntityManager'));
             },
+            'OrderCartService' => function(Zend\ServiceManager\ServiceManager $sm) {
+                    return new \Application\Service\OrderCartService($sm->get('Doctrine\ORM\EntityManager'));
+                },
             'CustomerService' => function(Zend\ServiceManager\ServiceManager $sm) {
                 return new Application\Service\CustomerService($sm->get('Doctrine\ORM\EntityManager'));
             },

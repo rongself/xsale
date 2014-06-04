@@ -84,6 +84,16 @@ class SaleRecordService extends AbstractService{
         return parent::getPaginator('SELECT o,c FROM Application\Entity\Order o LEFT JOIN o.customer c');
     }
 
+    public function getSaleroom()
+    {
+        $qb = $this->objectManager->createQueryBuilder('o');
+        $result =  $qb->select('SUM(o.totalPrice)')
+            ->from('Application\Entity\Order','o')
+            ->getQuery()
+            ->getSingleScalarResult();
+        return $result;
+    }
+
     /**
      * @param $id
      * @return mixed

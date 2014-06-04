@@ -27,18 +27,14 @@ class Module
         $config = $serviceManager->get('Config');
         $viewModel->xsaleConfig = $config['upload'];
 
-        /**
-         * @var $customerService CustomerService
-         */
         $customerService = $serviceManager->get('CustomerService');
         $viewModel->vipCount = $customerService->getVipCount();
-        /**
-         * StatisticsService
-         */
-        $statisticsService = $serviceManager->get('StatisticsService');
-        $sum = $statisticsService->getSum();
-        $viewModel->saleroom = intval($sum['totalPriceAmount']);
-        $viewModel->quantityOfSale = intval($sum['totalQuantity']);
+
+        $saleRecordService = $serviceManager->get('SaleRecordService');
+        $viewModel->saleroom = $saleRecordService->getSaleroom();
+
+        $orderItemService = $serviceManager->get('OrderCartService');
+        $viewModel->quantityOfSale = $orderItemService->getQuantityOfSale();
 
         // Set event
         $eventManager = $e->getApplication()->getEventManager();
