@@ -16,6 +16,18 @@ require(['knockout',
         });
 
         var uploader = new ImageUploader({observableArray:stockProduct.pictures});
+        $(document).on({
+            'mouseenter':function(e){
+                $(this).prev().removeClass('dp-none');
+                return false;
+            }
+        },'.product-picture');
+        $(document).on({
+            'mouseleave':function(e){
+                $(this).addClass('dp-none');
+                return false;
+            }
+        },'.del-btn');
 
         //set a validation need stockRecord instance
         stockProduct.sku.extend({

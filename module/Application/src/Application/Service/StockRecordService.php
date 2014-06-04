@@ -55,6 +55,7 @@ class StockRecordService extends AbstractService {
             $i = 0;
             foreach ($product->pictures as $picture) {
                 $image = clone $imageTemp;
+                $image->setProduct($productEntity);
                 if($i==0){
                     //set as default image(0)
                     $image->setType(0);

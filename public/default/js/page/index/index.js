@@ -15,12 +15,6 @@ require(['jquery','knockout','chart','underscore'],function($,ko,chart,_){
             data['priceData'] = returnData.priceData;
             var chartIns = new chart({data:[{ data: data['profitData'], label: "利润"},{ data: data['priceData'], label: "销售额"}]});
             chartIns.apply();
-
-            profitLists.profitSum(returnData.sum.totalProfit);
-            profitLists.priceSum(returnData.sum.totalPriceAmount);
-            profitLists.startTime(getDateFromUTC(minDate));
-            profitLists.endTime(getDateFromUTC(maxDate));
-            profitLists.list(returnData.profitList);
         }
     );
 

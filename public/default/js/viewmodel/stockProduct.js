@@ -23,6 +23,9 @@ define(['knockout','validation','validationConfig'], function(ko) {
         self.showProgress = ko.observable(false);
         self.description = ko.observable();
 
+        self.removePicture = function (item){
+            self.pictures.remove(item);
+        }
         self.reset = function(){
             self.sku('');
             self.name('');

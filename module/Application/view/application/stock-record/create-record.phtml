@@ -33,9 +33,18 @@
                             <label class="col-lg-4 control-label  visible-lg">图片</label>
                             <div id="progress" class="col-xs-8 col-lg-8">
                                 <?php echo $this->partial('imageuploader');?>
-                                <!-- ko foreach: pictures -->
-                                <img data-bind="attr:{src:xsaleConfig.thumbnailPath+$data}" alt="" width="31px" height="31px">
-                                <!-- /ko -->
+                                <div class="mt10">
+                                    <!-- ko foreach: pictures -->
+                                    <div class="po-re pull-left">
+                                        <a href="#" data-bind="click:$parent.removePicture" class="dp-block po-ab te-ce dp-none del-btn" title="删除"
+                                           style="width: 31px;height: 31px;line-height: 31px;color: #fff; background-color: #000;opacity: 0.7;">
+                                            ×
+                                        </a>
+                                        <img class="product-picture" data-bind="attr:{src:xsaleConfig.thumbnailPath+$data}" alt="" width="31px" height="31px">
+                                    </div>
+                                    <!-- /ko -->
+                                    <div class="clearfix"></div>
+                                </div>
                                 <!-- The global progress bar -->
                                 <div  data-bind="visible:showProgress" class="progress">
                                     <div class="progress-bar progress-bar-info"></div>

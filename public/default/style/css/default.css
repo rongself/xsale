@@ -1,3 +1,22 @@
+/*tools*/
+.dp-block{
+    display: block;
+}
+.dp-none{
+    display: none;
+}
+.po-ab{
+    position: absolute;
+}
+.po-re{
+    position: relative;
+}
+.mt10{
+    margin-top: 10px;
+}
+.te-ce{
+    text-align: center;
+}
 body{
     font-family: "微软雅黑";
 }
