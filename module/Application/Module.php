@@ -37,8 +37,8 @@ class Module
          */
         $statisticsService = $serviceManager->get('StatisticsService');
         $sum = $statisticsService->getSum();
-        $viewModel->saleroom = $sum['totalPriceAmount'];
-        $viewModel->quantityOfSale = $sum['totalQuantity'];
+        $viewModel->saleroom = intval($sum['totalPriceAmount']);
+        $viewModel->quantityOfSale = intval($sum['totalQuantity']);
 
         // Set event
         $eventManager = $e->getApplication()->getEventManager();
