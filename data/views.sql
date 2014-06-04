@@ -32,7 +32,7 @@ GROUP BY
  */
 ALTER
 ALGORITHM=UNDEFINED
-DEFINER=`shop`@`%`
+DEFINER=`xsale`@`localhost`
 SQL SECURITY DEFINER
 VIEW `xsv_total_profit_weekly` AS
 SELECT
