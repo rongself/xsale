@@ -36,7 +36,7 @@ define(['knockout','viewmodel/saleProduct','knockoutMapping','formPost','message
             }
         }
         self.removeItem = function (sku){
-            self.saleProducts.remove(function(item) { return item.sku == sku })
+            self.saleProducts.remove(sku);
         }
         self.reset = function(){
             if(self.saleProducts().length>0){
@@ -56,7 +56,7 @@ define(['knockout','viewmodel/saleProduct','knockoutMapping','formPost','message
                 $('#submitTo').button('reset');
             }
             if(!(self!=null&&typeof self.saleProducts() == 'object'&&self.saleProducts().length>0)){
-                message.error('销售记录中还未加入任何产品');
+                message.warning('销售记录中还未加入任何产品');
                 return false;
             }
             var data = koMapping.toJSON(self);

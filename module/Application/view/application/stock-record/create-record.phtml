@@ -170,8 +170,7 @@
                                 <td data-bind="text:cost "></td>
                                 <td data-bind="text:stock"></td>
                                 <td>
-                                    <button class="btn btn-xs btn-success"><i class="icon-ok"></i> </button>
-                                    <button class="btn btn-xs btn-warning"><i class="icon-pencil"></i> </button>
+                                    <button class="btn btn-xs btn-warning" data-bind="click:$parent.editItem"><i class="icon-pencil"></i> </button>
                                     <button class="btn btn-xs btn-danger" data-bind="click:$parent.removeItem"><i class="icon-remove"></i> </button>
                                 </td>
                             </tr>

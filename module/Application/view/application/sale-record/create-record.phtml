@@ -144,9 +144,8 @@
                                 <td data-bind="text:quantity"></td>
                                 <td data-bind="text:price"></td>
                                 <td>
-                                    <button class="btn btn-xs btn-success"><i class="icon-ok"></i> </button>
-                                    <button class="btn btn-xs btn-warning"><i class="icon-pencil"></i> </button>
-                                    <button class="btn btn-xs btn-danger" data-bind="click:function(){saleRecord.removeItem(sku);}"><i class="icon-remove"></i> </button>
+                                    <button class="btn btn-xs btn-warning"><i class="icon-pencil" data-bind="click:saleRecord.editItem;"></i> </button>
+                                    <button class="btn btn-xs btn-danger" data-bind="click:saleRecord.removeItem"><i class="icon-remove"></i> </button>
 
                                 </td>
                             </tr>
