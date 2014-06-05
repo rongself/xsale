@@ -31,7 +31,7 @@ define(['knockout','viewmodel/stockProduct','lib/json2','knockoutMapping','formP
             }
         }
         self.removeItem = function (sku){
-            self.stockProducts.remove(function(item) { return item.sku == sku })
+            self.stockProducts.remove(sku)
         }
         self.clear = function(){
             if(self.stockProducts().length>0){
