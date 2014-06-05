@@ -5,7 +5,8 @@ define(['knockout','validation','validationConfig'], function(ko) {
     return function(stockRecord) {
         var self = this;
         self.sku = ko.observable().extend({
-            required: { message: '产品款号不能为空' }
+            required: { message: '产品款号不能为空' },
+            pattern: {message: '款号不能包含字母数字下划线以外的字符',params: '[a-z0-9_]+$'}
         });
         self.name = ko.observable();
         self.cost = ko.observable().extend({
@@ -14,7 +15,8 @@ define(['knockout','validation','validationConfig'], function(ko) {
         });
         self.stock = ko.observable().extend({
             required: { message: '数量不能为空' },
-            number:{message:'数量必须位数字'}
+            number:{message:'数量必须位数字'},
+            min:{params:1,message:'数量必须大于1'}
         });
         self.pictures = ko.observableArray();
         self.price = ko.observable().extend({
@@ -36,7 +38,6 @@ define(['knockout','validation','validationConfig'], function(ko) {
             self.description('');
         }
         self.submitTo = function(){
-            console.log(stockRecord);
             var model = ko.validatedObservable(self);
             if((model.isValid())){
                 stockRecord.addItem(self);

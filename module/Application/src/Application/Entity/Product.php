@@ -106,6 +106,7 @@ class Product extends AbstractEntity
      */
     public function setSku($sku)
     {
+        if(preg_match("/[^\w/]",$sku)) throw new ValidationException('款号只能是字母数字下划线组合','sku');
         $this->sku = $sku;
 
         return $this;
