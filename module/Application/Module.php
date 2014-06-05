@@ -26,6 +26,7 @@ class Module
         $viewModel = $e->getApplication()->getMvcEvent()->getViewModel();
         $config = $serviceManager->get('Config');
         $viewModel->xsaleConfig = $config['upload'];
+        $viewModel->about = $config['about'];
 
         $customerService = $serviceManager->get('CustomerService');
         $viewModel->vipCount = $customerService->getVipCount();

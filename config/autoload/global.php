@@ -24,6 +24,11 @@ return array(
         'thumbnailPath'  =>'/uploads/img/thumbnail/',
         'defaultImage'=>'default.jpg'
     ),
+    'about'=>array(
+        'softwareName'=>'XSale',
+        'version'=>'测试版本 v0.8.1',
+        'author'=>'Ron Choi',
+    ),
     'service_manager' => array(
         'factories' => array(
             //'Zend\Db\Adapter\Adapter' => 'Zend\Db\Adapter\AdapterServiceFactory',

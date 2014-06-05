@@ -69,7 +69,7 @@
                     <span>菜单</span>
                 </button>
                 <!-- Site name for smallar screens -->
-                <a href="index.html" class="navbar-brand hidden-lg">XSale</a>
+                <a href="index.html" class="navbar-brand hidden-lg"><?php echo $this->about['softwareName'];?></a>
             </div>
 
 
@@ -129,8 +129,8 @@
                 <div class="col-md-4">
                     <!-- Logo. -->
                     <div class="logo">
-                        <h1><a class="title-font" href="#">XSale<span class="bold"></span></a></h1>
-                        <p class="meta">后台管理系统</p>
+                        <h1><a class="title-font" href="#"><?php echo $this->about['softwareName'];?><span class="bold"></span></a></h1>
+                        <p class="meta"><?php echo $this->about['version']?></p>
                     </div>
                     <!-- Logo ends -->
                 </div>
@@ -278,7 +278,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <!-- Copyright info -->
-                    <p class="copy">Copyright &copy; 2014 | <a href="#">Xsale by ron</a> </p>
+                    <p class="copy">&copy; <?php echo date('Y') ?> <?php echo $this->about['author']?>. All rights reserved. | <a href="#"><?php echo $this->about['softwareName'];?> by <?php echo $this->about['author']?></a> </p>
                 </div>
             </div>
         </div>
