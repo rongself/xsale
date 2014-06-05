@@ -41,13 +41,14 @@
                             <th>进货单号</th>
                             <th>总价</th>
                             <th>进货时间</th>
+                            <th>添加人</th>
                             <th>操作</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php foreach($this->paginator->getCurrentItems() as $item):?>
                         <tr data-href="/stockRecord/edit-record/skid/1">
-                            <td>                            
+                            <td rowspan="2" style="width: 12px;">
                                 <span class="uni">
                                     <?php $id = $this->escapeHtml($item->getId());?>
                                     <input type="checkbox" class="ids" value="<?php echo $id?>">
@@ -56,15 +57,13 @@
                             <td><?php echo $id;?></td>
                             <td><?php echo $this->escapeHtml($item->getTotalPrice())?></td>
                             <td><?php echo $this->escapeHtml($item->getStockTime()->format('Y-m-d H:s:i'))?></td>
-                            <td>
+                            <td><?php echo $this->escapeHtml($item->getAdmin()->getName())?></td>
+                            <td rowspan="2">
                                 <a class="btn btn-xs btn-default"><i class="icon-pencil"></i> </a>
                                 <a onclick="if(!confirm('要删除此进货单吗?'))return false;" href="<?php echo $this->url('stock-record/wildcard',array('action'=>'delete','id'=>$id))?>" class="btn btn-xs btn-danger"><i class="icon-remove"></i> </a>
                             </td>
                         </tr>
                         <tr>
-                            <td style="width: 12px;">
-                                &nbsp;
-                            </td>
                             <td colspan="4" class="stock-detail">
                                 <div class="panel panel-info" style="box-shadow: none;-webkit-box-shadow:none;">
                                     <table class="table">

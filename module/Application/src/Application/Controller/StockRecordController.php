@@ -1,9 +1,6 @@
 <?php
 namespace Application\Controller;
 
-use Application\Entity\XsProductImages;
-use Application\Entity\XsProducts;
-use Application\Entity\XsStockRecords;
 use Application\Service\StockRecordService;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\JsonModel;
@@ -34,7 +31,7 @@ class StockRecordController extends AbstractActionController
         if($this->getRequest()->isPost()){
             $jsonStr = $this->getRequest()->getPost('stockRecord');
             $data = json_decode($jsonStr);
-            $this->stockRecordService->create($data);
+            $this->stockRecordService->create($data,$this->identity());
             return new jsonModel(array('success'=>true,'errors'=>null));
         }
     }

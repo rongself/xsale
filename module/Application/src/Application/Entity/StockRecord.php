@@ -36,6 +36,12 @@ class StockRecord extends AbstractEntity
     private $stockItems;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Application\Entity\Account", inversedBy="stockRecords", cascade={"persist"})
+     * @ORM\JoinColumn(name="admin_id", referencedColumnName="id", nullable=true)
+     */
+    private $admin;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -145,5 +151,22 @@ class StockRecord extends AbstractEntity
     public function setStockTime($stockTime)
     {
         $this->stockTime = $stockTime;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAdmin()
+    {
+        return $this->admin;
+    }
+
+    /**
+     * @param mixed $admin
+     */
+    public function setAdmin($admin)
+    {
+        $this->admin = $admin;
+        return $this;
     }
 }

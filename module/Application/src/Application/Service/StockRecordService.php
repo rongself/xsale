@@ -8,6 +8,7 @@
 
 namespace Application\Service;
 
+use Application\Entity\Account;
 use Application\Entity\Product;
 use Application\Entity\ProductImage;
 use Application\Entity\StockItem;
@@ -15,7 +16,7 @@ use Application\Entity\StockRecord;
 
 class StockRecordService extends AbstractService {
 
-    public function create($data){
+    public function create($data,Account $user){
         $now = new \DateTime();
         $totalPrice = 0;
         $stockRecord = new StockRecord();
@@ -50,6 +51,7 @@ class StockRecordService extends AbstractService {
             $stockItem->setCreateTime($now);
             $stockItem->setStockRecord($stockRecord);
             $stockRecord->addStockItem($stockItem);
+            $stockRecord->setAdmin($user);
             //whether sku exist,always add pictures
             $imageTemp = new ProductImage();
             $i = 0;

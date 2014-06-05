@@ -32,6 +32,11 @@ class Account extends AbstractEntity
      */
     private $password;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Application\Entity\StockRecord", mappedBy="admin", cascade={"persist"})
+     */
+    private $stockRecords;
+
     /** 
      * @ORM\Column(type="datetime", nullable=false, name="create_time")
      */
@@ -136,5 +141,41 @@ class Account extends AbstractEntity
     {
         if(!isset($name)) throw new ValidationException('姓名不能为空','name');
         $this->name = $name;
+    }
+
+    /**
+     * Add order
+     *
+     * @param \Application\Entity\StockRecord $stockRecord
+     * @return Customer
+     */
+    public function addStockRecord(\Application\Entity\StockRecord $stockRecord = null)
+    {
+        $this->stockRecords[] = $stockRecord;
+
+        return $this;
+    }
+
+    /**
+     * Remove order
+     *
+     * @param \Application\Entity\StockRecord $stockRecord
+     * @return Customer
+     */
+    public function removeStockRecord(\Application\Entity\StockRecord $stockRecord = null)
+    {
+        $this->stockRecords->removeElement($stockRecord);
+
+        return $this;
+    }
+
+    /**
+     * Get order
+     *
+     * @return \Application\Entity\StockRecord
+     */
+    public function getStockRecords()
+    {
+        return $this->stockRecords;
     }
 }
