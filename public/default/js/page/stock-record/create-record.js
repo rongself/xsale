@@ -48,6 +48,10 @@ require(['knockout',
             $('#quantity').focus();
             return selectedSKU;
         });
+        ko.cleanNode($('#stockProduct').get(0));
+        ko.cleanNode($('#stockRecord').get(0));
+        ko.cleanNode($('#stockRecordSubmit').get(0));
+        ko.cleanNode($('#recordInfo').get(0));
         ko.applyBindings(stockProduct,$('#stockProduct').get(0));
         ko.applyBindings(stockRecord,$('#stockRecord').get(0));
         ko.applyBindings(stockRecord,$('#stockRecordSubmit').get(0));
