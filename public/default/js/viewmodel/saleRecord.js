@@ -1,7 +1,7 @@
 /**
  * Created by Ron on 14-3-1.
  */
-define(['knockout','viewmodel/saleProduct','knockoutMapping','formPost','message','validation','validationConfig'],function(ko,saleProductViewModel,koMapping,formPost,message){
+define(['knockout','viewmodel/saleProduct','knockoutMapping','formPost','message','cookie','validation','validationConfig'],function(ko,saleProductViewModel,koMapping,formPost,message){
     return function() {
         var self = this;
         self.saleProducts = ko.observableArray(null);
@@ -30,6 +30,7 @@ define(['knockout','viewmodel/saleProduct','knockoutMapping','formPost','message
             //try to update sale record
             if(!exists){
                 self.saleProducts.push(product);
+                $(document).trigger('saleRecord.addItem');
             }else{
                 self.saleProducts.remove(exists);
                 self.saleProducts.push(product);
@@ -43,6 +44,7 @@ define(['knockout','viewmodel/saleProduct','knockoutMapping','formPost','message
                 self.saleProducts.removeAll();
             }
             self.phoneNumber(null);
+            $(document).trigger('saleRecord.reset');
         }
 
         self.submitAndContinue = function (callback) {
@@ -67,6 +69,7 @@ define(['knockout','viewmodel/saleProduct','knockoutMapping','formPost','message
                 success:function(){
                     self.reset();
                     message.success('销售记录已成功提交');
+                    $(document).trigger('saleRecord.submitSuccess');
                     if(typeof callback == 'function'){
                         callback();
                     }
@@ -81,5 +84,41 @@ define(['knockout','viewmodel/saleProduct','knockoutMapping','formPost','message
         self.show = function (elem){
             $(elem).hide().slideDown();
         }
+        self.loadCache = function(){
+            if($.cookie('saleRecord')!=undefined){
+                var cache = koMapping.fromJSON($.cookie('saleRecord'));
+                self.orderTime(cache.orderTime());
+                self.phoneNumber(cache.phoneNumber());
+                var products = cache.saleProducts();
+                for(var key in  products){
+                    self.saleProducts.push(products[key]);
+                }
+                return true;
+            }
+            return false;
+        }
+        self.setCache = function(){
+            $.removeCookie('saleRecord');
+            $.cookie('saleRecord',koMapping.toJSON(self),{expires:2});
+        }
+        self.clearCache = function(){
+            $.removeCookie('saleRecord');
+        }
+        self.init = function(){
+            if(self.loadCache()){
+                message.info('已载入上次未保存的数据,清除数据请点击右上角重置表单按钮');
+            }
+            $(document).on({
+                'saleRecord.addItem':function(){
+                    self.setCache();
+                },
+                'saleRecord.submitSuccess':function(){
+                    self.clearCache();
+                },
+                'saleRecord.reset':function(){
+                    self.clearCache();
+                }
+            });
+        }();
     }
 });

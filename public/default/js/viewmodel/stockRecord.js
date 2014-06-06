@@ -1,7 +1,7 @@
 /**
  * Created by Ron on 14-2-27.
  */
-define(['knockout','viewmodel/stockProduct','lib/json2','knockoutMapping','formPost','message'], function(ko,stockProductViewModel,JSON,koMapping,formPost,message) {
+define(['knockout','viewmodel/stockProduct','lib/json2','knockoutMapping','formPost','message','cookie'], function(ko,stockProductViewModel,JSON,koMapping,formPost,message) {
     return function() {
         var self = this;
         self.stockProducts = ko.observableArray(null);
@@ -15,6 +15,25 @@ define(['knockout','viewmodel/stockProduct','lib/json2','knockoutMapping','formP
             }
             return sum;
         });
+        self.loadCache = function(){
+            if($.cookie('stockRecord')!=undefined){
+                var cache = koMapping.fromJSON($.cookie('stockRecord'));
+                self.stockTime(cache.stockTime());
+                var products = cache.stockProducts();
+                for(var key in  products){
+                    self.stockProducts.push(products[key]);
+                }
+                return true;
+            }
+            return false;
+        }
+        self.setCache = function(){
+            $.removeCookie('stockRecord');
+            $.cookie('stockRecord',koMapping.toJSON(self),{expires:2});
+        }
+        self.clearCache = function(){
+            $.removeCookie('stockRecord');
+        }
         self.addItem = function(stockProductInstance) {
             var json = koMapping.toJSON(stockProductInstance);
             var product = koMapping.fromJSON(json);
@@ -25,6 +44,7 @@ define(['knockout','viewmodel/stockProduct','lib/json2','knockoutMapping','formP
             //try to update stock record
             if(!exists){
                 self.stockProducts.push(product);
+                $(document).trigger('stockRecord.addItem');
             }else{
                 self.stockProducts.remove(exists);
                 self.stockProducts.push(product);
@@ -51,6 +71,7 @@ define(['knockout','viewmodel/stockProduct','lib/json2','knockoutMapping','formP
                 success:function(){
                     self.reset();
                     message.success('进货单已成功提交');
+                    $(document).trigger('stockRecord.submitSuccess');
                     if(typeof callback == 'function'){
                         callback();
                     }
@@ -64,6 +85,23 @@ define(['knockout','viewmodel/stockProduct','lib/json2','knockoutMapping','formP
         }
         self.reset = function () {
             self.clear();
+            $(document).trigger('stockRecord.reset');
         }
+        self.init = function(){
+            if(self.loadCache()){
+                message.info('已载入上次未保存的数据,清除数据请点击右上角重置表单按钮');
+            }
+            $(document).on({
+                'stockRecord.addItem':function(){
+                    self.setCache();
+                },
+                'stockRecord.submitSuccess':function(){
+                    self.clearCache();
+                },
+                'stockRecord.reset':function(){
+                    self.clearCache();
+                }
+            });
+        }();
     }
 });

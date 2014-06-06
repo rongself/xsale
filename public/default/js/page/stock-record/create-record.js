@@ -8,9 +8,10 @@ require(['knockout',
         'datetimepicker',
         'underscore',
         'lib/json2']
-    , function (ko, StockRecordViewModel, StockProductViewModel,SkuAutoComplete,ImageUploader,message) {
+    , function (ko,StockRecordViewModel, StockProductViewModel,SkuAutoComplete,ImageUploader,message) {
         var stockRecord = new StockRecordViewModel();
         var stockProduct = new StockProductViewModel(stockRecord);
+        //for edit
         stockRecord.editItem = function (product){
             if(!stockProduct.sku()){
                 stockRecord.removeItem(product);

@@ -23,7 +23,8 @@ require.config({
         flot:'/mac/js/jquery.flot',
         flotResize:'/mac/js/jquery.flot.resize',
         date:'lib/date-utils',
-        chart:'module/chart.helper'
+        chart:'module/chart.helper',
+        cookie:'lib/jquery.cookie'
     },
     shim:{
         'bootstrap':{
