@@ -12,8 +12,12 @@
 
         <?php echo $this->headMeta()
             ->appendName('viewport', 'width=device-width, initial-scale=1.0')
-            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge');
+			$this->headLink()->headLink(array('rel' => 'favicon',
+                              'href' => '/default/img/favicon.ico'),
+                              'PREPEND');
         ?>
+		
         <link href="/mac/style/bootstrap.css" rel="stylesheet">
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -47,8 +51,6 @@
         <link href="/default/style/css/pace-theme-minimal.css" rel="stylesheet">
 
         <script data-main="/default/js/main" src="/default/js/require.js" ></script>
-
-        <link rel="shortcut icon" href="/mac/img/favicon/favicon.png">
 
         <script type="text/javascript">
             require(['lib/json2'],function(){
