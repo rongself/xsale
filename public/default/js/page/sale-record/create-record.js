@@ -41,7 +41,11 @@ require(['knockout',
             if(selectedProduct.price){
                 saleProduct.price(selectedProduct.price);
             }
-            $('#submitTo').focus();
+            if(saleProduct.price()==null){
+                $('#price').focus();
+            }else{
+                $('#submitTo').focus();
+            }
             return selectedSKU;
         });
         var CustomerAutoComplete = new CustomerAutoComplete(function(seleted){

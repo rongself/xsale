@@ -4,6 +4,7 @@ require(['knockout',
         'module/sku.autocomplete',
         'module/image.uploader',
         'message',
+        'module/number',
         'datetimepicker',
         'underscore',
         'lib/json2']

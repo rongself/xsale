@@ -13,7 +13,7 @@ define(['knockout','validation','validationConfig'], function(ko) {
             required: { message: '进货价不能为空' },
             number:{message:'进货价必须为数字'}
         });
-        self.stock = ko.observable().extend({
+        self.stock = ko.observable(1).extend({
             required: { message: '数量不能为空' },
             number:{message:'数量必须位数字'},
             min:{params:1,message:'数量必须大于1'}
