@@ -1,6 +1,7 @@
 <?php
 namespace Application\Controller;
 
+use Application\Entity\Exception\ValidationException;
 use Application\Entity\Product;
 use Application\Lib\View\Model\JsonResultModel;
 use Application\Service\ProductService;
@@ -78,7 +79,7 @@ class ProductController extends AbstractActionController
 
     public function ajaxIsProductExistsAction(){
         $sku = $this->getRequest()->getPost('sku');
-        $return = $this->productService->IsProductExists($sku);
+        $return = $this->productService->isProductExists($sku);
         return new JsonModel(array('result'=>$return));
     }
 

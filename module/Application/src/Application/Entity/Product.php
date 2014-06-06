@@ -99,6 +99,14 @@ class Product extends AbstractEntity
     }
 
     /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
      * Set sku
      *
      * @param string $sku
@@ -106,7 +114,7 @@ class Product extends AbstractEntity
      */
     public function setSku($sku)
     {
-        if(preg_match("/[^\w/]",$sku)) throw new ValidationException('款号只能是字母数字下划线组合','sku');
+        if(!preg_match("/^[a-z0-9_#-]+$/",$sku)) throw new ValidationException('款号只能是字母,数字,_,-,#组合','sku');
         $this->sku = $sku;
 
         return $this;
@@ -408,4 +416,5 @@ class Product extends AbstractEntity
     {
         return $this->orderCart;
     }
+
 }

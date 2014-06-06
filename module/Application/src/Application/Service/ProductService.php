@@ -8,6 +8,7 @@
 
 namespace Application\Service;
 
+use Application\Entity\Exception\ValidationException;
 use Application\Entity\Product;
 use Zend\ModuleManager\ModuleManager;
 
@@ -33,7 +34,7 @@ class ProductService extends  AbstractService
         return $this->getRepository()->findAll();
     }
 
-    public function IsProductExists($sku)
+    public function isProductExists($sku)
     {
         $result = $this->getRepository()->findOneBy(array('sku'=>$sku));
         return $result!==null;
@@ -82,7 +83,14 @@ class ProductService extends  AbstractService
 
     public function edit(Product $product)
     {
-        $productEntity = $this->getProductBySku($product->getSku());
+        $productEntity = $this->getProductById($product->getId());
+        if($product->getSku()!=$productEntity->getSku()){
+            if(!$this->isProductExists($product->getSku())){
+                $productEntity->setSku($product->getSku());
+            }else{
+                throw new ValidationException('此款号的产品已存在','sku');
+            }
+        }
         $productEntity->setCost($product->getCost());
         $productEntity->setDescription($product->getDescription());
         $productEntity->setName($product->getName());

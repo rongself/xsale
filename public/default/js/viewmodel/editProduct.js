@@ -4,9 +4,10 @@
 define(['knockout','knockoutMapping','formPost','message','validation','validationConfig'], function(ko,koMapping,formPost,message) {
     return function() {
         var self = this;
+        self.id = ko.observable();
         self.sku = ko.observable().extend({
             required: { message: '产品款号不能为空' },
-            pattern: {message: '款号不能包含字母数字下划线以外的字符',params: '[a-z0-9_]+$'}
+            pattern: {message: '款号只能是字母,数字,_,-,#组合',params: '^[a-z0-9_#-]+$'}
         });
         self.name = ko.observable();
         self.cost = ko.observable().extend({

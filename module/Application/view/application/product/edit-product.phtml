@@ -17,7 +17,8 @@
                         <div class="form-group">
                             <label class="col-lg-4 control-label  visible-lg">款号</label>
                             <div class="col-lg-8">
-                                <input type="text" id="sku" class="form-control" data-bind="value:sku" data-value="<?php echo $product->getSku();?>" disabled>
+                                <input type="hidden" id="id" class="form-control" data-bind="value:id" data-value="<?php echo $product->getId();?>">
+                                <input type="text" id="sku" class="form-control" data-bind="value:sku" data-value="<?php echo $product->getSku();?>">
                             </div>
                         </div>
 <!--                        <div class="form-group">-->
