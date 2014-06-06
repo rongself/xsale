@@ -29,20 +29,21 @@ define(['knockout','validation','validationConfig'], function(ko) {
             self.pictures.remove(item);
         }
         self.reset = function(){
+            var model = ko.validatedObservable(self);
             self.sku('');
             self.name('');
             self.cost('');
-            self.stock('');
+            self.stock(1);
             self.pictures.removeAll();
             self.price('');
             self.description('');
+            model.errors.showAllMessages(false);
         }
         self.submitTo = function(){
             var model = ko.validatedObservable(self);
             if((model.isValid())){
                 stockRecord.addItem(self);
                 self.reset();
-                model.errors.showAllMessages(false);
             }else{
                 model.errors.showAllMessages();
             }

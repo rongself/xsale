@@ -106,7 +106,7 @@ define(['knockout','viewmodel/saleProduct','knockoutMapping','formPost','message
         }
         self.init = function(){
             if(self.loadCache()){
-                message.info('已载入上次未保存的数据,清除数据请点击右上角重置表单按钮');
+                message.info('已载入上次未保存的数据,清除数据请点击右上角按钮清空已添加产品');
             }
             $(document).on({
                 'saleRecord.addItem':function(){

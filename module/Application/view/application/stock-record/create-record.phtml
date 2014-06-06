@@ -3,7 +3,7 @@
         <div class="pull-right" id="stockRecordSubmit">
             <button type="submit" class="btn btn-danger" data-bind="click:submit">保存进货单</button>
             <button type="submit" class="btn btn-danger" data-bind="click:submitAndContinue">保存并继续添加</button>
-            <button type="reset" class="btn btn-default" data-bind="click:reset">重置表单</button>
+            <button type="reset" class="btn btn-default" data-bind="click:reset">清空已添加产品</button>
         </div>
     </div>
 </div>
@@ -93,6 +93,7 @@
                             <!-- Buttons -->
                             <div class="col-lg-offset-4 col-lg-12">
                                 <button type="submit" class="btn btn-success" data-bind="click:function(){$data.submitTo(stockRecord);}">添加此产品到进货单</button>
+                                <button type="reset" class="btn btn-default" data-bind="click:reset">清空</button>
                             </div>
                         </div>
                     </form>

@@ -7,11 +7,19 @@ define(['jquery'],function($){
             if($('#messageAlert').get(0)!=null){
                 $('#messageAlert').remove();
             }
-            $('<div id="messageAlert" class="alert fade in alert-'+type+'" style="position:fixed;bottom:-54px;left:0px;width:100%;z-index:100;margin:0px;"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>'+message+'</div>')
+            $('<div id="messageAlert" class="te-ce alert fade in alert-'+type+'"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>'+message+'</div>')
+                .css({
+                    position:'fixed',
+                    top:'-54px',
+                    left:'0px',
+                    width:'100%',
+                    'z-index':'1031',
+                    margin:'0px'
+                })
                 .appendTo('body')
-                .stop().animate({'bottom':0},500)
+                .stop().animate({'top':-1},500)
                 .delay(5000)
-                .animate({'bottom':-54},500,function(){$(this).remove();});
+                .animate({'top':-54},500,function(){$(this).remove();});
         },
         error:function(message){
             this.show(message,'danger');

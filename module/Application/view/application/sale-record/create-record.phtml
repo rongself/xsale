@@ -3,7 +3,7 @@
         <div class="pull-right">
             <button type="submit" id="submit" data-loading-text="正在验证数据.." class="btn btn-success" data-bind="click:saleRecord.submit" >保存</button>
             <button type="submit" id="submit" data-loading-text="正在验证数据.." class="btn btn-success" data-bind="click:saleRecord.submitAndContinue" >保存并继续添加</button>
-            <button type="reset" class="btn btn-default" data-bind="click:saleRecord.reset" >重置表单</button>
+            <button type="reset" class="btn btn-default" data-bind="click:saleRecord.reset" >清空已添加产品</button>
         </div>
     </div>
 </div>
@@ -60,6 +60,7 @@
                             <!-- Buttons -->
                             <div class="col-lg-offset-4 col-lg-12">
                                 <button type="submit" id="submitTo" data-loading-text="正在验证数据.." class="btn btn-success" data-bind="click:function(){saleProduct.submitTo(saleRecord);}">添加此产品到账单</button>
+                                <button type="reset" class="btn btn-default" data-bind="click:saleProduct.reset">清空</button>
                             </div>
                         </div>
                     </form>

@@ -21,10 +21,12 @@ define(['knockout','validation','validationConfig'], function(ko) {
         self.remark = ko.observable();
 
         self.reset = function(){
+            var model = ko.validatedObservable(self);
             self.sku('');
             self.quantity(1);
             self.price('');
             self.remark('');
+            model.errors.showAllMessages(false);
         }
         self.submitTo = function(saleRecordInstance){
             if(self.sku.isValidating()){
@@ -40,7 +42,6 @@ define(['knockout','validation','validationConfig'], function(ko) {
             if((model.isValid())){
                 saleRecordInstance.addItem(this);
                 self.reset();
-                model.errors.showAllMessages(false);
             }else{
                 model.errors.showAllMessages();
             }
