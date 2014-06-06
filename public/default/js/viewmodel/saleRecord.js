@@ -87,8 +87,8 @@ define(['knockout','viewmodel/saleProduct','knockoutMapping','formPost','message
         self.loadCache = function(){
             if($.cookie('saleRecord')!=undefined){
                 var cache = koMapping.fromJSON($.cookie('saleRecord'));
-                self.orderTime(cache.orderTime());
-                self.phoneNumber(cache.phoneNumber());
+                cache.orderTime!=undefined?self.orderTime(cache.orderTime()):'';
+                cache.phoneNumber!=undefined?self.phoneNumber(cache.phoneNumber()):'';
                 var products = cache.saleProducts();
                 for(var key in  products){
                     self.saleProducts.push(products[key]);

@@ -18,7 +18,9 @@ define(['knockout','viewmodel/stockProduct','lib/json2','knockoutMapping','formP
         self.loadCache = function(){
             if($.cookie('stockRecord')!=undefined){
                 var cache = koMapping.fromJSON($.cookie('stockRecord'));
-                self.stockTime(cache.stockTime());
+                if(cache.stockTime!=undefined){
+                    self.stockTime(cache.stockTime());
+                }
                 var products = cache.stockProducts();
                 for(var key in  products){
                     self.stockProducts.push(products[key]);
