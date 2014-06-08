@@ -100,11 +100,17 @@ class SaleRecordService extends AbstractService{
      */
     public function delete($id)
     {
-        $qb = $this->objectManager->createQueryBuilder();
-        $qb->delete()
-            ->from('Application\Entity\Order','o')
-            ->where($qb->expr()->eq('o.id',$id));
-        return $qb->getQuery()->execute();
+        $record = $this->getSaleRecordById($id);
+        $items = $record->getOrderCarts();
+        /**
+         * @var $item \Application\Entity\OrderCart
+         */
+        foreach($items as $item){
+            $item->getProduct()->setStock($item->getProduct()->getStock()+$item->getQuantity());
+        }
+        $this->objectManager->remove($record);
+        $this->objectManager->flush();
+        return $id;
     }
 
     /**
@@ -113,11 +119,20 @@ class SaleRecordService extends AbstractService{
      */
     public function deleteIn(array $ids)
     {
-        $qb = $this->objectManager->createQueryBuilder();
-        $qb->delete()
-            ->from('Application\Entity\Order','o')
-            ->where($qb->expr()->in('o.id',$ids));
-        return $qb->getQuery()->execute();
+        foreach($ids as $id)
+        {
+            $record = $this->getSaleRecordById($id);
+            $items = $record->getOrderCarts();
+            /**
+             * @var $item \Application\Entity\OrderCart
+             */
+            foreach($items as $item){
+                $item->getProduct()->setStock($item->getProduct()->getStock()+$item->getQuantity());
+            }
+            $this->objectManager->remove($record);
+        }
+        $this->objectManager->flush();
+        return $ids;
     }
     /**
      * @return \Doctrine\ORM\EntityRepository
@@ -125,5 +140,14 @@ class SaleRecordService extends AbstractService{
     function getRepository()
     {
         return  $customer = $this->objectManager->getRepository('Application\Entity\Order');
+    }
+
+    /**
+     * @param $id
+     * @return null|\Application\Entity\Order
+     */
+    private function getSaleRecordById($id)
+    {
+        return $this->getRepository()->find($id);
     }
 }

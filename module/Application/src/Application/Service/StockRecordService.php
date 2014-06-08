@@ -84,9 +84,17 @@ class StockRecordService extends AbstractService {
      */
     function getRepository()
     {
-        // TODO: Implement getRepository() method.
+        return $this->objectManager->getRepository('Application\Entity\StockRecord');
     }
 
+    /**
+     * @param $id
+     * @return null|\Application\Entity\StockRecord
+     */
+    public function getStockRecordById($id)
+    {
+        return $this->getRepository()->find($id);
+    }
     public function getPaginator()
     {
         return parent::getPaginator('SELECT o FROM Application\Entity\StockRecord o');
@@ -98,11 +106,17 @@ class StockRecordService extends AbstractService {
      */
     public function delete($id)
     {
-        $qb = $this->objectManager->createQueryBuilder();
-        $qb->delete()
-            ->from('Application\Entity\StockRecord','o')
-            ->where($qb->expr()->eq('o.id',$id));
-        return $qb->getQuery()->execute();
+        $record = $this->getStockRecordById($id);
+        $items = $record->getStockItems();
+        /**
+         * @var $item \Application\Entity\StockItem
+         */
+        foreach($items as $item){
+            $item->getProduct()->setStock($item->getProduct()->getStock()-$item->getQuantity());
+        }
+        $this->objectManager->remove($record);
+        $this->objectManager->flush();
+        return $id;
     }
 
     /**
@@ -111,10 +125,19 @@ class StockRecordService extends AbstractService {
      */
     public function deleteIn(array $ids)
     {
-        $qb = $this->objectManager->createQueryBuilder();
-        $qb->delete()
-            ->from('Application\Entity\StockRecord','o')
-            ->where($qb->expr()->in('o.id',$ids));
-        return $qb->getQuery()->execute();
+        foreach($ids as $id)
+        {
+            $record = $this->getStockRecordById($id);
+            $items = $record->getStockItems();
+            /**
+             * @var $item \Application\Entity\StockItem
+             */
+            foreach($items as $item){
+                $item->getProduct()->setStock($item->getProduct()->getStock()-$item->getQuantity());
+            }
+            $this->objectManager->remove($record);
+        }
+        $this->objectManager->flush();
+        return $ids;
     }
 }

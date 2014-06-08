@@ -15,15 +15,25 @@ class Setting extends AbstractEntity
      */
     private $id;
 
+    /**
+     * @ORM\Column(type="string", length=128, nullable=false, name="name")
+     */
+    private $name;
+
     /** 
      * @ORM\Column(type="string", length=128, nullable=false, name="key")
      */
     private $key;
 
-    /** 
+    /**
      * @ORM\Column(type="string", length=128, nullable=true, name="value")
      */
     private $value;
+
+    /**
+     * @ORM\Column(type="string", length=512, nullable=false, name="description")
+     */
+    private $description;
 
     /**
      * Get id
@@ -79,5 +89,37 @@ class Setting extends AbstractEntity
     public function getValue()
     {
         return $this->value;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param mixed $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param mixed $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
     }
 }

@@ -22,6 +22,10 @@ class SaleRecordController extends AbstractActionController
 
     public function indexAction()
     {
+        //show message
+        $headScript = $this->getServiceLocator()->get('viewhelpermanager')->get('headScript');
+        $this->Message()->listener($headScript);
+
         $page = intval($this->params('page',1));
         $paginator = $this->saleRecordService->getPaginator();
         $paginator->setCurrentPageNumber($page)->setItemCountPerPage(10);
@@ -50,19 +54,30 @@ class SaleRecordController extends AbstractActionController
     public function deleteAction()
     {
         $id = $this->params('id');
-        $res = $this->saleRecordService->delete($id);
-        if($res){
+        try{
+            $this->saleRecordService->delete($id);
+        }catch (ValidationException $e){
+            $message = implode(',',$e->getValidationError());
+            $this->Message()->error($message);
             return $this->redirect()->toRoute('sale-record/wildcard');
         }
+        $this->Message()->success('操作成功');
+        return $this->redirect()->toRoute('sale-record/wildcard');
     }
 
     public function deleteMultipleAction()
     {
         if($this->getRequest()->isPost())
         {
+            $result = new JsonResultModel();
             $ids = $this->params()->fromPost('ids');
-            $this->saleRecordService->deleteIn($ids);
-            return new JsonModel(array('success'=>true,'error'=>array()));
+            try{
+                $this->saleRecordService->deleteIn($ids);
+            }catch (ValidationException $e){
+                $message = implode(',',$e->getValidationError());
+                $result->addErrors('stock',$message);
+            }
+            return $result;
         }
     }
 
