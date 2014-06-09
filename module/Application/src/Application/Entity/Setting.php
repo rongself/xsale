@@ -20,8 +20,8 @@ class Setting extends AbstractEntity
      */
     private $name;
 
-    /** 
-     * @ORM\Column(type="string", length=128, nullable=false, name="key")
+    /**
+     * @ORM\Column(type="string", length=128, nullable=false, name="ukey",unique=true)
      */
     private $key;
 
@@ -31,7 +31,7 @@ class Setting extends AbstractEntity
     private $value;
 
     /**
-     * @ORM\Column(type="string", length=512, nullable=false, name="description")
+     * @ORM\Column(type="string", length=512, nullable=true, name="description")
      */
     private $description;
 

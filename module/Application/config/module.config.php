@@ -229,6 +229,35 @@ return array(
             // using the path /application/:controller/:action
         ),
     ),
+    'caches' => array(
+        'CacheServerOne'=>array(
+            'adapter' => array(
+                'name' => 'filesystem',
+                'options' => array(
+                    'dirLevel' => 2,
+                    'cacheDir' => 'data/cache',
+                    'dirPermission' => 0755,
+                    'filePermission' => 0666,
+                    'namespaceSeparator' => '-xs-'
+                ),
+            ),
+            'plugins' => array('serializer'),
+        ),
+        'CacheServerTwo' => array(
+            'adapter' => array(
+                'name' => 'Memcached',
+                'options' => array(
+                    'ttl' => 21600,
+                    'servers' => array(
+                        array(
+                            'host'   => 'localhost',
+                            'port'   => 11211,
+                        ),
+                    ),
+                ),
+            ),
+        ),
+    ),
     'service_manager' => array(
         'abstract_factories' => array(
             'Zend\Cache\Service\StorageCacheAbstractServiceFactory',
@@ -239,6 +268,9 @@ return array(
             'translator' => 'MvcTranslator',
         ),
         'factories'=>array(
+            'System\Config'=>function(Zend\ServiceManager\ServiceManager $sm){
+                    return \Application\Lib\System\Config\Config::getInstance($sm);
+                },
             'Zend\Authentication\AuthenticationService' => function($serviceManager) {
                     return $serviceManager->get('doctrine.authenticationservice.orm_default');
              },
@@ -286,15 +318,8 @@ return array(
     ),
     'controllers' => array(
         'invokables' => array(
-            //'Application\Controller\Index' => 'Application\Controller\IndexController',
-            //'Application\Controller\Account' => 'Application\Controller\AccountController',
-            //'Application\Controller\Customer' => 'Application\Controller\CustomerController',
             'Application\Controller\Error' => 'Application\Controller\ErrorController',
-            //'Application\Controller\Product' => 'Application\Controller\ProductController',
-            //'Application\Controller\SaleRecord' => 'Application\Controller\SaleRecordController',
             'Application\Controller\Setting' => 'Application\Controller\SettingController',
-            //'Application\Controller\Statistics' => 'Application\Controller\StatisticsController',
-            //'Application\Controller\StockRecord' => 'Application\Controller\StockRecordController',
             'Application\Controller\FileUploader' => 'Application\Controller\FileUploaderController'
         ),
         'factories' => array(
