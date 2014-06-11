@@ -28,5 +28,17 @@ define(['knockout','lib/jquery.fileupload'],function(ko){
                 );
             }
         }).prop('disabled', !$.support.fileInput).parent().addClass($.support.fileInput ? undefined : 'disabled');
+        $(document).on({
+            'mouseenter':function(e){
+                $(this).prev().removeClass('dp-none');
+                return false;
+            }
+        },'.product-picture');
+        $(document).on({
+            'mouseleave':function(e){
+                $(this).addClass('dp-none');
+                return false;
+            }
+        },'.del-btn');
     }
 });

@@ -83,7 +83,8 @@ class SaleRecordController extends AbstractActionController
 
     public function editRecordAction()
     {
-        // action body
+        $id = $this->params('id');
+        return array('id'=>$id);
     }
 
 

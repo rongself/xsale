@@ -35,10 +35,16 @@ class StockRecordController extends AbstractActionController
     public function createRecordAction()
     {
         if($this->getRequest()->isPost()){
+            $result = new JsonResultModel();
             $jsonStr = $this->getRequest()->getPost('stockRecord');
             $data = json_decode($jsonStr);
-            $this->stockRecordService->create($data,$this->identity());
-            return new jsonModel(array('success'=>true,'errors'=>null));
+            try{
+                $this->stockRecordService->create($data,$this->identity());
+            }catch (ValidationException $e){
+                $message = implode(',',$e->getValidationError());
+                $result->addErrors('undefined',$message);
+            }
+            return $result;
         }
     }
 
@@ -74,7 +80,20 @@ class StockRecordController extends AbstractActionController
 
     public function editRecordAction()
     {
-        // action body
+        $id = $this->params('id');
+        if($this->getRequest()->isPost()){
+            $result = new JsonResultModel();
+            $jsonStr = $this->getRequest()->getPost('stockRecord');
+            $data = json_decode($jsonStr);
+            try{
+                $this->stockRecordService->edit($data);
+            }catch (ValidationException $e){
+                $message = implode(',',$e->getValidationError());
+                $result->addErrors('undefined',$message);
+            }
+            return $result;
+        }
+        return array('id'=>$id);
     }
 
     public function recordDetailAction()
@@ -82,6 +101,12 @@ class StockRecordController extends AbstractActionController
         // action body
     }
 
+    public function ajaxGetRecordAction()
+    {
+        $id = $this->params()->fromQuery('id');
+        $record = $this->stockRecordService->getStockRecordArrayById($id);
+        return new JsonModel($record);
+    }
 
 }
 

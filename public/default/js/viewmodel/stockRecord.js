@@ -1,7 +1,7 @@
 /**
  * Created by Ron on 14-2-27.
  */
-define(['knockout','viewmodel/stockProduct','lib/json2','knockoutMapping','formPost','message','cookie'], function(ko,stockProductViewModel,JSON,koMapping,formPost,message) {
+define(['knockout','viewmodel/stockProduct','knockoutMapping','formPost','message','cookie'], function(ko,stockProductViewModel,koMapping,formPost,message) {
     return function() {
         var self = this;
         self.stockProducts = ko.observableArray(null);
@@ -104,6 +104,6 @@ define(['knockout','viewmodel/stockProduct','lib/json2','knockoutMapping','formP
                     self.clearCache();
                 }
             });
-        }();
+        };
     }
 });

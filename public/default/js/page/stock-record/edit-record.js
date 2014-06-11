@@ -1,5 +1,5 @@
 require(['knockout',
-        'viewmodel/stockRecord',
+        'viewmodel/editStockRecord',
         'viewmodel/stockProduct',
         'module/sku.autocomplete',
         'module/image.uploader',
@@ -8,20 +8,21 @@ require(['knockout',
         'datetimepicker',
         'underscore',
         'lib/json2']
-    , function (ko,StockRecordViewModel, StockProductViewModel,SkuAutoComplete,ImageUploader,message) {
-        var stockRecord = new StockRecordViewModel();
-        var stockProduct = new StockProductViewModel(stockRecord);
-        stockRecord.init();
-        /*for edit*/
+    , function (ko,EditStockRecord, StockProduct,SkuAutoComplete,ImageUploader,message) {
+        var stockRecord = new EditStockRecord();
+        var stockProduct = new StockProduct(stockRecord);
+        stockProduct.itemId = ko.observable();
+        //for edit
         stockRecord.editItem = function (product){
             if(!stockProduct.sku()){
                 stockRecord.removeItem(product);
+                stockProduct.itemId(product.itemId());
                 stockProduct.sku(product.sku());
                 stockProduct.name(product.name());
                 stockProduct.cost(product.cost());
                 stockProduct.stock(product.stock());
                 var pictures = product.pictures();
-                for(key in pictures){
+                for(var key in pictures){
                     console.log(pictures[key]);
                     stockProduct.pictures.push(pictures[key]);
                 }

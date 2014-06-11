@@ -59,7 +59,7 @@
                             <td><?php echo $this->escapeHtml($item->getStockTime()->format('Y-m-d H:s:i'))?></td>
                             <td><?php echo $this->escapeHtml($item->getAdmin()->getName())?></td>
                             <td rowspan="2">
-                                <a class="btn btn-xs btn-default"><i class="icon-pencil"></i> </a>
+                                <a href="<?php echo $this->url('stock-record/wildcard',array('action'=>'edit-record','id'=>$id))?>" class="btn btn-xs btn-default"><i class="icon-pencil"></i> </a>
                                 <a onclick="if(!confirm('要删除此进货单吗?'))return false;" href="<?php echo $this->url('stock-record/wildcard',array('action'=>'delete','id'=>$id))?>" class="btn btn-xs btn-danger"><i class="icon-remove"></i> </a>
                             </td>
                         </tr>

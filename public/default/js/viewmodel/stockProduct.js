@@ -6,7 +6,8 @@ define(['knockout','validation','validationConfig'], function(ko) {
         var self = this;
         self.sku = ko.observable().extend({
             required: { message: '产品款号不能为空' },
-            pattern: {message: '款号只能是字母,数字,_,-,#组合',params: '^[a-z0-9_#-]+$'}
+            pattern: {message: '款号只能是字母,数字,_,-,#组合',params: '^[a-z0-9_#-]+$'},
+            validation: { validator: uniqueInObservableArray, message: '该产品已存在于进货单中', params: stockRecord.stockProducts()}
         });
         self.name = ko.observable();
         self.cost = ko.observable().extend({

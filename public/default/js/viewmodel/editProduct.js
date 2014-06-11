@@ -1,8 +1,9 @@
 /**
  * Created by Administrator on 14-5-13.
  */
-define(['knockout','knockoutMapping','formPost','message','validation','validationConfig'], function(ko,koMapping,formPost,message) {
+define(['knockout','knockoutMapping','formPost','message','viewmodel/abstract','validation','validationConfig'], function(ko,koMapping,formPost,message,abstract) {
     return function() {
+        abstract.call(this);
         var self = this;
         self.id = ko.observable();
         self.sku = ko.observable().extend({
@@ -48,25 +49,6 @@ define(['knockout','knockoutMapping','formPost','message','validation','validati
                 }
             });
         }
-        self.init = function(){
-            for(protype in self){
-                if(ko.isWriteableObservable(self[protype])){
-                    var $ele = $('#'+protype);
-                    if($ele.length>0){
-                        var value = $ele.attr('data-value');
-                        if(value!=''){
-                            if(value=='true'){
-                                value = true;
-                            }else if(value=='false'){
-                                value = false;
-                            }
-                            self[protype](value);
-                        }
-                    }
-                }
-            }
-        }
-
-        self.init();
+        self.setDefaultValue();
     }
 });
