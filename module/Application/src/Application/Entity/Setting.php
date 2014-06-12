@@ -21,7 +21,7 @@ class Setting extends AbstractEntity
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=128, nullable=false, name="ukey",unique=true)
+     * @ORM\Column(type="string", length=128, nullable=true, name="ukey",unique=true)
      */
     private $key;
 
