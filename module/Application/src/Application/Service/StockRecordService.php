@@ -27,7 +27,8 @@ class StockRecordService extends AbstractService {
             $totalPrice +=round(floatval($product->cost)*intval($product->stock),2);
             $productEntity = $this->saveProduct($product);
             $stockItem= $this->creatStockItem($productEntity,$product->cost,$product->stock);
-
+            $stockItem->setStockRecord($stockRecord);
+            $stockRecord->addStockItem($stockItem);
             //whether sku exist,always add pictures
             $imageTemp = new ProductImage();
             $i = 0;
