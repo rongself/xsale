@@ -84,10 +84,27 @@ class SaleRecordController extends AbstractActionController
     public function editRecordAction()
     {
         $id = $this->params('id');
+        if($this->getRequest()->isPost()){
+            $result = new JsonResultModel();
+            $jsonStr = $this->getRequest()->getPost('saleRecord');
+            $data = json_decode($jsonStr);
+            try{
+                $this->saleRecordService->edit($data);
+            }catch (ValidationException $e){
+                $message = implode(',',$e->getValidationError());
+                $result->addErrors('undefined',$message);
+            }
+            return $result;
+        }
         return array('id'=>$id);
     }
 
-
+    public function ajaxGetRecordAction()
+    {
+        $id = $this->params()->fromQuery('id');
+        $record = $this->saleRecordService->getSaleRecordArrayById($id);
+        return new JsonModel($record);
+    }
 }
 
 

@@ -2,7 +2,7 @@
  * Created by Ron on 14-3-1.
  */
 require(['knockout',
-      'viewmodel/saleRecord',
+      'viewmodel/editSaleRecord',
       'viewmodel/saleProduct',
       'module/sku.autocomplete',
       'module/customer.autocomplete',
@@ -12,10 +12,10 @@ require(['knockout',
       'validation',
       'typeahead',
       'underscore']
-    ,function(ko,SaleRecordViewModel,SaleProductViewModel,SkuAutoComplete,CustomerAutoComplete,message){
-        saleRecord = new SaleRecordViewModel();
-        saleProduct = new SaleProductViewModel();
-        saleRecord.init();
+    ,function(ko,EditSaleRecord,SaleProduct,SkuAutoComplete,CustomerAutoComplete,message){
+        saleRecord = new EditSaleRecord();
+        saleProduct = new SaleProduct();
+
         saleRecord.editItem = function (product){
             if(!saleProduct.sku()){
                 saleRecord.removeItem(product);
@@ -32,6 +32,7 @@ require(['knockout',
         $('#startTime').on('dp.change', function(e){
             saleRecord.orderTime(moment(e.date).format('YYYY-MM-DD'));
         });
+
         saleProduct.sku.extend({
             validation: { validator: uniqueInObservableArray, message: '该产品已存在于账单中', params: saleRecord.saleProducts()}
         });

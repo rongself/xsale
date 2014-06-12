@@ -11,12 +11,10 @@ require(['knockout',
     , function (ko,EditStockRecord, StockProduct,SkuAutoComplete,ImageUploader,message) {
         var stockRecord = new EditStockRecord();
         var stockProduct = new StockProduct(stockRecord);
-        stockProduct.itemId = ko.observable();
         //for edit
         stockRecord.editItem = function (product){
             if(!stockProduct.sku()){
                 stockRecord.removeItem(product);
-                stockProduct.itemId(product.itemId());
                 stockProduct.sku(product.sku());
                 stockProduct.name(product.name());
                 stockProduct.cost(product.cost());

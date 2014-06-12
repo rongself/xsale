@@ -119,6 +119,6 @@ define(['knockout','viewmodel/saleProduct','knockoutMapping','formPost','message
                     self.clearCache();
                 }
             });
-        }();
+        };
     }
 });

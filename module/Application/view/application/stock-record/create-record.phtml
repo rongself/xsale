@@ -1,7 +1,7 @@
 <div class='row'>
     <div class="col-md-12">
         <div class="pull-right" id="stockRecordSubmit">
-            <button type="submit" class="btn btn-danger" data-bind="click:submit">保存进货单</button>
+            <button type="submit" class="btn btn-danger" data-bind="click:submit">保存进货记录</button>
             <button type="submit" class="btn btn-danger" data-bind="click:submitAndContinue">保存并继续添加</button>
             <button type="reset" class="btn btn-default" data-bind="click:reset">清空已添加产品</button>
         </div>
@@ -12,7 +12,7 @@
         <div class="widget wgreen">
 
             <div class="widget-head">
-                <div class="pull-left">添加进货单产品</div>
+                <div class="pull-left">添加进货记录产品</div>
                 <div class="widget-icons pull-right">
                     <a href="#" class="wminimize"><i class="icon-chevron-up"></i></a> 
                     <a href="#" class="wclose"><i class="icon-remove"></i></a>
@@ -64,7 +64,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-lg-4 control-label  visible-lg">数量+</label>
+                            <label class="col-lg-4 control-label  visible-lg">数量</label>
                             <div class="col-lg-8">
                                 <div class="input-group spinner">
                                     <input data-min-number="1" type="text"  id="quantity" class="form-control" placeholder="输入进货数量"
@@ -92,7 +92,7 @@
                         <div class="form-group">
                             <!-- Buttons -->
                             <div class="col-lg-offset-4 col-lg-12">
-                                <button type="submit" class="btn btn-success" data-bind="click:function(){$data.submitTo(stockRecord);}">添加此产品到进货单</button>
+                                <button type="submit" class="btn btn-success" data-bind="click:function(){$data.submitTo(stockRecord);}">添加此产品到进货记录</button>
                                 <button type="reset" class="btn btn-default" data-bind="click:reset">清空</button>
                             </div>
                         </div>
@@ -111,7 +111,7 @@
                 <div class="widget wgreen">
 
                     <div class="widget-head">
-                        <div class="pull-left">进货单信息</div>
+                        <div class="pull-left">进货记录信息</div>
                         <div class="widget-icons pull-right">
                             <a href="#" class="wminimize"><i class="icon-chevron-up"></i></a>
                             <a href="#" class="wclose"><i class="icon-remove"></i></a>
@@ -154,7 +154,7 @@
                 <div class="widget">
 
                     <div class="widget-head">
-                        <div class="pull-left">此进货单包括产品:</div>
+                        <div class="pull-left">此进货记录包括产品:</div>
                         <div class="widget-icons pull-right">
                             <a href="#" class="wminimize"><i class="icon-chevron-up"></i></a>
                             <a href="#" class="wclose"><i class="icon-remove"></i></a>
@@ -169,7 +169,7 @@
                             <tr>
                                 <th>款号</th>
                                 <th>进货价</th>
-                                <th>数量+</th>
+                                <th>数量</th>
                                 <th>操作</th>
                             </tr>
                             </thead>
