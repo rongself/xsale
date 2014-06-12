@@ -26,7 +26,7 @@ return array(
     ),
     'about'=>array(
         'softwareName'=>'XSale',
-        'version'=>'测试版本 v0.8.1',
+        'version'=>'测试版本 v0.8.5',
         'author'=>'Ron Choi',
     ),
     'service_manager' => array(
