@@ -14,6 +14,7 @@ use Application\Entity\ProductImage;
 use Application\Entity\StockItem;
 use Application\Entity\StockRecord;
 use Application\Lib\Entity\Serializor;
+use Doctrine\ORM\Query\Expr\OrderBy;
 
 class StockRecordService extends AbstractService {
 
@@ -117,11 +118,23 @@ class StockRecordService extends AbstractService {
         return Serializor::toArray($record,4,array(),array('Application\Entity\Account'=>array('password','stockRecords')));
     }
 
-    public function getPaginator($keyword=null)
+    public function getPaginator($keyword=null,$orderBy=null)
     {
         $qb = $this->getRepository()->createQueryBuilder('o');
         if(isset($keyword)){
             $qb->where($qb->expr()->eq('o.id',':keyword'))->setParameter('keyword',$keyword);
+        }
+        switch($orderBy['sort']){
+            case 'id':
+                break;
+            default:
+                $orderBy['sort']='o.stockTime';
+                break;
+        }
+        $orderBy['order'] = $orderBy['order']=='asc'?'ASC':'DESC';
+
+        if(isset($orderBy)&&is_array($orderBy)){
+            $qb->orderBy(new OrderBy($orderBy['sort'],$orderBy['order']));
         }
         return parent::getPaginator($qb->getQuery());
     }
