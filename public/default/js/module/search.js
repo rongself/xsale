@@ -12,7 +12,7 @@ define(['jquery','message'],function($,message){
             if(keyword==''){
                 message.info('请输入搜索关键词');
             }else{
-                location.href= options.setUrl(keyword);
+                location.href= options.setUrl(encodeURIComponent(keyword));
             }
             return false;
         });

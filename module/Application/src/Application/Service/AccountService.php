@@ -12,6 +12,7 @@ namespace Application\Service;
 use Application\Entity\Account;
 use Application\Entity\Exception\ValidationException;
 use Application\Lib\Authentication\Password;
+use Doctrine\DBAL\Types\Type;
 
 class AccountService extends AbstractService{
 
@@ -19,8 +20,9 @@ class AccountService extends AbstractService{
     {
         $qb = $this->getRepository()->createQueryBuilder('o');
         if(isset($keyword)){
-            $qb->where($qb->expr()->like('o.username',$qb->expr()->literal("%{$keyword}%")))
-                ->orWhere($qb->expr()->like('o.name',$qb->expr()->literal("%{$keyword}%")));
+            $qb->where($qb->expr()->like('o.username',':keyword'))
+                ->orWhere($qb->expr()->like('o.name',':keyword'))
+                ->setParameter('keyword',"%{$keyword}%");
         }
         return parent::getPaginator($qb->getQuery());
     }
@@ -34,7 +36,7 @@ class AccountService extends AbstractService{
         $qb = $this->objectManager->createQueryBuilder();
         $qb->delete()
             ->from('Application\Entity\Account','o')
-            ->where($qb->expr()->eq('o.id',$id));
+            ->where($qb->expr()->eq('o.id',':id'))->setParameter('id',$id);
         return $qb->getQuery()->execute();
     }
 
@@ -47,7 +49,7 @@ class AccountService extends AbstractService{
         $qb = $this->objectManager->createQueryBuilder();
         $qb->delete()
             ->from('Application\Entity\Account','o')
-            ->where($qb->expr()->in('o.id',$ids));
+            ->where($qb->expr()->in('o.id',':ids'))->setParameter(':ids',$ids,Type::SIMPLE_ARRAY);
         return $qb->getQuery()->execute();
     }
 

@@ -40,9 +40,10 @@ class CustomerService extends AbstractService {
     {
         $qb = $this->getRepository()->createQueryBuilder('o');
         if(isset($keyword)){
-            $qb->where($qb->expr()->like('o.name',$qb->expr()->literal("%{$keyword}%")))
-                ->orWhere($qb->expr()->like('o.phoneNumber',$qb->expr()->literal("%{$keyword}%")))
-                ->orWhere($qb->expr()->like('o.wechat',$qb->expr()->literal("%{$keyword}%")));
+            $qb->where($qb->expr()->like('o.name',':keyword'))
+                ->orWhere($qb->expr()->like('o.phoneNumber',':keyword'))
+                ->orWhere($qb->expr()->like('o.wechat',':keyword'))
+                ->setParameter('keyword',"%{$keyword}%");
         }
         return parent::getPaginator($qb->getQuery());
     }
@@ -56,7 +57,7 @@ class CustomerService extends AbstractService {
         $qb = $this->objectManager->createQueryBuilder();
         $qb->delete()
             ->from('Application\Entity\Customer','o')
-            ->where($qb->expr()->eq('o.id',$id));
+            ->where($qb->expr()->eq('o.id',':id'))->setParameter('id',$id);
         return $qb->getQuery()->execute();
     }
 
@@ -69,7 +70,7 @@ class CustomerService extends AbstractService {
         $qb = $this->objectManager->createQueryBuilder();
         $qb->delete()
             ->from('Application\Entity\Customer','o')
-            ->where($qb->expr()->in('o.id',$ids));
+            ->where($qb->expr()->in('o.id',':ids'))->setParameter(':ids',$ids,Type::SIMPLE_ARRAY);
         return $qb->getQuery()->execute();
     }
 

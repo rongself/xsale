@@ -121,7 +121,7 @@ class StockRecordService extends AbstractService {
     {
         $qb = $this->getRepository()->createQueryBuilder('o');
         if(isset($keyword)){
-            $qb->where($qb->expr()->eq('o.id',$keyword));
+            $qb->where($qb->expr()->eq('o.id',':keyword'))->setParameter('keyword',$keyword);
         }
         return parent::getPaginator($qb->getQuery());
     }
