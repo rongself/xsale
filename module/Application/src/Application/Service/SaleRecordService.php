@@ -145,9 +145,13 @@ class SaleRecordService extends AbstractService{
         return true;
     }
 
-    public function getPaginator()
+    public function getPaginator($keyword=null)
     {
-        return parent::getPaginator('SELECT o,c FROM Application\Entity\Order o LEFT JOIN o.customer c');
+        $qb = $this->getRepository()->createQueryBuilder('o');
+        if(isset($keyword)){
+            $qb->where($qb->expr()->eq('o.id',$keyword));
+        }
+        return parent::getPaginator($qb->getQuery());
     }
 
     public function getSaleroom()

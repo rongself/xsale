@@ -15,9 +15,14 @@ use Application\Lib\Authentication\Password;
 
 class AccountService extends AbstractService{
 
-    public function getPaginator()
+    public function getPaginator($keyword=null)
     {
-        return parent::getPaginator('SELECT o FROM Application\Entity\Account o');
+        $qb = $this->getRepository()->createQueryBuilder('o');
+        if(isset($keyword)){
+            $qb->where($qb->expr()->like('o.username',$qb->expr()->literal("%{$keyword}%")))
+                ->orWhere($qb->expr()->like('o.name',$qb->expr()->literal("%{$keyword}%")));
+        }
+        return parent::getPaginator($qb->getQuery());
     }
 
     /**

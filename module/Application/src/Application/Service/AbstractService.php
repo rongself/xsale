@@ -33,9 +33,8 @@ abstract class AbstractService{
      * @param $queryStr
      * @return Paginator
      */
-    protected function getPaginator($queryStr)
+    protected function getPaginator($query)
     {
-        $query = $this->objectManager->createQuery($queryStr);
         $paginator = new Paginator(
             new DoctrinePaginator(new ORMPaginator($query))
         );

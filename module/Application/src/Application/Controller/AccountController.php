@@ -35,7 +35,8 @@ class AccountController extends AbstractActionController
     public function indexAction()
     {
         $page = intval($this->params('page',1));
-        $paginator = $this->accountService->getPaginator();
+        $keyword = $this->params('keyword');
+        $paginator = $this->accountService->getPaginator($keyword);
         $paginator->setCurrentPageNumber($page)->setItemCountPerPage(10);
         return array('paginator'=>$paginator);
     }

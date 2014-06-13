@@ -26,8 +26,10 @@ class SaleRecordController extends AbstractActionController
         $headScript = $this->getServiceLocator()->get('viewhelpermanager')->get('headScript');
         $this->Message()->listener($headScript);
 
+        $keyword = $this->params('keyword');
+
         $page = intval($this->params('page',1));
-        $paginator = $this->saleRecordService->getPaginator();
+        $paginator = $this->saleRecordService->getPaginator($keyword);
         $paginator->setCurrentPageNumber($page)->setItemCountPerPage(10);
         return array('paginator'=>$paginator);
     }

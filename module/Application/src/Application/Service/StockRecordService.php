@@ -117,9 +117,13 @@ class StockRecordService extends AbstractService {
         return Serializor::toArray($record,4,array(),array('Application\Entity\Account'=>array('password','stockRecords')));
     }
 
-    public function getPaginator()
+    public function getPaginator($keyword=null)
     {
-        return parent::getPaginator('SELECT o FROM Application\Entity\StockRecord o');
+        $qb = $this->getRepository()->createQueryBuilder('o');
+        if(isset($keyword)){
+            $qb->where($qb->expr()->eq('o.id',$keyword));
+        }
+        return parent::getPaginator($qb->getQuery());
     }
 
     /**

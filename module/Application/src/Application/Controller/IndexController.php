@@ -29,10 +29,10 @@ class IndexController extends AbstractActionController
     public function indexAction()
     {
         return array(
-            'recentOrder'=>$this->statisticsService->getRecentOrder(),
-            'recentStock'=>$this->statisticsService->getRecentStock(),
-            'topSale'=>$this->statisticsService->getTopSale(10,30),
-            'stockWarning'=>$this->productService->getStockLessProduct(2)
+            'recentOrder'=>$this->statisticsService->getRecentOrder(5),
+            'recentStock'=>$this->statisticsService->getRecentStock(5),
+            'topSale'=>$this->statisticsService->getTopSale(5,30),
+            'stockWarning'=>$this->productService->getStockLessProduct(1)
         );
     }
 }

@@ -25,8 +25,10 @@ class ProductController extends AbstractActionController
         $headScript = $this->getServiceLocator()->get('viewhelpermanager')->get('headScript');
         $this->Message()->listener($headScript);
 
+        $keyword = $this->params('keyword');
+
         $page = intval($this->params('page',1));
-        $paginator = $this->productService->getPaginator();
+        $paginator = $this->productService->getPaginator($keyword);
         $paginator->setCurrentPageNumber($page)->setItemCountPerPage(10);
         return array('paginator'=>$paginator);
     }
