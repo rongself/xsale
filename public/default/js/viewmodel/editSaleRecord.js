@@ -23,7 +23,7 @@ define(['knockout','viewmodel/abstract','viewmodel/saleRecord','viewmodel/salePr
                     product.itemId(items[key].id)
                     product.sku(items[key].product.sku);
                     product.quantity(items[key].quantity);
-                    product.price(items[key].product.price);
+                    product.price(items[key].price);
                     product.remark(items[key].product.remark);
                     self.saleProducts.push(product);
                 }

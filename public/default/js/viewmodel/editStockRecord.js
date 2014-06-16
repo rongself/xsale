@@ -19,7 +19,7 @@ define(['knockout','viewmodel/abstract','viewmodel/stockRecord','viewmodel/stock
                     product.itemId(items[key].id)
                     product.sku(items[key].product.sku);
                     product.name(items[key].product.name);
-                    product.cost(items[key].price);
+                    product.cost(items[key].product.cost);
                     product.stock(items[key].quantity);
                     product.price(items[key].product.price);
                     product.description(items[key].product.description);
