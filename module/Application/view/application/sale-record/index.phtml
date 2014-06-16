@@ -58,11 +58,17 @@
                                 </span>
                             </td>
                             <td><?php echo $id;?></td>
-                            <td><?php
-                                $customer = $item->getCustomer();
-                                echo isset($customer)&&($customer->getName()) ? $this->escapeHtml($customer->getName()):'-';
-                                ?></td>
-                            <td><?php echo isset($customer) ? $this->escapeHtml($customer->getPhoneNumber()):'-';?></td>
+                            <td>
+                                <?php $customer = $item->getCustomer();?>
+                                <a href="<?php echo $this->url('sale-record/wildcard',array('action'=>'history','id'=>$this->escapeHtml($customer->getId())))?>" title="查看该用户购买历史">
+                                    <?php echo isset($customer)&&($customer->getName()) ? $this->escapeHtml($customer->getName()):'-';?>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="<?php echo $this->url('sale-record/wildcard',array('action'=>'history','id'=>$this->escapeHtml($customer->getId())))?>" title="查看该用户购买历史">
+                                    <?php echo isset($customer) ? $this->escapeHtml($customer->getPhoneNumber()):'-';?>
+                                </a>
+                            </td>
                             <td><?php echo $this->escapeHtml($item->getTotalPrice());?></td>
                             <td><?php echo $this->escapeHtml($item->getOrderTime()->format('Y-m-d H:s:i'));?></td>
                             <td rowspan="2">
@@ -83,12 +89,12 @@
                                             <tr>
                                                 <?php $id = $this->escapeHtml($product->getId());?>
                                                 <td style="width:5%">
-                                                    <a href="<?php echo $this->url('product/wildcard',array('action'=>'detail','id'=>$id))?>">
+                                                    <a href="<?php echo $this->url('product/wildcard',array('action'=>'edit-product','id'=>$id))?>">
                                                         <?php echo $this->escapeHtml($product->getSku())?>
                                                     </a>
                                                 </td>
                                                 <td style="width:40%">
-                                                    <a href="<?php echo $this->url('product/wildcard',array('action'=>'detail','id'=>$id))?>">
+                                                    <a href="<?php echo $this->url('product/wildcard',array('action'=>'edit-product','id'=>$id))?>">
                                                         <?php echo $this->escapeHtml($product->getName())?>
                                                     </a>
                                                 </td>

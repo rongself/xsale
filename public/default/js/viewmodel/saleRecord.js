@@ -8,6 +8,7 @@ define(['knockout','viewmodel/saleProduct','knockoutMapping','formPost','message
         self.orderTime = ko.observable(moment().format("YYYY-MM-DD")).extend({
             required: { message: '售出日期不能为空' }
         });
+        self.customerName = ko.observable();
         self.phoneNumber = ko.observable().extend({
             number:{message:'手机号格式不正确'}
         });
@@ -44,6 +45,7 @@ define(['knockout','viewmodel/saleProduct','knockoutMapping','formPost','message
                 self.saleProducts.removeAll();
             }
             self.phoneNumber(null);
+            self.customerName(null);
             $(document).trigger('saleRecord.reset');
         }
 

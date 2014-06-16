@@ -48,7 +48,11 @@ require(['knockout',
             }
             return selectedSKU;
         });
-        var CustomerAutoComplete = new CustomerAutoComplete(function(seleted){
+        var CustomerAutoComplete = new CustomerAutoComplete(function(seleted,customers){
+            var selectedCustomer =  _.find(customers,function(item){return item.phoneNumber == seleted});
+            if(selectedCustomer.name){
+                saleRecord.customerName(selectedCustomer.name);
+            }
             return seleted;
         });
         ko.applyBindings(saleRecord);

@@ -9,7 +9,7 @@
             <div class="col-lg-3 pull-right">
                 <form>
                     <div class="input-group">
-                        <input type="text" id="keyword" class="form-control" placeholder="请输入进货单号">
+                        <input type="text" id="keyword" class="form-control" placeholder="请输入账单号">
                     <span class="input-group-btn">
                         <button id="search" class="btn btn-default" type="submit" style="font-size: 14px !important;border-left: none;">搜索</button>
                     </span>
@@ -23,7 +23,7 @@
     <div class="col-md-12">
         <div class="widget">
             <div class="widget-head">
-                <div class="pull-left">进货单列表</div>
+                <div class="pull-left">销售列表</div>
                 <div class="widget-icons pull-right">
                     <a href="#" class="wminimize"><i class="icon-chevron-up"></i></a> 
                     <a href="#" class="wclose"><i class="icon-remove"></i></a>
@@ -40,38 +40,45 @@
                                     <input type="checkbox" id="checkAll">
                                 </span>
                             </th>
-                            <th>进货单号</th>
+                            <th>账单号</th>
+                            <th>顾客姓名</th>
+                            <th>顾客电话</th>
                             <th>总价</th>
-                            <th>进货时间</th>
-                            <th>添加人</th>
+                            <th>结账时间</th>
                             <th>操作</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php foreach($this->paginator->getCurrentItems() as $item):?>
-                        <tr data-href="/stockRecord/edit-record/skid/1">
+                        <tr data-href="/saleRecord/edit-record/slid/1">
                             <td rowspan="2" style="width: 12px;">
                                 <span class="uni">
                                     <?php $id = $this->escapeHtml($item->getId());?>
-                                    <input type="checkbox" class="ids" value="<?php echo $id?>">
+                                    <input type="checkbox" class="ids" value="<?php echo $id?>"/>
                                 </span>
                             </td>
                             <td><?php echo $id;?></td>
-                            <td><?php echo $this->escapeHtml($item->getTotalPrice())?></td>
-                            <td><?php echo $this->escapeHtml($item->getStockTime()->format('Y-m-d H:s:i'))?></td>
-                            <td><?php echo $this->escapeHtml($item->getAdmin()->getName())?></td>
+                            <td><?php
+                                $customer = $item->getCustomer();
+                                echo isset($customer)&&($customer->getName()) ? $this->escapeHtml($customer->getName()):'-';
+                                ?></td>
+                            <td><?php echo isset($customer) ? $this->escapeHtml($customer->getPhoneNumber()):'-';?></td>
+                            <td><?php echo $this->escapeHtml($item->getTotalPrice());?></td>
+                            <td><?php echo $this->escapeHtml($item->getOrderTime()->format('Y-m-d H:s:i'));?></td>
                             <td rowspan="2">
-                                <a href="<?php echo $this->url('stock-record/wildcard',array('action'=>'edit-record','id'=>$id))?>" class="btn btn-xs btn-default"><i class="icon-pencil"></i> </a>
-                                <a onclick="if(!confirm('要删除此进货单吗?'))return false;" href="<?php echo $this->url('stock-record/wildcard',array('action'=>'delete','id'=>$id))?>" class="btn btn-xs btn-danger"><i class="icon-remove"></i> </a>
+
+                                <a href="<?php echo $this->url('sale-record/wildcard',array('action'=>'edit-record','id'=>$id))?>" class="btn btn-xs btn-default"><i class="icon-pencil"></i> </a>
+                                <a onclick="if(!confirm('要删除此订单吗?'))return false;" href="<?php echo $this->url('sale-record/wildcard',array('action'=>'delete','id'=>$id))?>" class="btn btn-xs btn-danger"><i class="icon-remove"></i> </a>
+
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="4" class="stock-detail">
+                            <td colspan="5" class="order-detail">
                                 <div class="panel panel-info" style="box-shadow: none;-webkit-box-shadow:none;">
                                     <table class="table">
                                         <tbody>
-                                        <?php foreach($item->getStockItems() as $stockItem):?>
-                                            <?php $product = $stockItem->getProduct();?>
+                                        <?php foreach($item->getOrderCarts() as $orderItem):?>
+                                            <?php $product = $orderItem->getProduct();?>
                                             <?php if(isset($product)):?>
                                             <tr>
                                                 <?php $id = $this->escapeHtml($product->getId());?>
@@ -86,25 +93,26 @@
                                                     </a>
                                                 </td>
                                                 <td style="width:20%">
-                                                    进货价:<?php echo $this->escapeHtml($stockItem->getPrice())?>
+                                                    售价:<?php echo $this->escapeHtml($orderItem->getPrice())?>
                                                 </td>
                                                 <td style="width:20%">
-                                                    进货数量:<?php echo $this->escapeHtml($stockItem->getQuantity())?>
+                                                    售出数量:<?php echo $this->escapeHtml($orderItem->getQuantity())?>
                                                 </td>
                                                 <td style="width:20%">
                                                     当前库存:<?php echo $this->escapeHtml($product->getStock())?>
                                                 </td>
                                             </tr>
-                                            <?php endif;?>
+                                            <?php endif?>
                                         <?php endforeach;?>
                                         </tbody>
                                     </table>
                                 </div>
                             </td>
                         </tr>
-                        <?php endforeach;?>
+                    <?php endforeach;?>
                     </tbody>
                 </table>
+
                 <div class="widget-foot">
 
                     <div class="uni pull-left">
@@ -114,12 +122,12 @@
                         </select>
                     </div>
                     <?php
-                    echo $this->paginationControl($this->paginator,
-                        'Sliding', 'paginator-control-bar'
-                        ,array(
-                            'route' => 'stock-record/wildcard'
-                        )
-                    );
+                        echo $this->paginationControl($this->paginator,
+                            'Sliding', 'paginator-control-bar'
+                             ,array(
+                                'route' => 'sale-record/wildcard'
+                             )
+                        );
                     ?>
                     <div class="clearfix"></div> 
 
@@ -129,4 +137,4 @@
         </div>
     </div>
 </div>
-<?php $this->headScript()->appendScript("require(['main'],function(){require(['page/stock-record/index']);});");?>
+<?php $this->headScript()->appendScript("require(['main'],function(){require(['page/sale-record/index']);});");?>

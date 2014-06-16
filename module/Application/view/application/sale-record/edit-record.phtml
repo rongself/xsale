@@ -95,7 +95,12 @@
                                         <?php echo $this->partial('customer-autocomplete');?>
                                     </div>
                                 </div>
-
+                                <div class="form-group">
+                                    <label class="col-lg-4 control-label visible-lg">客户姓名</label>
+                                    <div class="col-lg-8">
+                                        <input type="text" data-bind="value:saleRecord.customerName" id="customerName" class="form-control" placeholder="输入客户姓名"/>
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <label class="col-lg-4 control-label visible-lg">售出时间</label>
                                     <div class="col-lg-8">
@@ -143,8 +148,8 @@
                             afterAdd: saleRecord.show " id="recordContent">
                             <tr>
                                 <td data-bind="text:sku"></td>
-                                <td data-bind="text:quantity"></td>
                                 <td data-bind="text:price"></td>
+                                <td data-bind="text:quantity"></td>
                                 <td>
                                     <button class="btn btn-xs btn-warning" data-bind="click:saleRecord.editItem;"><i class="icon-pencil"></i> </button>
                                     <button class="btn btn-xs btn-danger" data-bind="click:saleRecord.removeItem"><i class="icon-remove"></i> </button>

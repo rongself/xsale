@@ -12,9 +12,6 @@ use Application\Entity\Customer;
 use Application\Entity\Order;
 use Application\Entity\OrderCart;
 use Application\Lib\Entity\Serializor;
-use Zend\Paginator\Paginator;
-use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator;
-use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
 use Application\Entity\Exception\ValidationException;
 use Zend\Di\ServiceLocator;
 
@@ -46,8 +43,11 @@ class SaleRecordService extends AbstractService{
             if(!isset($customer)){
                 $customer = new Customer();
                 $customer->setPhoneNumber($data->phoneNumber);
+                $customer->setName($data->customerName);
                 $customer->setIsVip(0);
                 $customer->setCreateTime($now);
+            }else{
+                $customer->setName($data->customerName);
             }
             $saleRecord->setCustomer($customer);
         }
@@ -99,8 +99,11 @@ class SaleRecordService extends AbstractService{
             if(!isset($customer)){
                 $customer = new Customer();
                 $customer->setPhoneNumber($data->phoneNumber);
+                $customer->setName($data->customerName);
                 $customer->setIsVip(0);
                 $customer->setCreateTime($now);
+            }else{
+                $customer->setName($data->customerName);
             }
             $saleRecord->setCustomer($customer);
         }
@@ -235,6 +238,16 @@ class SaleRecordService extends AbstractService{
         $item->setQuantity($quantity);
         $item->setCreateTime(new \DateTime());
         return $item;
+    }
+
+    public function getHistoryPaginator($id,$keyword=null)
+    {
+        $qb = $this->getRepository()->createQueryBuilder('o');
+        $qb->where($qb->expr()->eq('o.customer',':id'))->setParameter('id',$id);
+        if(isset($keyword)){
+            $qb->where($qb->expr()->eq('o.id',':keyword'))->setParameter('keyword',$keyword);
+        }
+        return parent::getPaginator($qb->getQuery());
     }
 
 }

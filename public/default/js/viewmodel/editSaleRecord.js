@@ -11,6 +11,10 @@ define(['knockout','viewmodel/abstract','viewmodel/saleRecord','viewmodel/salePr
         self.ajaxInit = function(){
             $.getJSON('/sale-record/ajax-get-record',{id:self.id()},function(data){
                 self.orderTime(moment(data.orderTime).format('YYYY-MM-DD'));
+                if(data.customer){
+                    self.phoneNumber(data.customer.phoneNumber);
+                    self.customerName(data.customer.name);
+                }
                 var items = data.orderCarts;
                 for(var key in items)
                 {

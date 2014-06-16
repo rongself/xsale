@@ -17,7 +17,7 @@ class CustomerService extends AbstractService {
     {
         //@todo auto-complete speed optimize
         $customers = $this->getRepository()->createQueryBuilder('o')
-            ->select('o.phoneNumber,o.isVip')
+            ->select('o.phoneNumber,o.isVip,o.name')
             //->where('o.phoneNumber LIKE :query')
             //->setParameter('query', $query.'%')
             //->setMaxResults($limit)

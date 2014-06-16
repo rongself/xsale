@@ -18,7 +18,7 @@ define(['knockout','knockoutMapping','formPost','message','viewmodel/abstract','
         self.stock = ko.observable().extend({
             required: { message: '库存不能为空' },
             number:{message:'库存必须位数字'},
-            min:{params:1,message:'库存必须大于1'}
+            min:{params:0,message:'库存必须大于0'}
         });
         self.pictures = ko.observableArray();
         self.price = ko.observable().extend({

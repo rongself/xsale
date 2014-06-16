@@ -24,10 +24,11 @@ define(['jquery','typeahead','underscore','lib/json2'],function($){
                 var customer = _.find(customers, function (item) {
                     return item.phoneNumber == selectedSKU;
                 });
+                var customerName = customer.name?customer.name+":":''
                 if(customer.isVip){
-                    return '<div>'+customer.phoneNumber+' <span style="color:#ac2925;"> (VIP)</span></div>';
+                    return '<div>'+customerName+customer.phoneNumber+' <span style="color:#ac2925;"> (VIP)</span></div>';
                 }else{
-                    return customer.phoneNumber;
+                    return customerName+customer.phoneNumber;
                 }
 
             },

@@ -9,6 +9,7 @@
 namespace Application\Service;
 
 use Application\Entity\Account;
+use Application\Entity\Exception\ValidationException;
 use Application\Entity\Product;
 use Application\Entity\ProductImage;
 use Application\Entity\StockItem;
@@ -27,7 +28,7 @@ class StockRecordService extends AbstractService {
         foreach($data->stockProducts as $product){
             $totalPrice +=round(floatval($product->cost)*intval($product->stock),2);
             $productEntity = $this->saveProduct($product);
-            $stockItem= $this->creatStockItem($productEntity,$product->cost,$product->stock);
+            $stockItem= $this->createStockItem($productEntity,$product->cost,$product->stock);
             $stockItem->setStockRecord($stockRecord);
             $stockRecord->addStockItem($stockItem);
             //whether sku exist,always add pictures
@@ -73,7 +74,7 @@ class StockRecordService extends AbstractService {
             }else{
                 //没有itemId传过来,是新的item,指向已存在的产品或新的产品
                 $productEntity = $this->saveProduct($product);
-                $newItem = $this->creatStockItem($productEntity,$product->cost,$product->stock);
+                $newItem = $this->createStockItem($productEntity,$product->cost,$product->stock);
                 $newItem->setStockRecord($stockRecord);
                 $stockRecord->addStockItem($newItem);
             }
@@ -188,6 +189,7 @@ class StockRecordService extends AbstractService {
     private function saveProduct($stockItem,$rollback=0)
     {
         $productEntity = $this->objectManager->getRepository('Application\Entity\Product')->findOneBy(array('sku'=>$stockItem->sku));
+        if(intval($stockItem->stock)<=0) throw new ValidationException('进货数量必须大于0','stock');
         if($productEntity==null){
             // if sku is not exists,add it
             $productEntity = new Product();
@@ -209,7 +211,7 @@ class StockRecordService extends AbstractService {
         return $productEntity;
     }
 
-    private function creatStockItem(Product $productEntity, $price, $quantity)
+    private function createStockItem(Product $productEntity, $price, $quantity)
     {
         $stockItem = new StockItem();
         $stockItem->setProduct($productEntity);

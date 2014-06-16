@@ -51,7 +51,7 @@
                                 <tr>
                                     <td><img src="<?php echo $conf['thumbnailPath'].($sale['picture']?$sale['picture']:$conf['defaultImage']);?>" alt=""></td>
                                     <td>
-                                        <a href="<?php echo $this->url('product/wildcard',array('action'=>'detail','id'=>$sale['product_id']));?>">
+                                        <a href="<?php echo $this->url('product/wildcard',array('action'=>'edit-product','id'=>$sale['product_id']));?>">
                                             <?php echo $sale['sku'];?>
                                         </a>
                                         /<?php echo $sale['name'];?>
@@ -103,10 +103,10 @@
                                         <img src="<?php echo $conf['thumbnailPath'].($order['picture']?$order['picture']:$conf['defaultImage']);?>" alt="">
                                     </td>
                                     <td>
-                                        <a href="<?php echo $this->url('sale-record/wildcard',array('action'=>'detail','id'=>$order['order_id']))?>"><?php echo $order['order_id'];?></a>
+                                        <a href="<?php echo $this->url('sale-record/wildcard',array('action'=>'edit-record','id'=>$order['order_id']))?>"><?php echo $order['order_id'];?></a>
                                     </td>
                                     <td>
-                                        <a href="<?php echo $this->url('product/wildcard',array('action'=>'detail','id'=>$order['product_id']))?>">
+                                        <a href="<?php echo $this->url('product/wildcard',array('action'=>'edit-product','id'=>$order['product_id']))?>">
                                             <?php echo $order['sku'];?>
                                         </a>
                                         /<?php echo $order['name'];?>
@@ -154,10 +154,10 @@
                                         <img src="<?php echo $conf['thumbnailPath'].($stock['picture']?$stock['picture']:$conf['defaultImage']);?>" alt="">
                                     </td>
                                     <td>
-                                        <a href="<?php echo $this->url('stock-record/wildcard',array('action'=>'detail','id'=>$stock['stock_record_id']))?>"><?php echo $stock['stock_record_id'];?></a>
+                                        <a href="<?php echo $this->url('stock-record/wildcard',array('action'=>'edit-record','id'=>$stock['stock_record_id']))?>"><?php echo $stock['stock_record_id'];?></a>
                                     </td>
                                     <td>
-                                        <a href="<?php echo $this->url('product/wildcard',array('action'=>'detail','id'=>$stock['product_id']))?>">
+                                        <a href="<?php echo $this->url('product/wildcard',array('action'=>'edit-product','id'=>$stock['product_id']))?>">
                                             <?php echo $stock['sku'];?>
                                         </a>
                                         /<?php echo $stock['name'];?>
@@ -196,7 +196,7 @@
                         <tr>
                             <td><img src="<?php echo $conf['thumbnailPath'].($product->getPicture()?$product->getPicture():$conf['defaultImage']);?>" alt=""></td>
                             <td>
-                                <a href="<?php echo $this->url('product/wildcard',array('action'=>'detail','id'=>$product->getId()));?>">
+                                <a href="<?php echo $this->url('product/wildcard',array('action'=>'edit-product','id'=>$product->getId()));?>">
                                     <?php echo $product->getSku();?>
                                 </a>
                                 /<?php echo $product->getName();?>

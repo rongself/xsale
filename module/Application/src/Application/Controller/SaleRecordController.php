@@ -34,6 +34,21 @@ class SaleRecordController extends AbstractActionController
         return array('paginator'=>$paginator);
     }
 
+    public function historyAction()
+    {
+        //show message
+        $headScript = $this->getServiceLocator()->get('viewhelpermanager')->get('headScript');
+        $this->Message()->listener($headScript);
+
+        $keyword = $this->params('keyword');
+
+        $page = intval($this->params('page',1));
+        $id = intval($this->params('id'));
+        $paginator = $this->saleRecordService->getHistoryPaginator($id,$keyword);
+        $paginator->setCurrentPageNumber($page)->setItemCountPerPage(10);
+        return array('paginator'=>$paginator);
+    }
+
     public function createRecordAction()
     {
         $resultModel = new JsonResultModel();
