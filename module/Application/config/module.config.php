@@ -28,7 +28,7 @@ return array(
             'home' => array(
                 'type'    => 'Segment',
                 'options' => array(
-                    'route'    => '/[:controller[/:action]]',
+                    'route'    => '/[:controller[/[:action]]]',
                     'constraints' => array(
                         'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
@@ -79,7 +79,7 @@ return array(
             'sale-record' => array(
                 'type'    => 'Segment',
                 'options' => array(
-                    'route'    => '/sale-record[/:action]',
+                    'route'    => '/sale-record[/[:action]]',
                     'constraints' => array(
                         'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
@@ -100,7 +100,7 @@ return array(
             'stock-record' => array(
                 'type'    => 'Segment',
                 'options' => array(
-                    'route'    => '/stock-record[/:action]',
+                    'route'    => '/stock-record[/[:action]]',
                     'constraints' => array(
                         'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
@@ -121,7 +121,7 @@ return array(
             'customer' => array(
                 'type'    => 'Segment',
                 'options' => array(
-                    'route'    => '/customer[/:action]',
+                    'route'    => '/customer[/[:action]]',
                     'constraints' => array(
                         'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
@@ -142,7 +142,7 @@ return array(
             'product' => array(
                 'type'    => 'Segment',
                 'options' => array(
-                    'route'    => '/product[/:action]',
+                    'route'    => '/product[/[:action]]',
                     'constraints' => array(
                         'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
@@ -163,7 +163,7 @@ return array(
             'account' => array(
                 'type'    => 'Segment',
                 'options' => array(
-                    'route'    => '/account[/:action]',
+                    'route'    => '/account[/[:action]]',
                     'constraints' => array(
                         'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
@@ -184,7 +184,7 @@ return array(
             'setting' => array(
                 'type'    => 'Segment',
                 'options' => array(
-                    'route'    => '/setting[/:action]',
+                    'route'    => '/setting[/[:action]]',
                     'constraints' => array(
                         'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
@@ -205,7 +205,7 @@ return array(
             'statistics' => array(
                 'type'    => 'Segment',
                 'options' => array(
-                    'route'    => '/statistics[/:action]',
+                    'route'    => '/statistics[/[:action]]',
                     'constraints' => array(
                         'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
