@@ -101,6 +101,7 @@ class AccountController extends AbstractActionController
     public function deleteAction()
     {
         $id = $this->params('id');
+        if($this->authenticationService->getIdentity()->getId()==$id) throw new \Exception('can not delete yourself');
         $res = $this->accountService->delete($id);
         if($res){
             return $this->redirect()->toRoute('account/wildcard');
@@ -112,6 +113,7 @@ class AccountController extends AbstractActionController
         if($this->getRequest()->isPost())
         {
             $ids = $this->params()->fromPost('ids');
+            if(in_array($this->authenticationService->getIdentity()->getId(),$ids)) throw new \Exception('can not delete yourself');
             $this->accountService->deleteIn($ids);
             return new JsonModel(array('success'=>true,'error'=>array()));
         }

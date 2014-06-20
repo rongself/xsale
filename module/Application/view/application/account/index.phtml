@@ -54,8 +54,10 @@
                             <td>
 
                                 <a class="btn btn-xs btn-default"><i class="icon-pencil"></i> </a>
+                                <?php $user = $this->identity();?>
+                                <?php if($user->getId()!=$id):?>
                                 <a onclick="if(!confirm('要删除此订单吗?'))return false;" href="<?php echo $this->url('account/wildcard',array('action'=>'delete','id'=>$id))?>" class="btn btn-xs btn-danger"><i class="icon-remove"></i> </a>
-
+                                <?php endif;?>
                             </td>
                         </tr>
                     <?php endforeach;?>

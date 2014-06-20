@@ -9,6 +9,7 @@
 
 namespace Application;
 
+use Application\Lib\Acl\Acl;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
 use Zend\View\Model\JsonModel;
@@ -17,6 +18,7 @@ class Module
 {
     public function onBootstrap(MvcEvent $e)
     {
+        $this->initAcl($e);
         $eventManager        = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
@@ -39,7 +41,8 @@ class Module
 
         // Set event
         $eventManager = $e->getApplication()->getEventManager();
-        $eventManager->attach(array('dispatch',MvcEvent::EVENT_DISPATCH_ERROR,MvcEvent::EVENT_RENDER_ERROR), array($this, 'dispatchHandle'));
+        //$eventManager->attach(array('dispatch',MvcEvent::EVENT_DISPATCH_ERROR,MvcEvent::EVENT_RENDER_ERROR), array($this, 'dispatchHandle'));
+        $eventManager-> attach('route', array($this, 'checkAcl'));
     }
 
     /**
@@ -65,6 +68,50 @@ class Module
         {
             if(!$auth->hasIdentity()){
                 return $controllerIns->plugin('redirect')->toRoute('login');
+            }
+            $userRole = 'super-admin';
+            $route = strtolower($controller.'/'.$action);
+            $acl = Acl::getInstance();
+            if (!$acl-> isAllowed($userRole, $route)) {
+                $response = $e -> getResponse();
+                //location to page or what ever
+                $response -> getHeaders() -> addHeaderLine('Location', $e -> getRequest() -> getBaseUrl() . '/404');
+                $response -> setStatusCode(404);
+            }
+        }
+    }
+
+    public function initAcl(MvcEvent $e) {
+        $acl = Acl::getInstance();
+    }
+
+    public function checkAcl(MvcEvent $e) {
+        $controllerIns = $e->getTarget();
+        $viewModel = $e->getApplication()->getMvcEvent()->getViewModel();
+        $controller = $e->getRouteMatch()->getParam("__CONTROLLER__");
+        $action = $e->getRouteMatch()->getParam('action');
+        if(!($viewModel instanceof JsonModel))
+        {
+            $viewModel->controller = $controller;
+            $viewModel->action = $action;
+        }
+
+        //check Identity globally
+        $auth = $e->getApplication()->getServiceManager()->get('Zend\Authentication\AuthenticationService');
+        if($controller!=='account'&&$action!=='login')
+        {
+            if(!$auth->hasIdentity()){
+                return $controllerIns->plugin('redirect')->toRoute('login');
+            }
+            $userRole = 'super-admin';
+            $route = strtolower($controller.'/'.$action);
+            $acl = Acl::getInstance();
+
+            if (!$acl-> isAllowed($userRole, $route)) {
+                $response = $e -> getResponse();
+                //location to page or what ever
+                $response -> getHeaders() -> addHeaderLine('Location', $e -> getRequest() -> getBaseUrl() . '/404');
+                $response -> setStatusCode(404);
             }
         }
     }
