@@ -237,12 +237,15 @@
 <!--                        <li><a --><?php //if($this->action=='hot-sell'&&$this->controller=='statistics')echo 'class="active"'?><!-- href="--><?php //echo $this->url('statistics',array('action'=>'hot-sell'))?><!--">热销产品</a></li>-->
                     </ul>
                 </li>
+                <?php $acl = \Application\Lib\Acl\Acl::getInstance();?>
+                <?php if($acl->isAllowed($this->identity()->getRole(),'account/index')):?>
                 <li class="has_sub"><a href="<?php echo $this->url('account',array('action'=>'index'))?>"><i class="icon-list-alt"></i> 账户 <span class="pull-right"><i class="icon-chevron-right"></i></span></a>
                     <ul <?php if($this->controller=='account')echo 'style="display:block;"'?>>
                         <li><a <?php if($this->action=='index'&&$this->controller=='account')echo 'class="active"'?> href="<?php echo $this->url('account',array('action'=>'index'))?>">所有账户</a></li>
                         <li><a <?php if($this->action=='create-account'&&$this->controller=='account')echo 'class="active"'?> href="<?php echo $this->url('account',array('action'=>'create-account'))?>">添加账户</a></li>
                     </ul>
                 </li>
+                <?php endif;?>
                 <li class="has_sub"><a href="<?php echo $this->url('setting',array('action'=>'system'))?>"><i class="icon-list-alt"></i> 设置 <span class="pull-right"><i class="icon-chevron-right"></i></span></a>
                     <ul <?php if($this->controller=='setting')echo 'style="display:block;"'?>>
                         <li><a <?php if($this->action=='system'&&$this->controller=='setting')echo 'class="active"'?> href="<?php echo $this->url('setting',array('action'=>'system'))?>">系统设置</a></li>

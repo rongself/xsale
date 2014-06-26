@@ -18,6 +18,9 @@ class Module
 {
     public function onBootstrap(MvcEvent $e)
     {
+        if(php_sapi_name() === 'cli'){
+            return false;
+        }
         $this->initAcl($e);
         $eventManager        = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
@@ -86,7 +89,10 @@ class Module
     }
 
     public function checkAcl(MvcEvent $e) {
-        $controllerIns = $e->getTarget();
+        /**
+         * @var $controllerIns \Zend\Mvc\Application
+         */
+        $response = $e -> getResponse();
         $viewModel = $e->getApplication()->getMvcEvent()->getViewModel();
         $controller = $e->getRouteMatch()->getParam("__CONTROLLER__");
         $action = $e->getRouteMatch()->getParam('action');
@@ -101,14 +107,15 @@ class Module
         if($controller!=='account'&&$action!=='login')
         {
             if(!$auth->hasIdentity()){
-                return $controllerIns->plugin('redirect')->toRoute('login');
+                //location to page or what ever
+                $response -> getHeaders() -> addHeaderLine('Location', $e -> getRequest() -> getBaseUrl() . '/account/login');
+                $response -> setStatusCode(302);
             }
-            $userRole = 'super-admin';
+            $userRole = $auth->getIdentity()->getRole();
             $route = strtolower($controller.'/'.$action);
             $acl = Acl::getInstance();
 
             if (!$acl-> isAllowed($userRole, $route)) {
-                $response = $e -> getResponse();
                 //location to page or what ever
                 $response -> getHeaders() -> addHeaderLine('Location', $e -> getRequest() -> getBaseUrl() . '/404');
                 $response -> setStatusCode(404);

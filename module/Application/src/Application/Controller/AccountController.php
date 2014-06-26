@@ -3,6 +3,8 @@ namespace Application\Controller;
 
 use Application\Entity\Account;
 use Application\Entity\Exception\ValidationException;
+use Application\Lib\Acl\Acl;
+use Application\Lib\Acl\RoleType;
 use Application\Lib\View\Model\JsonResultModel;
 use Application\Service\AccountService;
 use Zend\Authentication\AuthenticationService;
@@ -48,6 +50,7 @@ class AccountController extends AbstractActionController
             try{
                 $jsonData = $this->params()->fromPost('account');
                 $account = new Account(Json::decode($jsonData,Json::TYPE_ARRAY));
+                $account->setRole(RoleType::ADMIN);
                 $account->setCreateTime(new \DateTime());//@todo 这一行抛出异常被捕获处理后,会不会执行下一行??不会!
                 $this->accountService->create($account);
             }catch (ValidationException $e){

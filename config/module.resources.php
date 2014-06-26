@@ -7,6 +7,7 @@ return array(
             'account/edit-account',
             'account/index',
             'account/login',
+            'account/logout',
             'account/delete',
             'account/delete-multiple',
         ),

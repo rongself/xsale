@@ -27,6 +27,11 @@ class Account extends AbstractEntity
      */
     private $name;
 
+    /**
+     * @ORM\Column(type="string", length=32, nullable=false, name="role")
+     */
+    private $role;
+
     /** 
      * @ORM\Column(type="string", length=32, nullable=false, name="password")
      */
@@ -177,5 +182,21 @@ class Account extends AbstractEntity
     public function getStockRecords()
     {
         return $this->stockRecords;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    /**
+     * @param mixed $role
+     */
+    public function setRole($role)
+    {
+        $this->role = $role;
     }
 }
