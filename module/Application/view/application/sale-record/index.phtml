@@ -60,12 +60,12 @@
                             <td><?php echo $id;?></td>
                             <td>
                                 <?php $customer = $item->getCustomer();?>
-                                <a href="<?php echo $this->url('sale-record/wildcard',array('action'=>'history','id'=>$this->escapeHtml($customer->getId())))?>" title="查看该用户购买历史">
+                                <a href="<?php echo isset($customer)?$this->url('sale-record/wildcard',array('action'=>'history','id'=>$this->escapeHtml($customer->getId()))):''?>" title="查看该用户购买历史">
                                     <?php echo isset($customer)&&($customer->getName()) ? $this->escapeHtml($customer->getName()):'-';?>
                                 </a>
                             </td>
                             <td>
-                                <a href="<?php echo $this->url('sale-record/wildcard',array('action'=>'history','id'=>$this->escapeHtml($customer->getId())))?>" title="查看该用户购买历史">
+                                <a href="<?php echo isset($customer)?$this->url('sale-record/wildcard',array('action'=>'history','id'=>$this->escapeHtml($customer->getId()))):''?>" title="查看该用户购买历史">
                                     <?php echo isset($customer) ? $this->escapeHtml($customer->getPhoneNumber()):'-';?>
                                 </a>
                             </td>
