@@ -110,15 +110,16 @@ class Module
                 //location to page or what ever
                 $response -> getHeaders() -> addHeaderLine('Location', $e -> getRequest() -> getBaseUrl() . '/account/login');
                 $response -> setStatusCode(302);
-            }
-            $userRole = $auth->getIdentity()->getRole();
-            $route = strtolower($controller.'/'.$action);
-            $acl = Acl::getInstance();
+            }else{
+                $userRole = $auth->getIdentity()->getRole();
+                $route = strtolower($controller.'/'.$action);
+                $acl = Acl::getInstance();
 
-            if (!$acl-> isAllowed($userRole, $route)) {
-                //location to page or what ever
-                $response -> getHeaders() -> addHeaderLine('Location', $e -> getRequest() -> getBaseUrl() . '/404');
-                $response -> setStatusCode(404);
+                if (!$acl-> isAllowed($userRole, $route)) {
+                    //location to page or what ever
+                    $response -> getHeaders() -> addHeaderLine('Location', $e -> getRequest() -> getBaseUrl() . '/404');
+                    $response -> setStatusCode(404);
+                }
             }
         }
     }

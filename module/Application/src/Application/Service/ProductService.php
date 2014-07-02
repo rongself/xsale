@@ -10,6 +10,7 @@ namespace Application\Service;
 
 use Application\Entity\Exception\ValidationException;
 use Application\Entity\Product;
+use Doctrine\DBAL\Types\Type;
 use Zend\ModuleManager\ModuleManager;
 
 class ProductService extends  AbstractService
