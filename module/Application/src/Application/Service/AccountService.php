@@ -96,6 +96,20 @@ class AccountService extends AbstractService{
         }
     }
 
+    public function resetPassword($id,$newPassword)
+    {
+        /**
+         * @var $result \Application\Entity\Account
+         */
+        $result = $this->getRepository()->findOneBy(array('id'=>$id));
+        if($result===null){
+            throw new ValidationException('用户不存在','password');
+        }else{
+            $result->setPassword($newPassword);
+            $this->objectManager->flush($result);
+        }
+    }
+
     /**
      * @param $id
      * @param $name
@@ -105,8 +119,13 @@ class AccountService extends AbstractService{
         /**
          * @var $result \Application\Entity\Account
          */
-        $result = $this->getRepository()->findOneBy(array('id'=>$id));
+        $result = $this->getAccountById($id);
         $result->setName($name);
         $this->objectManager->flush($result);
+    }
+
+    public function getAccountById($id)
+    {
+        return $this->getRepository()->find($id);
     }
 }

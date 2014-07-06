@@ -507,4 +507,15 @@ class Product extends \Application\Entity\Product implements \Doctrine\ORM\Proxy
         return parent::jsonSerialize();
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public function toArray()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'toArray', array());
+
+        return parent::toArray();
+    }
+
 }

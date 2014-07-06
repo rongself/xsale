@@ -84,6 +84,30 @@ class AccountController extends AbstractActionController
         }
         return array('account'=>$account);
     }
+
+    public function manageAccountAction()
+    {
+        if($this->getRequest()->isGet()){
+            $id = $this->params('id');
+            $account = $this->accountService->getAccountById($id);
+        }
+        $resultModel = new JsonResultModel();
+        if($this->getRequest()->isPost()){
+            try{
+                $dataJson = $this->params()->fromPost('account');
+                $account = Json::decode($dataJson);
+                //var_dump($account);exit;
+                $this->accountService->editAccount($account->id,$account->name);
+            }catch (ValidationException $ve){
+                return $resultModel->setErrors($ve->getValidationError());
+            }catch(\Exception $e){
+                return $resultModel->addErrors('error','unknow error');
+            }
+            return $resultModel;
+        }
+        return array('account'=>$account);
+    }
+
     public function changePasswordAction()
     {
         $resultModel = new JsonResultModel();
@@ -99,6 +123,25 @@ class AccountController extends AbstractActionController
             }
             return $resultModel;
         }
+    }
+
+    public function resetPasswordAction()
+    {
+        $id = $this->params('id');
+        $resultModel = new JsonResultModel();
+        if($this->getRequest()->isPost()){
+            try{
+                $jsonData = $this->params()->fromPost('password');
+                $data = Json::decode($jsonData);
+                $this->accountService->resetPassword($data->id,$data->newPassword);
+            }catch (ValidationException $ve){
+                return $resultModel->setErrors($ve->getValidationError());
+            }catch(\Exception $e){
+                return $resultModel->addErrors('error','unknow error');
+            }
+            return $resultModel;
+        }
+        return array('id'=>$id);
     }
 
     public function deleteAction()
