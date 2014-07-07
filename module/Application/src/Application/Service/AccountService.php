@@ -11,6 +11,7 @@ namespace Application\Service;
 
 use Application\Entity\Account;
 use Application\Entity\Exception\ValidationException;
+use Application\Lib\Acl\RoleType;
 use Application\Lib\Authentication\Password;
 use Doctrine\DBAL\Types\Type;
 
@@ -101,9 +102,11 @@ class AccountService extends AbstractService{
         /**
          * @var $result \Application\Entity\Account
          */
-        $result = $this->getRepository()->findOneBy(array('id'=>$id));
+        $result = $this->getRepository()->find($id);
         if($result===null){
             throw new ValidationException('用户不存在','password');
+        }else if($result->getRole()==RoleType::SUPER_ADMIN){
+            throw new ValidationException('不能重置超级管理员的密码','password');
         }else{
             $result->setPassword($newPassword);
             $this->objectManager->flush($result);

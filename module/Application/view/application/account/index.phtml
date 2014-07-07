@@ -37,6 +37,7 @@
                             </th>
                             <th>登录名</th>
                             <th>姓名</th>
+                            <th>角色</th>
                             <th>操作</th>
                         </tr>
                     </thead>
@@ -51,6 +52,9 @@
                             </td>
                             <td><?php echo $this->escapeHtml($item->getUsername());?></td>
                             <td><?php echo $this->escapeHtml($item->getName());?></td>
+                            <td>
+                                <?php echo $this->escapeHtml($item->getRole());?>
+                            </td>
                             <td>
 
                                 <a href="<?php echo $this->url('account/wildcard',array('action'=>'manage-account','id'=>$id))?>" class="btn btn-xs btn-default"><i class="icon-pencil"></i> </a>
