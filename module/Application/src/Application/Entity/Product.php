@@ -114,7 +114,7 @@ class Product extends AbstractEntity
      */
     public function setSku($sku)
     {
-        if(!preg_match("/^[a-z0-9_#-]+$/",$sku)) throw new ValidationException('款号只能是字母,数字,_,-,#组合','sku');
+        if(!preg_match("/^[a-zA-Z0-9_#-]+$/",$sku)) throw new ValidationException('款号只能是字母,数字,_,-,#组合','sku');
         $this->sku = $sku;
 
         return $this;
