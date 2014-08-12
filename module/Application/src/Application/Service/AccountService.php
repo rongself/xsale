@@ -117,13 +117,14 @@ class AccountService extends AbstractService{
      * @param $id
      * @param $name
      */
-    public function editAccount($id, $name)
+    public function editAccount($id, $name,$role)
     {
         /**
          * @var $result \Application\Entity\Account
          */
         $result = $this->getAccountById($id);
         $result->setName($name);
+        $result->setRole($role);
         $this->objectManager->flush($result);
     }
 

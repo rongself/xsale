@@ -28,6 +28,13 @@
                                 <input type="text" data-bind="value:username" class="form-control" id="username" placeholder="请输入用于登录名">
                             </div>
                         </div>
+                        <!-- role-->
+                        <div class="form-group">
+                            <label class="control-label col-lg-3 visible-lg" for="email">用户类型</label>
+                            <div class="col-lg-9">
+                                <select class="form-control" name="role" id="role" data-bind="options:roleOptions,optionsText:'roleName',value:selectedRole"></select>
+                            </div>
+                        </div>
                         <!-- Password -->
                         <div class="form-group">
                             <label class="control-label col-lg-3 visible-lg" for="email">密码</label>

@@ -12,6 +12,7 @@ namespace Application;
 use Application\Lib\Acl\Acl;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
+use Zend\Mvc\Router\SimpleRouteStack;
 use Zend\View\Model\JsonModel;
 
 class Module
@@ -45,7 +46,7 @@ class Module
         // Set event
         $eventManager = $e->getApplication()->getEventManager();
         //$eventManager->attach(array('dispatch',MvcEvent::EVENT_DISPATCH_ERROR,MvcEvent::EVENT_RENDER_ERROR), array($this, 'dispatchHandle'));
-        $eventManager-> attach('route', array($this, 'checkAcl'));
+        $eventManager-> attach(array(MvcEvent::EVENT_ROUTE,MvcEvent::EVENT_RENDER_ERROR,MvcEvent::EVENT_DISPATCH_ERROR), array($this, 'checkAcl'));
     }
 
     /**
@@ -101,22 +102,22 @@ class Module
             $viewModel->controller = $controller;
             $viewModel->action = $action;
         }
-
         //check Identity globally
         $auth = $e->getApplication()->getServiceManager()->get('Zend\Authentication\AuthenticationService');
-        if($controller!=='account'&&$action!=='login')
+        if(!($controller==='account'&&$action==='login'))
         {
             if(!$auth->hasIdentity()){
-                //location to page or what ever
+
                 $response -> getHeaders() -> addHeaderLine('Location', $e -> getRequest() -> getBaseUrl() . '/account/login');
                 $response -> setStatusCode(302);
+                $response -> setContent(null);
             }else{
                 $userRole = $auth->getIdentity()->getRole();
                 $route = strtolower($controller.'/'.$action);
                 $acl = Acl::getInstance();
 
                 if (!$acl-> isAllowed($userRole, $route)) {
-                    //location to page or what ever
+
                     $response -> getHeaders() -> addHeaderLine('Location', $e -> getRequest() -> getBaseUrl() . '/404');
                     $response -> setStatusCode(404);
                 }
