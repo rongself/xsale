@@ -110,7 +110,8 @@ class Module
 
                 $response -> getHeaders() -> addHeaderLine('Location', $e -> getRequest() -> getBaseUrl() . '/account/login');
                 $response -> setStatusCode(302);
-                $response -> setContent(null);
+                $response->sendHeaders();
+                return $response;
             }else{
                 $userRole = $auth->getIdentity()->getRole();
                 $route = strtolower($controller.'/'.$action);
@@ -120,6 +121,8 @@ class Module
 
                     $response -> getHeaders() -> addHeaderLine('Location', $e -> getRequest() -> getBaseUrl() . '/404');
                     $response -> setStatusCode(404);
+                    $response->sendHeaders();
+                    return $response;
                 }
             }
         }

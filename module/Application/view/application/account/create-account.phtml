@@ -32,7 +32,11 @@
                         <div class="form-group">
                             <label class="control-label col-lg-3 visible-lg" for="email">用户类型</label>
                             <div class="col-lg-9">
-                                <select class="form-control" name="role" id="role" data-bind="options:roleOptions,optionsText:'roleName',value:selectedRole"></select>
+                                <select class="form-control" id="role" data-bind="value:role" >
+                                    <?php foreach($roles as $role):?>
+                                        <option value="<?php echo $role;?>"><?php echo $role;?></option>
+                                    <?php endforeach;?>
+                                </select>
                             </div>
                         </div>
                         <!-- Password -->

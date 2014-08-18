@@ -1,6 +1,7 @@
 <?php
 namespace Application\Entity;
 use Application\Entity\Exception\ValidationException;
+use Application\Lib\Acl\Acl;
 use Application\Lib\Authentication\Password;
 use Doctrine\ORM\Mapping AS ORM;
 
@@ -197,6 +198,7 @@ class Account extends AbstractEntity
      */
     public function setRole($role)
     {
+        if(!in_array($role,Acl::getInstance()->getRoles())) throw new ValidationException('设置的权限不存在','role');
         $this->role = $role;
     }
 }

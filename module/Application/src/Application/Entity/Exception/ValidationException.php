@@ -14,8 +14,8 @@ class ValidationException extends \Exception {
     private $validationError = array();
 
     /**
+     * @param string $message
      * @param string $field
-     * @param int $message
      */
     public function __construct($message,$field = 0)
     {

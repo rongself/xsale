@@ -3,6 +3,7 @@ return array(
     'root'=>array(
         'account'=>array(
             'account/change-password',
+            'account/manage-account',
             'account/create-account',
             'account/edit-account',
             'account/index',
@@ -10,6 +11,7 @@ return array(
             'account/logout',
             'account/delete',
             'account/delete-multiple',
+            'account/ajax-is-username-exists'
         ),
         'customer'=>array(
             'customer/create-customer',

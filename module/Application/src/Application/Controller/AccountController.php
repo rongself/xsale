@@ -46,6 +46,8 @@ class AccountController extends AbstractActionController
     public function createAccountAction()
     {
         $resultModel = new JsonResultModel();
+        $acl = Acl::getInstance();
+        $roles = $acl->getRoles();
         if($this->getRequest()->isPost()){
             try{
                 $jsonData = $this->params()->fromPost('account');
@@ -61,7 +63,7 @@ class AccountController extends AbstractActionController
             }
             return $resultModel;
         }
-
+        return array('roles'=>$roles);
     }
 
     public function editAccountAction()
@@ -73,7 +75,7 @@ class AccountController extends AbstractActionController
             try{
                 $dataJson = $this->params()->fromPost('account');
                 $account = Json::decode($dataJson);
-                $this->accountService->editAccount($id,$account->name);
+                $this->accountService->editAccount($id,$account->name,$account->role);
             }catch (ValidationException $ve){
                 return $resultModel->setErrors($ve->getValidationError());
             }catch(\Exception $e){
@@ -88,6 +90,8 @@ class AccountController extends AbstractActionController
     {
         if($this->getRequest()->isGet()){
             $id = $this->params('id');
+            $acl = Acl::getInstance();
+            $roles = $acl->getRoles();
             $account = $this->accountService->getAccountById($id);
         }
         $resultModel = new JsonResultModel();
@@ -104,7 +108,7 @@ class AccountController extends AbstractActionController
             }
             return $resultModel;
         }
-        return array('account'=>$account);
+        return array('account'=>$account,'roles'=>$roles);
     }
 
     public function changePasswordAction()

@@ -22,8 +22,12 @@
                         <div class="form-group">
                             <label class="control-label col-lg-3 visible-lg" for="email">用户类型</label>
                             <div class="col-lg-9">
-                                <select class="form-control" data-bind="options:roleOptions,optionsText:'roleName',optionsValue:'roleId',value:selectedRole" value="<?php echo $account->getRole();?>"></select>
-                                <input name="role" id="role" data-value="<?php echo $account->getRole();?>" data-bind="value:role" type="hidden"/>
+                                <select class="form-control" id="role" data-value="<?php echo $account->getRole();?>" data-bind="value:role" >
+                                    <?php foreach($roles as $role):?>
+                                    <option value="<?php echo $role;?>"><?php echo $role;?></option>
+                                    <?php endforeach;?>
+                                </select>
+<!--                                <input name="role" id="role" data-value="--><?php //echo $account->getRole();?><!--" data-bind="value:role" type="hidden"/>-->
                             </div>
                         </div>
                         <div class="form-group">

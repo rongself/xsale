@@ -4,22 +4,11 @@
 define(['knockout','knockoutMapping','formPost','message','validation','validationConfig'], function(ko,koMapping,formPost,message) {
     return function(){
         var self = this;
-        var RoleType = function(name,id){
-            this.roleName = name;
-            this.roleId = id;
-        }
         self.name = ko.observable().extend({
             required:{message: '用户姓名不能为空'}
         });
-        self.roleOptions = ko.observableArray([
-            new RoleType('超级管理员','super-admin'),
-            new RoleType('管理员','admin')
-        ]);
         self.selectedRole = ko.observable();
-        self.role = ko.computed(function(){
-            if(self.selectedRole())
-            return self.selectedRole().roleId;
-        });
+        self.role = ko.observable();
         self.username = ko.observable().extend({
             required:{message: '登录名不能为空'},
             isUsernameExists:self

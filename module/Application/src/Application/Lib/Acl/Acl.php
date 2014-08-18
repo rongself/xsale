@@ -13,13 +13,13 @@ use Zend\Permissions\Acl\Resource\GenericResource;
 use Zend\Permissions\Acl\Role\GenericRole;
 
 class Acl extends \Zend\Permissions\Acl\Acl{
-    protected $_roles;
+    protected $__roles;
     protected $__resources;
     protected static  $_instance;
 
     private function __construct()
     {
-        $this->_roles = include $_SERVER['DOCUMENT_ROOT'].'/../config/module.acl.roles.php';
+        $this->__roles = include $_SERVER['DOCUMENT_ROOT'].'/../config/module.acl.roles.php';
         $this->_resources = include $_SERVER['DOCUMENT_ROOT'].'/../config/module.resources.php';
         $this->load();
     }
@@ -32,7 +32,7 @@ class Acl extends \Zend\Permissions\Acl\Acl{
     }
     public function load()
     {
-        if(empty($this->_roles)) throw new \Exception('no roles found');
+        if(empty($this->__roles)) throw new \Exception('no roles found');
         if(empty($this->_resources)) throw new \Exception('no resources found');
         foreach($this->_resources as $key=>$value){
             $root = new GenericResource($key);
@@ -46,7 +46,7 @@ class Acl extends \Zend\Permissions\Acl\Acl{
                 }
             }
         }
-        foreach($this->_roles as $key=>$value){
+        foreach($this->__roles as $key=>$value){
             $role = new GenericRole($key);
             $this->addRole($role);
             $this->allow($role,$value);
