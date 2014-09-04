@@ -17,8 +17,8 @@
                         <div class="form-group">
                             <label class="col-lg-4 control-label  visible-lg">款号</label>
                             <div class="col-lg-8">
-                                <input type="hidden" id="id" class="form-control" data-bind="value:id" data-value="<?php echo $product->getId();?>">
-                                <input type="text" id="sku" class="form-control" data-bind="value:sku" data-value="<?php echo $product->getSku();?>">
+                                <input type="hidden" id="id" class="form-control" data-bind="value:id" data-value="<?php echo $this->escapeHtml($product->getId());?>">
+                                <input type="text" id="sku" class="form-control" data-bind="value:sku" data-value="<?php echo $this->escapeHtml($product->getSku());?>">
                             </div>
                         </div>
 <!--                        <div class="form-group">-->
@@ -30,31 +30,31 @@
                         <div class="form-group">
                             <label class="col-lg-4 control-label  visible-lg">名称</label>
                             <div class="col-lg-8">
-                                <input type="text" id="name" class="form-control" data-bind="value:name" data-value="<?php echo $product->getName();?>" placeholder="输入产品名称">
+                                <input type="text" id="name" class="form-control" data-bind="value:name" data-value="<?php echo $this->escapeHtml($product->getName());?>" placeholder="输入产品名称">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-lg-4 control-label  visible-lg">进货价</label>
                             <div class="col-lg-8">
-                                <input type="text" id="cost" class="form-control" data-bind="value:cost" data-value="<?php echo $product->getCost();?>" placeholder="输入产品进货价单价">
+                                <input type="text" id="cost" class="form-control" data-bind="value:cost" data-value="<?php echo $this->escapeHtml($product->getCost());?>" placeholder="输入产品进货价单价">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-lg-4 control-label  visible-lg">库存</label>
                             <div class="col-lg-8">
-                                <input type="text" id="stock" class="form-control" data-bind="value:stock" data-value="<?php echo $product->getStock();?>" placeholder="输入进货数量">
+                                <input type="text" id="stock" class="form-control" data-bind="value:stock" data-value="<?php echo $this->escapeHtml($product->getStock());?>" placeholder="输入进货数量">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-lg-4 control-label  visible-lg">零售价</label>
                             <div class="col-lg-8">
-                                <input type="text" id="price" class="form-control" data-bind="value:price" data-value="<?php echo $product->getPrice();?>" placeholder="输入产品零售价(只作为参考价)">
+                                <input type="text" id="price" class="form-control" data-bind="value:price" data-value="<?php echo $this->escapeHtml($product->getPrice());?>" placeholder="输入产品零售价(只作为参考价)">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-lg-4 control-label  visible-lg">描述</label>
                             <div class="col-lg-8">
-                                <textarea class="form-control" id="description" rows="3" data-bind="value:description" data-value="<?php echo $product->getDescription();?>" placeholder="输入产品描述"></textarea>
+                                <textarea class="form-control" id="description" rows="3" data-bind="value:description" data-value="<?php echo $this->escapeHtml($product->getDescription());?>" placeholder="输入产品描述"></textarea>
                             </div>
                         </div>
                         <div class="form-group">

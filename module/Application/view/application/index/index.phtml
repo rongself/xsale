@@ -197,11 +197,11 @@
                             <td><img src="<?php echo $conf['thumbnailPath'].($product->getPicture()?$product->getPicture():$conf['defaultImage']);?>" alt=""></td>
                             <td>
                                 <a href="<?php echo $this->url('product/wildcard',array('action'=>'edit-product','id'=>$product->getId()));?>">
-                                    <?php echo $product->getSku();?>
+                                    <?php echo $this->escapeHtml($product->getSku());?>
                                 </a>
-                                /<?php echo $product->getName();?>
+                                /<?php echo $this->escapeHtml($product->getName());?>
                             </td>
-                            <td style="color: #b94a48">剩余<?php echo $product->getStock();?>件</td>
+                            <td style="color: #b94a48">剩余<?php echo $this->escapeHtml($product->getStock());?>件</td>
                         </tr>
                     <?php endforeach;?>
                     </tbody>
