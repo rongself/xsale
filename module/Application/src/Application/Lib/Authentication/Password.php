@@ -11,8 +11,8 @@ namespace Application\Lib\Authentication;
 
 class Password {
 
-    public static  function BuildPassword($pwdSting)
+    public static  function BuildPassword($pwdString)
     {
-        return md5($pwdSting);
+        return md5($pwdString);
     }
 } 

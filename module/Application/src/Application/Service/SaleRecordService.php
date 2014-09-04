@@ -26,7 +26,14 @@ class SaleRecordService extends AbstractService{
     {
         $this->objectManager = $entityManager;
     }
-    public function create($data){
+
+    /**
+     * @param $data
+     * @return bool
+     * @throws \Application\Entity\Exception\ValidationException
+     */
+    public function create($data)
+    {
         if(!isset($data)||empty($data)){
             throw new ValidationException('Data invalid','saleRecord');
         }
@@ -121,7 +128,7 @@ class SaleRecordService extends AbstractService{
                 //没有itemId传过来,是新的item,指向已存在的产品或新的产品
                 $stock = intval($productEntity->getStock());
                 $productEntity->setStock($stock-intval($product->quantity));
-                $newItem = $this->creatSaleItem($productEntity,$product->price,$product->quantity);
+                $newItem = $this->createSaleItem($productEntity,$product->price,$product->quantity);
                 $newItem->setOrder($saleRecord);
                 $saleRecord->addOrderCart($newItem);
             }
@@ -224,13 +231,23 @@ class SaleRecordService extends AbstractService{
         return $this->getRepository()->find($id);
     }
 
+    /**
+     * @param $id
+     * @return Array|NULL
+     */
     public function getSaleRecordArrayById($id)
     {
         $record = $this->getSaleRecordById($id);
         return Serializor::toArray($record,4,array(),array('Application\Entity\Account'=>array('password'),'Application\Entity\Customer'=>array('orders')));
     }
 
-    private function creatSaleItem($productEntity, $price, $quantity)
+    /**
+     * @param $productEntity
+     * @param $price
+     * @param $quantity
+     * @return OrderCart
+     */
+    private function createSaleItem($productEntity, $price, $quantity)
     {
         $item = new OrderCart();
         $item->setProduct($productEntity);
@@ -240,6 +257,11 @@ class SaleRecordService extends AbstractService{
         return $item;
     }
 
+    /**
+     * @param $id
+     * @param null $keyword
+     * @return \Zend\Paginator\Paginator
+     */
     public function getHistoryPaginator($id,$keyword=null)
     {
         $qb = $this->getRepository()->createQueryBuilder('o');

@@ -11,3 +11,4 @@ vendor/bin
 /library/Zend/
 *.php~
 vendor
+data/DoctrineORMModule/
