@@ -10,6 +10,7 @@ namespace Application\Service;
 
 
 use Application\Entity\Customer;
+use Application\Entity\VipArchive;
 
 class CustomerService extends AbstractService {
 
@@ -76,6 +77,12 @@ class CustomerService extends AbstractService {
 
     public function create(Customer $customer)
     {
+        if($customer->getIsVip()){
+            $vipArchive = new VipArchive();
+            $vipArchive->setCustomer($customer);
+            $vipArchive->setBalance(0);
+            $customer->setVipArchive($vipArchive);
+        }
         $this->objectManager->persist($customer);
         $this->objectManager->flush();
     }

@@ -3,6 +3,7 @@ namespace Application\Controller;
 
 use Application\Entity\Customer;
 use Application\Entity\Exception\ValidationException;
+use Application\Form\Recharge;
 use Application\Lib\View\Model\JsonResultModel;
 use Doctrine\DBAL\DBALException;
 use Zend\Json\Json;
@@ -33,6 +34,20 @@ class CustomerController extends AbstractActionController
         $paginator = $this->customerService->getPaginator($keyword);
         $paginator->setCurrentPageNumber($page)->setItemCountPerPage(10);
         return array('paginator'=>$paginator);
+    }
+
+    public function rechargeAction()
+    {
+        $form = new Recharge();
+        if($this->getRequest()->isPost()){
+            $form->setData($this->getRequest()->getPost());
+            if($form->isValid()){
+
+            }
+        }
+        return array(
+            'form'=>$form
+        );
     }
 
     public function createCustomerAction()

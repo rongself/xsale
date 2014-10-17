@@ -139,6 +139,27 @@ return array(
                     )
                 )
             ),
+            'vip' => array(
+                'type'    => 'Segment',
+                'options' => array(
+                    'route'    => '/vip[/[:action]]',
+                    'constraints' => array(
+                        'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
+                    'defaults' => array(
+                        'controller'=>'vip',
+                        'action' => 'index',
+                        '__NAMESPACE__' => 'Application\Controller'
+                    ),
+                ),
+                'may_terminate' => true,
+                'child_routes' => array(
+                    'wildcard' => array(
+                        'type' => 'Wildcard'
+                    )
+                )
+            ),
             'product' => array(
                 'type'    => 'Segment',
                 'options' => array(
@@ -299,6 +320,9 @@ return array(
                         $sm->get('ProductService')
                     );
             },
+            'VipService' => function(Zend\ServiceManager\ServiceManager $sm) {
+                    return new Application\Service\VipService($sm->get('Doctrine\ORM\EntityManager'));
+            },
         ),
     ),
     'translator' => array(
@@ -307,7 +331,7 @@ return array(
             array(
                 'type'     => 'gettext',
                 'base_dir' => __DIR__ . '/../language',
-                'pattern'  => '%s.mo',
+                'pattern'  => '%s.mo'
             ),
         ),
     ),
@@ -359,7 +383,12 @@ return array(
                     return new Application\Controller\StatisticsController(
                         $sm->getServiceLocator()->get('StatisticsService')
                     );
-                },
+             },
+            'Application\Controller\Vip' => function ($sm) {
+                    return new Application\Controller\VipController(
+                        $sm->getServiceLocator()->get('VipService')
+                    );
+             },
 
         )
     ),
@@ -385,6 +414,12 @@ return array(
         ),
         'template_path_stack' => array(
             __DIR__ . '/../view',
+        ),
+    ),
+    'view_helpers' => array(
+        'invokables' => array(
+            'bootstrapFormConllection' => 'Application\Lib\View\Helper\BootstrapFormConllection',
+            'bootstrapFormRow'          => 'Application\Lib\View\Helper\BootstrapFormRow'
         ),
     ),
     // Placeholder for console routes

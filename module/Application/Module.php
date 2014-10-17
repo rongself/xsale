@@ -13,12 +13,22 @@ use Application\Lib\Acl\Acl;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
 use Zend\Mvc\Router\SimpleRouteStack;
+use Zend\Validator\AbstractValidator;
 use Zend\View\Model\JsonModel;
 
 class Module
 {
     public function onBootstrap(MvcEvent $e)
     {
+        //translate the messages of validators
+        $translator = new \Zend\Mvc\I18n\Translator();
+        $translator->addTranslationFile(
+            'phpArray',
+            './vendor/zendframework/zendframework/resources/languages/zh/Zend_Validate.php'
+        );
+        $translator->setLocale('zh_CN');
+        AbstractValidator::setDefaultTranslator($translator);
+
         if(php_sapi_name() === 'cli'){
             return false;
         }
@@ -47,6 +57,7 @@ class Module
         $eventManager = $e->getApplication()->getEventManager();
         //$eventManager->attach(array('dispatch',MvcEvent::EVENT_DISPATCH_ERROR,MvcEvent::EVENT_RENDER_ERROR), array($this, 'dispatchHandle'));
         $eventManager-> attach(array(MvcEvent::EVENT_ROUTE,MvcEvent::EVENT_RENDER_ERROR,MvcEvent::EVENT_DISPATCH_ERROR), array($this, 'checkAcl'));
+
     }
 
     /**

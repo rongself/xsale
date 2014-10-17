@@ -47,9 +47,9 @@ class Customer extends AbstractEntity
     private $isVip;
 
     /**
-     * @ORM\Column(type="float", nullable=true, name="balance", precision=10, scale=0)
-     */
-    private $balance;
+     * @ORM\OneToOne(targetEntity="VipArchive", mappedBy="customer", cascade={"persist"})
+     **/
+    private $vipArchive;
 
     /** 
      * @ORM\Column(type="text", nullable=true, name="remark")
@@ -283,16 +283,17 @@ class Customer extends AbstractEntity
     /**
      * @return mixed
      */
-    public function getBalance()
+    public function getVipArchive()
     {
-        return $this->balance;
+        return $this->vipArchive;
     }
 
     /**
-     * @param mixed $balance
+     * @param mixed $vipArchive
      */
-    public function setBalance($balance)
+    public function setVipArchive($vipArchive)
     {
-        $this->balance = $balance;
+        $this->vipArchive = $vipArchive;
     }
+
 }

@@ -20,6 +20,8 @@ return array(
             'customer/delete',
             'customer/delete-multiple',
             'customer/get-customers-json',
+            'customer/ajax-is-phonenumber-exists',
+            'customer/recharge'
         ),
         'index'=>array(
             'index/index',
