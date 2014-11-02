@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: Administrator
+ * User: Ron Choi
  * Date: 14-10-14
  * Time: 下午5:39
  */
@@ -41,7 +41,7 @@ class BootstrapFormConllection extends FormCollection{
             if ($elementOrFieldset instanceof FieldsetInterface) {
                 $markup .= $fieldsetHelper($elementOrFieldset);
             } elseif ($elementOrFieldset instanceof ElementInterface) {
-                $markup .= $elementHelper($elementOrFieldset);
+                $markup .= call_user_func($elementHelper,$elementOrFieldset);
             }
         }
 
