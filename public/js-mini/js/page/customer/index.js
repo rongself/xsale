@@ -1,0 +1,1 @@
+require(["checkedAll","viewmodel/customer","knockout","search"],function(e,t,n,r){e({deleteUrl:"/customer/delete-multiple"});var i=new t;n.applyBindings(i),r({setUrl:function(e){return"/customer/index/keyword/"+e}})});

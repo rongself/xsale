@@ -1,0 +1,1 @@
+define(["jquery","message"],function(e,t){return function(n){var r={setUrl:function(){return""}};n=e.extend(r,n),e("#search").click(function(){var r=e("#keyword").val();return r==""?t.info("请输入搜索关键词"):location.href=n.setUrl(encodeURIComponent(r)),!1})}});

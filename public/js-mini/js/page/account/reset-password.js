@@ -1,0 +1,1 @@
+require(["viewmodel/resetPassword","knockout"],function(e,t){var e=new e;t.applyBindings(e)});

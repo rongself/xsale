@@ -1,0 +1,1 @@
+require(["viewmodel/editProduct","knockout","imageUploader"],function(e,t,n){var r=new e;t.applyBindings(r);var i=new n});

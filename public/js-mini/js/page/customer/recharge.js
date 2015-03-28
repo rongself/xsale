@@ -1,0 +1,1 @@
+require(["knockout","viewmodel/saleRecord","viewmodel/saleProduct","module/customer.autocomplete","message","module/number","datetimepicker","validation","typeahead","underscore"],function(e,t,n,r,i){var r=new r(function(e,t){var n=_.find(t,function(t){return t.phoneNumber==e&&t.isVip==1});return n.name&&saleRecord.customerName(n.name),e})});

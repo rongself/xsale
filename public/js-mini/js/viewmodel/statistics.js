@@ -1,0 +1,1 @@
+define(["knockout"],function(e){return function(){var t=this;t.profitSum=e.observable(0),t.priceSum=e.observable(0),t.profitRate=e.computed(function(){return(t.profitSum()/t.priceSum()*100).toFixed(2)}),t.startTime=e.observable(),t.endTime=e.observable(),t.list=e.observableArray(),t.reset=function(){t.profitSum(0),t.priceSum(0),t.profitRate(0),t.list.removeAll()}}});

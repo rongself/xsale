@@ -1,0 +1,1 @@
+require(["checkedAll","message","search"],function(e,t,n){e({deleteUrl:"/stock-record/delete-multiple"}),n({setUrl:function(e){return"/stock-record/index/keyword/"+e}})});

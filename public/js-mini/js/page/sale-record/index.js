@@ -1,0 +1,1 @@
+require(["checkedAll","search"],function(e,t){e({deleteUrl:"/sale-record/delete-multiple"}),t({setUrl:function(e){return"/sale-record/index/keyword/"+e}})});

@@ -1,0 +1,1 @@
+require(["viewmodel/editCustomer","knockout","switch"],function(e,t,n){var r=new e;t.applyBindings(r),n.defaults.onText="是",n.defaults.offText="否",$("[name='switch-checkbox']").bootstrapSwitch()});

@@ -1,0 +1,1 @@
+define(["knockout","validation","validationConfig"],function(e){return function(){var t=this;t.id=e.observable(),t.url=e.observable(),t.type=e.observable()}});

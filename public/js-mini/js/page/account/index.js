@@ -1,0 +1,1 @@
+require(["checkedAll","search"],function(e,t){e({deleteUrl:"/account/delete-multiple"}),t({setUrl:function(e){return"/account/index/keyword/"+e}})});

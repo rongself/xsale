@@ -1,0 +1,1 @@
+define(["knockout"],function(e){return function(){var t=this;t.setDefaultValue=function(){for(protype in t)if(e.isWriteableObservable(t[protype])){var n=$("#"+protype);if(n.length>0){var r=n.attr("data-value");r!=""?(r=="true"?r=!0:r=="false"&&(r=!1),t[protype](r)):t[protype]("")}}},t.ajaxInit=function(){},t.reset=function(){t.init()}}});

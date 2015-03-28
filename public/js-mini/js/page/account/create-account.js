@@ -1,0 +1,1 @@
+require(["viewmodel/account","knockout"],function(e,t){var n=new e;t.applyBindings(n)});
